@@ -1,13 +1,15 @@
 from flask import Flask
 import requests
 from bs4 import BeautifulSoup
+import scraping 
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def index():
-    url = 'https://hehethebox.com'
+    url = ''
+
     response = requests.get(url)
 
     # parse HTML
@@ -15,7 +17,7 @@ def index():
 
     formatted_html = soup.prettify()
 
-    return formatted_html
+    return scraping.formatted_html
 
 @app.route('/blog')
 def blog():
