@@ -1,7 +1,7 @@
 from flask import Flask
 import requests
 from bs4 import BeautifulSoup
-import scraping 
+import scrapBikesData 
 
 app = Flask(__name__)
 
@@ -17,7 +17,7 @@ def index():
 
     formatted_html = soup.prettify()
 
-    return scraping.formatted_html
+    return scrapBikesData.formatted_html
 
 @app.route('/blog')
 def blog():
