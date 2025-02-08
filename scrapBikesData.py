@@ -133,7 +133,7 @@ def getBikesData():
                     station['last_update']
                     )
                 )
-            print('Storing station data successfully!')
+            # print('Storing station data successfully!')
             if check_table_exists(cursor, 'positions'): 
                 checkData = f"SELECT * FROM positions WHERE id = %s"
                 cursor.execute(checkData, (stationNumber,))
@@ -150,7 +150,7 @@ def getBikesData():
                         station['last_update']
                         )
                     )
-                    print('Storing position data successfully!') 
+                    # print('Storing position data successfully!') 
                 else: 
                     if (result[1] != station['position']['lat']):
                         updateLat = f"""
@@ -159,7 +159,7 @@ def getBikesData():
                             WHERE id = %s;
                         """
                         cursor.execute(updateLat, (station['position']['lat'], station['last_update'], stationNumber))
-                        print('Updated lng data successfully!') 
+                        # print('Updated lng data successfully!') 
                     if (result[2] != station['position']['lng']):
                         updateLng = f"""
                             UPDATE positions 
@@ -167,11 +167,12 @@ def getBikesData():
                             WHERE id = %s;
                         """
                         cursor.execute(updateLng, (station['position']['lng'], station['last_update'], stationNumber))
-                        print('Updated lng data successfully!') 
+                        # print('Updated lng data successfully!') 
 
         connection.commit()
         cursor.close()
-        connection.close() 
+        connection.close()
+        print('finished!')
     else:
         print(f"Error: {response.status_code}")
 
