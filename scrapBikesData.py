@@ -1,5 +1,4 @@
 import requests
-import schedule
 import os
 import re
 import time
@@ -177,8 +176,6 @@ def getBikesData():
     else:
         print(f"Error: {response.status_code}")
 
-schedule.every(5).minutes.do(getBikesData)
-
 while True:
-    schedule.run_pending()  # 執行任何等待的任務
-    time.sleep(1) 
+    getBikesData()
+    time.sleep(5*60) 
