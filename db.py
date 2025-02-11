@@ -14,7 +14,7 @@ dbPort = "3006"
 connection_string = "mysql+mysqldb://{}:{}@{}:{}/{}".format(dbUser, dbPassword, dbHost, dbPort, dbName)
 
 conn = False
-
+# sg-063a97696ba8dec6a
 def dbConnection():
     connect = mysql.connector.connect(
         host=dbHost,
