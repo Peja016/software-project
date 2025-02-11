@@ -1,7 +1,7 @@
 import requests
-import schedule
 import os
 import re
+import time
 from dotenv import load_dotenv
 
 from db import getCursor
@@ -103,7 +103,6 @@ def getBikesData():
                             WHERE id = %s;
                         """
                         cursor.execute(updateBikesInfo, (station[attrsName[i]], station['last_update'], stationNumber))
-            print('Storing bikeInfo successfully!')
         
             tableName = re.sub(r'[^a-zA-Z0-9]', '', station['address'])
 
@@ -133,6 +132,7 @@ def getBikesData():
                     station['last_update']
                     )
                 )
+                print(f'Storing {tableName} successfully!')
             # print('Storing station data successfully!')
             if check_table_exists(cursor, 'positions'): 
                 checkData = f"SELECT * FROM positions WHERE id = %s"
@@ -176,4 +176,6 @@ def getBikesData():
     else:
         print(f"Error: {response.status_code}")
 
-schedule.every(5).minutes.do(getBikesData)
+while True:
+    getBikesData()
+    time.sleep(5*60) 
