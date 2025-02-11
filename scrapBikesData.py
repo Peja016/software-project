@@ -4,7 +4,7 @@ import re
 import time
 from dotenv import load_dotenv
 
-from db import getCursor
+from db import getEngine
 
 load_dotenv() # Load environment variables from .env file
 
@@ -16,7 +16,7 @@ def check_table_exists(cursor, table_name):
 def getBikesData():
     print('Start running')
     # Replace with your actual API key
-    cursor, connection, engine = getCursor()
+    cursor, connection = getEngine()
 
     createBikesInfoTable = """
         CREATE TABLE IF NOT EXISTS bikesInfo (
@@ -68,7 +68,7 @@ def getBikesData():
             stationNumber = station['number']
 
             checkBikeInfo = f"SELECT * FROM bikesInfo WHERE id = %s"
-            engine.execute(checkBikeInfo, (stationNumber,))
+            cursor.execute(checkBikeInfo, (stationNumber,))
             result = cursor.fetchone()
             if result is None:
                 insertData = f"""

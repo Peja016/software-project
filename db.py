@@ -11,7 +11,7 @@ dbPassword = os.getenv('DATABASE_PASSWORD')
 dbName = os.getenv('DATABASE_NAME')
 dbPort = "3006"
 
-connection_string = "mysql+mysqldb://{}:{}@{}:{}/{}".format(dbUser, dbPassword, dbHost, dbPort, dbName)
+# connection_string = "mysql+mysqldb://{}:{}@{}:{}/{}".format(dbUser, dbPassword, dbHost, dbPort, dbName)
 
 conn = False
 # sg-063a97696ba8dec6a
@@ -25,8 +25,8 @@ def dbConnection():
     return connect
 
 def getEngine(): 
-    engine = create_engine(connection_string, echo = True)  
+    # engine = create_engine(connection_string, echo = True)  
     connection = dbConnection()
     cursor = connection.cursor()
-    return cursor, connection, engine
+    return cursor, connection
 
