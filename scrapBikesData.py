@@ -16,7 +16,7 @@ def check_table_exists(cursor, table_name):
 def getBikesData():
     print('Start running')
     # Replace with your actual API key
-    cursor, connection = getCursor()
+    cursor, connection, engine = getCursor()
 
     createBikesInfoTable = """
         CREATE TABLE IF NOT EXISTS bikesInfo (
@@ -52,7 +52,7 @@ def getBikesData():
     full_url = f'{url}?contract={city}&apiKey={api_key}'
 
     # Send a GET request
-    response = requests.get(full_url)
+    response = requests.get(url, params={"apiKey": api_key, "contract": city})
 
     # Check if the request was successful (status code 200 means success)
     if response.status_code == 200:
@@ -68,7 +68,7 @@ def getBikesData():
             stationNumber = station['number']
 
             checkBikeInfo = f"SELECT * FROM bikesInfo WHERE id = %s"
-            cursor.execute(checkBikeInfo, (stationNumber,))
+            engine.execute(checkBikeInfo, (stationNumber,))
             result = cursor.fetchone()
             if result is None:
                 insertData = f"""

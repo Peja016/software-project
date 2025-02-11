@@ -24,7 +24,7 @@ def dbConnection():
     )
     return connect
 
-def getCursor(): 
+def getEngine(): 
     engine = create_engine(connection_string, echo = True)  
     connection = dbConnection()
     cursor = connection.cursor()
