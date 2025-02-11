@@ -10,7 +10,7 @@ dbPassword = os.getenv('DATABASE_PASSWORD')
 dbName = os.getenv('DATABASE_NAME')
 
 conn = False
-
+# sg-063a97696ba8dec6a
 def dbConnection():
     connect = mysql.connector.connect(
         host=dbHost,
