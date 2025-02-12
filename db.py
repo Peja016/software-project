@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
-load_dotenv() # Load environment variables from .env file
+load_dotenv(override=True) # Load environment variables from .env file
 
 dbHost = os.getenv('DATABASE_HOST')
 dbUser = os.getenv('DATABASE_USER')
@@ -16,13 +16,18 @@ dbPort = "3006"
 conn = False
 # sg-063a97696ba8dec6a
 def dbConnection():
-    connect = mysql.connector.connect(
-        host=dbHost,
-        user=dbUser,
-        password=dbPassword,
-        database=dbName
-    )
-    return connect
+    try:
+        connect = mysql.connector.connect(
+            host=dbHost,
+            user=dbUser,
+            password=dbPassword,
+            database=dbName
+        )
+        if connect.is_connected():
+            print("資料庫連線成功！")
+        return connect
+    except mysql.connector.Error as e:
+        print("資料庫連線失敗:", e)
 
 def getEngine(): 
     # engine = create_engine(connection_string, echo = True)  
@@ -30,3 +35,4 @@ def getEngine():
     cursor = connection.cursor()
     return cursor, connection
 
+dbConnection()
