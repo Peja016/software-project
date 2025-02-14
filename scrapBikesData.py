@@ -183,6 +183,6 @@ def getBikesData():
     else:
         print(f"Error: {response.status_code}")
 
-# while True:
-getBikesData()
-    # time.sleep(5*60) 
+while True:
+    getBikesData()
+    time.sleep(5*60) 
