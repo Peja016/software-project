@@ -24,7 +24,6 @@ def getWeatherData():
     createWeatherReports = """
         CREATE TABLE IF NOT EXISTS weatherReports (
             id BIGINT PRIMARY KEY AUTO_INCREMENT,
-            timestamp BIGINT,
             temperature FLOAT,
             feels_like FLOAT,
             temp_min FLOAT,
@@ -37,6 +36,7 @@ def getWeatherData():
             cloudiness INT,
             sunrise BIGINT,
             sunset BIGINT,
+            timestamp BIGINT,
         );
     """
     cursor.execute(createWeatherReports)
@@ -71,18 +71,64 @@ def getWeatherData():
     if response.status_code == 200:
         data = response.json()
         print(data)
-        # with open("output.json", "w", encoding="utf-8") as json_file:
-        #     json.dump(data, json_file, indent=4, ensure_ascii=False)
-        # Output the raw data (JSON format)
-        
-        # print(json.dumps(data, indent=4))  # Beautify the output JSON data
-        
-        # For example, extract the station name and available bike count
-        # for forecast in data:
+        main = data['main']
+        wind = data['wind']
+        sys = data['sys']
+        weather = data['weather'][0]
+        insertReportsData = f"""
+            INSERT INTO weatherReports (
+                temperature,
+                feels_like,
+                temp_min,
+                temp_max,
+                pressure,
+                humidity,
+                visibility,
+                wind_speed,
+                wind_deg,
+                cloudiness,
+                sunrise,
+                sunset,
+                timestamp,
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+        """
+        cursor.execute(insertReportsData, (
+                main['temp'], 
+                main['feels_like'], 
+                main['temp_min'],
+                main['temp_max'],
+                main['pressure'],
+                main['humidity'],
+                data['visibility'],
+                wind['speed'],
+                wind['deg'],
+                data['clouds']['all'],
+                sys['sunrise'],
+                sys['sunset'],
+                data['dt'],
+            )
+        )
+        insertConditionsData = f"""
+            INSERT INTO weatherConditions (
+                conditionId,
+                weatherStatus,
+                description,
+                icon,
+            )
+            VALUES (%s, %s, %s, %s);
+        """
+        cursor.execute(insertConditionsData, (
+                weather['id'], 
+                weather['main'], 
+                weather['description'], 
+                weather['icon'],
+            )
+        )
 
-        # connection.commit()
-        # cursor.close()
-        # connection.close()
+        connection.commit()
+        cursor.close()
+        connection.close()
     else:
         print(f"Error: {response.status_code}")
 
