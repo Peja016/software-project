@@ -38,7 +38,7 @@ def getWeatherData():
     createWeatherConditions = """
         CREATE TABLE IF NOT EXISTS weatherConditions (
             id INT PRIMARY KEY AUTO_INCREMENT,
-            reportId INT,
+            reportId BIGINT,
             conditionId BIGINT,
             weatherStatus VARCHAR(50),
             description VARCHAR(100),
@@ -47,7 +47,6 @@ def getWeatherData():
         );
     """
     cursor.execute(createWeatherConditions)
-
 
     api_key = os.getenv('WEATHER_API_KEY')
     url = 'https://api.openweathermap.org/data/2.5/weather'
