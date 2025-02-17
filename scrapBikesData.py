@@ -58,12 +58,12 @@ def getBikesData():
     # Check if the request was successful (status code 200 means success)
     if response.status_code == 200:
         data = response.json()
-        df = pd.DataFrame(data)
-        try:
-            df.to_csv("output.csv", index=False)
-            print("CSV file produced successfully!")
-        except ValueError as e :
-            print(e)
+        # df = pd.DataFrame(data)
+        # try:
+        #     df.to_csv("output.csv", index=False)
+        #     print("CSV file produced successfully!")
+        # except ValueError as e :
+        #     print(e)
         # with open("output.json", "w", encoding="utf-8") as json_file:
         #     json.dump(data, json_file, indent=4, ensure_ascii=False)
         # Output the raw data (JSON format)
