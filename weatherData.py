@@ -104,6 +104,7 @@ def getWeatherData():
             )
         )
         connection.commit() 
+        print('store report data successfully')
         # get the ID just inserted
         last_report_id = cursor.lastrowid
         
@@ -126,6 +127,8 @@ def getWeatherData():
             )
         )
         connection.commit()
+        print('store conditon data successfully')
+
         cursor.close()
         connection.close()
     else:
