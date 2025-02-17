@@ -43,7 +43,7 @@ def getWeatherData():
             weatherStatus VARCHAR(50),
             description VARCHAR(100),
             icon VARCHAR(10),
-            FOREIGN KEY (reportId) REFERENCES weatherReports(id) CASCADE
+            FOREIGN KEY (reportId) REFERENCES weatherReports(id) ON DELETE CASCADE ON UPDATE CASCADE
         );
     """
     cursor.execute(createWeatherConditions)
