@@ -13,7 +13,6 @@ load_dotenv() # Load environment variables from .env file
 
 def getWeatherData():
     print('Start running')
-    # Replace with your actual API key
     cursor, connection = getEngine()
 
     createWeatherReports = """
@@ -31,7 +30,7 @@ def getWeatherData():
             cloudiness INT,
             sunrise BIGINT,
             sunset BIGINT,
-            timestamp BIGINT,
+            timestamp BIGINT
         );
     """
     cursor.execute(createWeatherReports)
@@ -64,7 +63,7 @@ def getWeatherData():
     # Check if the request was successful (status code 200 means success)
     if response.status_code == 200:
         data = response.json()
-        # print(data)
+        print(data)
         main = data['main']
         wind = data['wind']
         sys = data['sys']
