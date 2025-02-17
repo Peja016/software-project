@@ -17,7 +17,7 @@ def getWeatherData():
 
     createWeatherReports = """
         CREATE TABLE IF NOT EXISTS weatherReports (
-            id BIGINT PRIMARY KEY AUTO_INCREMENT,
+            id INT PRIMARY KEY AUTO_INCREMENT,
             temperature FLOAT,
             feels_like FLOAT,
             temp_min FLOAT,
@@ -42,7 +42,7 @@ def getWeatherData():
             weatherStatus VARCHAR(50),
             description VARCHAR(100),
             icon VARCHAR(10),
-            FOREIGN KEY (conditionId) REFERENCES weatherReports(id) CASCADE
+            FOREIGN KEY (id) REFERENCES weatherReports(id) CASCADE
         );
     """
     cursor.execute(createWeatherConditions)
