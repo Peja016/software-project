@@ -83,7 +83,7 @@ def getWeatherData():
                 cloudiness,
                 sunrise,
                 sunset,
-                timestamp,
+                timestamp
             )
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
         """
@@ -113,7 +113,7 @@ def getWeatherData():
                 conditionId,
                 weatherStatus,
                 description,
-                icon,
+                icon
             )
             VALUES (%s, %s, %s, %s, %s);
         """
