@@ -11,11 +11,6 @@ from db import getEngine
 
 load_dotenv() # Load environment variables from .env file
 
-def check_table_exists(cursor, table_name):
-    cursor.execute(f"SHOW TABLES LIKE '{table_name}'")
-    result = cursor.fetchone()
-    return result is not None  # if true，the table exists
-
 def getWeatherData():
     print('Start running')
     # Replace with your actual API key
