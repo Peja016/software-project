@@ -38,11 +38,12 @@ def getWeatherData():
     createWeatherConditions = """
         CREATE TABLE IF NOT EXISTS weatherConditions (
             id INT PRIMARY KEY AUTO_INCREMENT,
+            reportId INT,
             conditionId BIGINT,
             weatherStatus VARCHAR(50),
             description VARCHAR(100),
             icon VARCHAR(10),
-            FOREIGN KEY (id) REFERENCES weatherReports(id) CASCADE
+            FOREIGN KEY (reportId) REFERENCES weatherReports(id) CASCADE
         );
     """
     cursor.execute(createWeatherConditions)
@@ -102,23 +103,28 @@ def getWeatherData():
                 data['dt'],
             )
         )
+        connection.commit() 
+        # get the ID just inserted
+        last_report_id = cursor.lastrowid
+        
         insertConditionsData = f"""
             INSERT INTO weatherConditions (
+                reportId,
                 conditionId,
                 weatherStatus,
                 description,
                 icon,
             )
-            VALUES (%s, %s, %s, %s);
+            VALUES (%s, %s, %s, %s, %s);
         """
         cursor.execute(insertConditionsData, (
+                last_report_id,
                 weather['id'], 
                 weather['main'], 
                 weather['description'], 
                 weather['icon'],
             )
         )
-    
         connection.commit()
         cursor.close()
         connection.close()
