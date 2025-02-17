@@ -55,7 +55,6 @@ def getWeatherData():
     lat = 53.344
     lon = -6.2672
 
-
     # Construct the full URL (including API key and city parameter)
     full_url = f'{url}?lat={lat}&lon={lon}&&appid={api_key}'
 
@@ -65,7 +64,7 @@ def getWeatherData():
     # Check if the request was successful (status code 200 means success)
     if response.status_code == 200:
         data = response.json()
-        print(data)
+        # print(data)
         main = data['main']
         wind = data['wind']
         sys = data['sys']
@@ -120,7 +119,7 @@ def getWeatherData():
                 weather['icon'],
             )
         )
-
+    
         connection.commit()
         cursor.close()
         connection.close()

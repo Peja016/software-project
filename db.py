@@ -35,4 +35,4 @@ def getEngine():
     cursor = connection.cursor()
     return cursor, connection
 
-dbConnection()
+# dbConnection()
