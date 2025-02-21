@@ -1,5 +1,9 @@
 import os
 import requests
+from dotenv import load_dotenv
+
+load_dotenv() # Load environment variables from .env file
+
 
 def getBikesData():
     api_key = os.getenv('JCDecaux_API_KEY')

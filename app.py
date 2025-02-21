@@ -1,36 +1,35 @@
 from flask import Flask, render_template, jsonify
 from bs4 import BeautifulSoup
-
+import os
+from dotenv import load_dotenv
 import getBikesData
+
+load_dotenv() # Load environment variables from .env file
 
 app = Flask(__name__)
 
-
 @app.route('/')
 def index():
-    # url = 'https://ooopenlab.cc/en'
-
-    # response = requests.get(url)
-
-    # parse HTML
-    # soup = BeautifulSoup(response.text, 'html.parser')
-
-    # formatted_html = soup.prettify()
-    # print(formatted_html)
-
     return render_template('index.html')
 
-@app.route('/api/bikesInfo')
+
+@app.route('/api/bikesInfo', methods=['POST'])
 def getBikesInfo():
     res = getBikesData.getBikesData()
     if res.status_code == 200:
         return res.json()
-    else:
-        return print('Cannot get data')
 
-@app.route('/blog')
-def blog():
-    return "Hello, it's blog!"
+@app.route('/map')
+def map():
+    return render_template(
+        "map.html",
+        lat=os.getenv('LAT'),
+        lon=os.getenv('LON'),
+        api=os.getenv('GOOGLE_MAP_API'),
+        bikes_api_url="/api/bikesInfo",
+    )
 
 if __name__ == "__main__":
+    print('hi')
+    app.config['ENV'] = 'development'
     app.run(debug=True)
