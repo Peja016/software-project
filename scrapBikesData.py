@@ -1,11 +1,11 @@
-import requests
-import os
 import re
 import time
 from dotenv import load_dotenv
 import pandas as pd
 
 from db import getEngine
+
+import getBikesData
 
 load_dotenv() # Load environment variables from .env file
 
@@ -14,7 +14,7 @@ def check_table_exists(cursor, table_name):
     result = cursor.fetchone()
     return result is not None  # if true，the table exists
 
-def getBikesData():
+def storeBikesData():
     print('Start running')
     # Replace with your actual API key
     cursor, connection = getEngine()
@@ -43,21 +43,11 @@ def getBikesData():
     """
     cursor.execute(createPositionTable)
 
-    api_key = os.getenv('JCDecaux_API_KEY')
-    url = 'https://api.jcdecaux.com/vls/v1/stations'
-
-    # Optional: specify the city (e.g., Paris)
-    city = 'dublin'
-
-    # Construct the full URL (including API key and city parameter)
-    full_url = f'{url}?contract={city}&apiKey={api_key}'
-
-    # Send a GET request
-    response = requests.get(url, params={"apiKey": api_key, "contract": city})
+    res = getBikesData()
 
     # Check if the request was successful (status code 200 means success)
-    if response.status_code == 200:
-        data = response.json()
+    if res.status_code == 200:
+        data = res.json()
         # df = pd.DataFrame(data)
         # try:
         #     df.to_csv("output.csv", index=False)
@@ -184,5 +174,5 @@ def getBikesData():
         print(f"Error: {response.status_code}")
 
 while True:
-    getBikesData()
+    storeBikesData()
     time.sleep(5*60) 
