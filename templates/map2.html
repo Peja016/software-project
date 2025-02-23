@@ -8,6 +8,7 @@
     <style>
         #map {
             height: 75vh;
+            /* you can change map's height here */
             width: 100%;
         }
     </style>
@@ -16,14 +17,25 @@
 <body>
     <h2>Find the location</h2>
     <div id="map"></div>
-    <script src="{{ url_for('static', filename='/scripts/fetchData.js') }}" defer></script>
     <script>
+        async function fetchData(api) {
+            const headers = { 'Content-Type': 'application/json' }
 
+            const res = await fetch(api, {
+                headers,
+                method: 'POST',
+                body: JSON.stringify(),
+            })
+
+            const data = await res.json()
+
+            return data
+        }
         async function initMap() {
-            const bikeData = await fetchData("{{ bikes_api_url }}");
-            const lat = "{{ lat }}"
-            const lon = "{{ lon }}"
-            const location = { lat: +lat, lng: +lon };
+            const bikeData = await fetchData("{{ bikes_api_url }}"); // bikes_api_url should like this 'https://api.jcdecaux.com/vls/v1/stations/?contract={city}&apiKey={api_key}'
+            const lat = 53.344
+            const lng = -6.2672
+            const location = { lat, lng };
             const map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 15,
                 center: location
@@ -45,6 +57,7 @@
     </script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key={{ api }}&callback=initMap" async defer></script>
+    <!-- api is your google map api key  -->
 </body>
 
 </html>
