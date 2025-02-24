@@ -55,14 +55,16 @@
         }
         .arrows {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            margin: -30px 0 10px;
+            justify-content: space-between; /* Space the arrows evenly between the images */
+            align-items: center; /* Align the arrows vertically to the middle of the images */
+            width: 100%; /* Ensure the arrows span the entire width of the container */
+            position: absolute;
+            top: 50%; /* Vertically center the arrows on the images */
         }
         .arrow {
             width: 50px;
             height: 20px;
+            object-fit: contain; /* Ensure the arrows maintain their aspect ratio */
         }
         .step ul {
             list-style-type: disc;
@@ -125,23 +127,19 @@
             </div>
         </div>
 
-        <!-- Images -->
+        <!-- Images and Arrows between them -->
         <div class="steps">
             <div class="step">
                 <img src="images/smartphone.jpg" alt="Find a Bike">
             </div>
+            <img class="arrow" src="images/blue_arrow.jpg" alt="Arrow"> <!-- Arrow between first and second image -->
             <div class="step">
                 <img src="images/ride.png" alt="Cycle">
             </div>
+            <img class="arrow" src="images/blue_arrow.jpg" alt="Arrow"> <!-- Arrow between second and third image -->
             <div class="step">
                 <img src="images/return.png" alt="Return the Bike">
             </div>
-        </div>
-
-        <!-- Arrows -->
-        <div class="arrows">
-            <img class="arrow" src="images/blue_arrow.jpg" alt="Arrow">
-            <img class="arrow" src="images/blue_arrow.jpg" alt="Arrow">
         </div>
 
         <!-- Text as Unordered List -->
