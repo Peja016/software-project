@@ -1,2 +1,4 @@
 # env
 deploy.yml
+.idea
+__pycache__
