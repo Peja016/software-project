@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 
 load_dotenv() # Load environment variables from .env file
 
-
 def getBikesData():
     api_key = os.getenv('JCDecaux_API_KEY')
     url = 'https://api.jcdecaux.com/vls/v1/stations'

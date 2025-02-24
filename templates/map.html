@@ -1,34 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Bike stations Maps</title>
-        <style>
-            #map {
-                height: 75vh;
-                width: 100%;
-            }
-        </style>
-        <!-- <script async src="https://maps.googleapis.com/maps/api/js?key={{ api }}&callback=console.debug&libraries=maps,marker&v=beta"></script> -->
-    </head>
-    <body>
-        <h2>Find the location</h2>
-        <div id="map"></div>
-        <script src="{{ url_for('static', filename='/scripts/fetchData.js') }}" defer></script>
-        <script>
 
-            async function initMap() {
-                const bikeData = await fetchData("{{ bikes_api_url }}");
-                const lat = "{{ lat }}"
-                const lon = "{{ lon }}"
-                const location = { lat: +lat, lng: +lon };
-                const map = new google.maps.Map(document.getElementById("map"), {
-                    zoom: 15,
-                    center: location
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike stations Maps</title>
+    <style>
+        #map {
+            height: 75vh;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Find the location</h2>
+    <div id="map"></div>
+    <script src="{{ url_for('static', filename='/scripts/fetchData.js') }}" defer></script>
+    <script>
+
+        async function initMap() {
+            const bikeData = await fetchData("{{ bikes_api_url }}");
+            const lat = "{{ lat }}"
+            const lon = "{{ lon }}"
+            const location = { lat: +lat, lng: +lon };
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                center: location
+            });
+
+            bikeData.forEach(({ position }) => {
+                const marker = new google.maps.Marker({
+                    position,
+                    map,
                 });
 
-                console.log(bikeData)
+                // console.log(bikeData)
                 const infoWindow = new google.maps.InfoWindow();
                 
                 bikeData.forEach(({
@@ -55,10 +62,12 @@
                         infoWindow.open(map, marker);
                     });
                 });
+            });
 
-            }
-        </script>
+        }
+    </script>
 
-        <script src="https://maps.googleapis.com/maps/api/js?key={{ api }}&callback=initMap" async defer></script>
-    </body>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ api }}&callback=initMap" async defer></script>
+</body>
+
 </html>

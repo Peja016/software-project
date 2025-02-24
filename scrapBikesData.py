@@ -3,9 +3,11 @@ import time
 from dotenv import load_dotenv
 import pandas as pd
 
+import response 
+
 from db import getEngine
 
-import getBikesData
+from getBikesData import getBikesData
 
 load_dotenv() # Load environment variables from .env file
 

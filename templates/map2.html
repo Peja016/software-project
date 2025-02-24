@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike stations Maps</title>
+    <style>
+        #map {
+            height: 75vh;
+            /* you can change map's height here */
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Find the location</h2>
+    <div id="map"></div>
+    <script>
+        async function fetchData(api) {
+            const headers = { 'Content-Type': 'application/json' }
+
+            const res = await fetch(api, {
+                headers,
+                method: 'POST',
+                body: JSON.stringify(),
+            })
+
+            const data = await res.json()
+
+            return data
+        }
+        async function initMap() {
+            const bikeData = await fetchData("{{ bikes_api_url }}"); // bikes_api_url should like this 'https://api.jcdecaux.com/vls/v1/stations/?contract={city}&apiKey={api_key}'
+            const lat = 53.344
+            const lng = -6.2672
+            const location = { lat, lng };
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                center: location
+            });
+
+            bikeData.forEach(({ position }) => {
+                const marker = new google.maps.Marker({
+                    position,
+                    map,
+                });
+
+                marker.addListener("click", () => {
+                    infoWindow.setContent(location.info);
+                    infoWindow.open(map, marker);
+                });
+            });
+
+        }
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ api }}&callback=initMap" async defer></script>
+    <!-- api is your google map api key  -->
+</body>
+
+</html>
