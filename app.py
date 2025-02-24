@@ -29,6 +29,10 @@ def map():
         bikes_api_url="/api/bikesInfo",
     )
 
+@app.route('/how')
+def how():
+    return render_template("how.html")
+
 if __name__ == "__main__":
     print('hi')
     app.config['ENV'] = 'development'
