@@ -28,14 +28,30 @@
                     center: location
                 });
 
-                bikeData.forEach(({ position }) => {
+                console.log(bikeData)
+                const infoWindow = new google.maps.InfoWindow();
+                
+                bikeData.forEach(({
+                    position,
+                    name,
+                    available_bikes,
+                    available_bike_stands,
+                    status
+                }) => {
                     const marker = new google.maps.Marker({
                         position,
                         map,
                     });
-
+                    
                     marker.addListener("click", () => {
-                        infoWindow.setContent(location.info);
+                        infoWindow.setContent(`
+                            <div>
+                                <b>${name}</b>
+                                <p>Available bikes: ${available_bikes}</p>
+                                <p>Available bike stands: ${available_bike_stands}</p>
+                                <p>Status: ${status}</p>
+                            </div>
+                        `);
                         infoWindow.open(map, marker);
                     });
                 });
