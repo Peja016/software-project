@@ -17,7 +17,7 @@ def index():
 def getBikesInfo():
     res = getBikesData.getBikesData()
     if res.status_code == 200:
-        return res.json()
+        return jsonify(res.json())
 
 @app.route('/map')
 def map():

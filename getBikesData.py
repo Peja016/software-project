@@ -13,4 +13,7 @@ def getBikesData():
     # full_url = f'{url}?contract={city}&apiKey={api_key}'
     # Send a GET request
     response = requests.get(url, params={"apiKey": api_key, "contract": city})
+    # print(type(response.json()))
     return response
+
+# getBikesData()
