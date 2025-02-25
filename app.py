@@ -33,6 +33,10 @@ def map():
 def how():
     return render_template("how.html")
 
+@app.route('/use')
+def use():
+    return render_template("use.html")
+
 if __name__ == "__main__":
     print('hi')
     app.config['ENV'] = 'development'

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use CityBike</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        header {
+            background-color: #2d87f0;
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        .step {
+            width: 30%;
+            text-align: center;
+        }
+        .step img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        .arrow {
+            width: 50px;
+            height: 20px;
+        }
+        .safety {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #e0f2ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .safety h2 {
+            color: #2d87f0;
+            text-align: center;
+        }
+        .safety ul {
+            padding-left: 20px;
+        }
+        .safety ul li {
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+        .safety ul li::before {
+            content: "•";
+            color: #2d87f0;
+            font-size: 20px;
+            font-weight: bold;
+            display: inline-block;
+            width: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>How to Use CityBike</header>
+    <div class="container">
+        <div class="steps">
+            <div class="step">
+                <h2>1. Rent a bike</h2>
+                <p>&#8250; Log in and choose a CityBike subscription<br>
+                   &#8250; Check and select your bike<br>
+                   &#8226; Release a bike<br>
+                   &#8250; No bike at the station?</p>
+                <img src="static/images/smartphone.jpg" alt="Renting a Bike">
+            </div>
+            <img class="arrow" src="static/images/blue_arrow.jpg" alt="Arrow">
+            <div class="step">
+                <h2>2. Using the service</h2>
+                <p>&#8250; The first 30 minutes are free<br>
+                   &#8250; Rules of the road<br>
+                   &#8250; Tips and best practices<br>
+                   &#8250; Locking the bike</p>
+                <img src="static/images/ride.png" alt="Using the Bike">
+            </div>
+            <img class="arrow" src="static/images/blue_arrow.jpg" alt="Arrow">
+            <div class="step">
+                <h2>3. Return a bike</h2>
+                <p>&#8250; Choose a station<br>
+                   &#8226; Park a bike at a station<br>
+                   &#8250; No stands available to park at the station?<br>
+                   &#8250; Write a review</p>
+                <img src="static/images/return.png" alt="Returning a Bike">
+            </div>
+        </div>
+        <!-- Safety Section -->
+        <div class="safety">
+            <h2>Bicycle Safety Tips</h2>
+            <ul>
+                <li>Always wear a helmet for protection.</li>
+                <li>Follow traffic rules and signals.</li>
+                <li>Use hand signals when turning.</li>
+                <li>Stay in designated cycling lanes.</li>
+                <li>Be visible: wear bright clothes and use bike lights at night.</li>
+                <li>Check your bike before riding (brakes, tires, lights).</li>
+                <li>Avoid using headphones while cycling.</li>
+                <li>Be aware of pedestrians and other cyclists.</li>
+                <li>Lock your bike properly when not in use.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
