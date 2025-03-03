@@ -38,6 +38,5 @@ def use():
     return render_template("use.html")
 
 if __name__ == "__main__":
-    print('hi')
     app.config['ENV'] = 'development'
     app.run(debug=True)
