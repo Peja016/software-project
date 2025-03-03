@@ -2,7 +2,7 @@ from flask import Flask, render_template, jsonify
 from bs4 import BeautifulSoup
 import os
 from dotenv import load_dotenv
-import getBikesData
+from getBikesData import getBikesData
 
 load_dotenv() # Load environment variables from .env file
 
@@ -15,7 +15,7 @@ def index():
 
 @app.route('/api/bikesInfo', methods=['POST'])
 def getBikesInfo():
-    res = getBikesData.getBikesData()
+    res = getBikesData()
     if res.status_code == 200:
         return jsonify(res.json())
 

@@ -16,9 +16,10 @@
 <body>
     <h2>Find the location</h2>
     <div id="map"></div>
-    <script src="{{ url_for('static', filename='/js/fetchData.js') }}"></script>
-    <script defer>
-
+    <script src="{{ url_for('static', filename='js/fetchData.js') }}"></script>
+    <script type="module">
+        // import initMap from '../static/js/initMap.js'
+        // initMap()
         async function initMap() {
             const bikeData = await fetchData("{{ bikes_api_url }}");
             const lat = "{{ lat }}"

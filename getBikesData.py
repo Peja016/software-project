@@ -10,10 +10,6 @@ def getBikesData():
     # Optional: specify the city (e.g., Paris)
     city = 'dublin'
     # Construct the full URL (including API key and city parameter)
-    # full_url = f'{url}?contract={city}&apiKey={api_key}'
     # Send a GET request
     response = requests.get(url, params={"apiKey": api_key, "contract": city})
-    # print(type(response.json()))
     return response
-
-# getBikesData()
