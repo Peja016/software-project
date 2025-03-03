@@ -2,3 +2,4 @@
 deploy.yml
 .idea
 __pycache__
+bike_scraper.py
