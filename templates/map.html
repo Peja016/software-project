@@ -16,7 +16,7 @@
 <body>
     <h2>Find the location</h2>
     <div id="map"></div>
-    <script src="{{ url_for('static', filename='/scripts/fetchData.js') }}"></script>
+    <script src="{{ url_for('static', filename='/js/fetchData.js') }}"></script>
     <script defer>
 
         async function initMap() {
@@ -54,9 +54,9 @@
                         infoWindow.setContent(`
                             <div>
                                 <b>${name}</b>
-                                <p>Available bikes: ${available_bikes}</p>
-                                <p>Available bike stands: ${available_bike_stands}</p>
-                                <p>Status: ${status}</p>
+                                <p><b>Available bikes:</b> ${available_bikes}</p>
+                                <p><b>Available bike stands:</b>  ${available_bike_stands}</p>
+                                <p><b>Status:</b>  ${status}</p>
                             </div>
                         `);
                         infoWindow.open(map, marker);
