@@ -3,6 +3,10 @@ deploy.yml
 <<<<<<< HEAD
 .idea
 __pycache__
+<<<<<<< HEAD
 =======
 bike_scraper.py
 >>>>>>> main
+=======
+bike_scraper.py
+>>>>>>> 9b21d88c97bad4905ddcf66191e675f479918131
