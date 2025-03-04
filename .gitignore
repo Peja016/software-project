@@ -1,4 +1,8 @@
 # env
 deploy.yml
+<<<<<<< HEAD
 .idea
 __pycache__
+=======
+bike_scraper.py
+>>>>>>> main

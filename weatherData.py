@@ -38,7 +38,7 @@ def getWeatherData():
     createWeatherConditions = """
         CREATE TABLE IF NOT EXISTS weatherConditions (
             id INT PRIMARY KEY AUTO_INCREMENT,
-            reportId BIGINT,
+            reportId INT,
             conditionId BIGINT,
             weatherStatus VARCHAR(50),
             description VARCHAR(100),
@@ -64,7 +64,7 @@ def getWeatherData():
     # Check if the request was successful (status code 200 means success)
     if response.status_code == 200:
         data = response.json()
-        print(data)
+        # print(data)
         main = data['main']
         wind = data['wind']
         sys = data['sys']
@@ -134,6 +134,6 @@ def getWeatherData():
     else:
         print(f"Error: {response.status_code}")
 
-# while True:
-getWeatherData()
-    # time.sleep(5*60) 
+while True:
+    getWeatherData()
+    time.sleep(3600) 

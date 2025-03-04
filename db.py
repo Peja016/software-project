@@ -24,10 +24,10 @@ def dbConnection():
             database=dbName
         )
         if connect.is_connected():
-            print("資料庫連線成功！")
+            print("connected database successfully!")
         return connect
     except mysql.connector.Error as e:
-        print("資料庫連線失敗:", e)
+        print("Failed to connect database QQ", e)
 
 def getEngine(): 
     # engine = create_engine(connection_string, echo = True)  
