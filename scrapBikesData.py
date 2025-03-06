@@ -5,9 +5,9 @@ import pandas as pd
 
 # import response 
 
-from db import getEngine
+from dbConnect import getEngine
 
-from getBikesData import getBikesData
+from bikesData import getBikesData
 
 load_dotenv() # Load environment variables from .env file
 

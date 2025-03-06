@@ -2,7 +2,7 @@ from flask import Flask, render_template, jsonify
 from bs4 import BeautifulSoup
 import os
 from dotenv import load_dotenv
-from getBikesData import getBikesData
+from bikesData import getBikesData
 
 load_dotenv() # Load environment variables from .env file
 
