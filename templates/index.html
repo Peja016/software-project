@@ -5,68 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Group6 Bikes</title>
     <link rel="stylesheet" href="../static/css/home.css">
+    <link rel="stylesheet" href="../static/css/global.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation Bar -->
-    <header>
-        <div class="logo">Dublin <span class="bike-icon">🚲</span> bikes</div>
-        <nav>
-            <ul>
-                <li><a href="#">HOME</a></li>
-                <li><a href="#">Get Started</a></li>
-                <li><a href="#">Pricing</a></li>
-                <li><a href="#">Safety</a></li>
-                <li><a href="#">Report an Issue</a></li>
-                <li><a href="#">News</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-        <div class="auth-buttons">
-            <button class="signup">Signup</button>
-            <button class="signin">Sign In</button>
-            <button class="pass">3-Day Pass</button>
-        </div>
-    </header>
+    <header></header>
+    <script src="{{ url_for('static', filename='js/header.js') }}"></script>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-overlay">
-            <h1>Dubilin Bikes</h1>
-            <p>Your Everyday Companion!</p>
+    <div class="container">
+        <section class="hero">
+            <div class="hero-overlay">
+                <h1>Dubilin Bikes</h1>
+                <p>Your Everyday Companion!</p>
+            </div>
+        </section>
+
+
+        <!-- Map -->
+        <div class="map">
+            <!-- code here -->
         </div>
-    </section>
 
+        <!-- Description -->
+        <section class="description">
+            <p>Dublin Bikes offers a convenient and healthy way to explore the vibrant Dublin city center. 
+                With bike stations located throughout the city, it provides an easy and efficient means of transport. 
+                As Dublin's leading local travel and lifestyle service platform, it leverages digital technology to 
+                enhance accessibility, making everyday mobility more seamless and convenient for all.</p>
+            <div class="bike-image"><img src="athlete.jpg" alt="Our Bikes"></div>
+        </section>
 
-    <!-- Map -->
-    <div class="map">
-        <!-- code here -->
+        <!-- News Section -->
+        <section class="news">
+            <h2>News</h2>
+            <div class="news-item">Service Disruption Notice: Bad Weather Warning - 22 January 2023</div>
+            <div class="news-item">Service Returned: Galway - Brown Station - 18 January 2023</div>
+        </section>
+
+        <!-- Dublin Bikes App -->
+        <section class="app-download">
+            <h2>Dublin Bikes App</h2>
+            <p>Download the Dublin Bikes App for easy access to rental stations.</p>
+            <div class="app-buttons">
+                <img src="google-play.png" alt="Google Play">
+                <img src="app-store.png" alt="App Store">
+            </div>
+        </section>
     </div>
-
-    <!-- Description -->
-    <section class="description">
-        <p>Dublin Bikes offers a convenient and healthy way to explore the vibrant Dublin city center. 
-            With bike stations located throughout the city, it provides an easy and efficient means of transport. 
-            As Dublin's leading local travel and lifestyle service platform, it leverages digital technology to 
-            enhance accessibility, making everyday mobility more seamless and convenient for all.</p>
-        <div class="bike-image"><img src="athlete.jpg" alt="Our Bikes"></div>
-    </section>
-
-    <!-- News Section -->
-    <section class="news">
-        <h2>News</h2>
-        <div class="news-item">Service Disruption Notice: Bad Weather Warning - 22 January 2023</div>
-        <div class="news-item">Service Returned: Galway - Brown Station - 18 January 2023</div>
-    </section>
-
-    <!-- Dublin Bikes App -->
-    <section class="app-download">
-        <h2>Dublin Bikes App</h2>
-        <p>Download the Dublin Bikes App for easy access to rental stations.</p>
-        <div class="app-buttons">
-            <img src="google-play.png" alt="Google Play">
-            <img src="app-store.png" alt="App Store">
-        </div>
-    </section>
 
     <!-- Footer -->
     <footer>
