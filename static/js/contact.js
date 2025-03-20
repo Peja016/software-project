@@ -6,22 +6,29 @@ const errorMessage = document.getElementById('errorMessage')
 const info = {}
 
 const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]/
+const phonePattern = /^(?:\+?\d{1,4})?[ -.]?(?:\(?\d{2,4}\)?)[ -.]?\d{3,4}[ -.]?\d{3,4}$/
+
 
 var isNameEmpty = true
-var isEmailinValid = true
+var isEmailInvalid = true
 var isMessageEmpty = true
+var isPhoneInvalid = false
 
 const validation = (key, value) => {
     if (key == 'name') {
         isNameEmpty = value.trim() === ''
     } else if (key == 'email') {
-        isEmailinValid = !emailPattern.test(value)
+        isEmailInvalid = !emailPattern.test(value)
     } else if (key == 'phone') {
-
+        if (Boolean(value)) {
+            isPhoneInvalid = !phonePattern.test(value)
+        } else {
+            isPhoneInvalid = false
+        }
     } else {
         isMessageEmpty = value.trim() === ''
     }
-    if (isNameEmpty || isEmailinValid || isMessageEmpty) {
+    if (isNameEmpty || isEmailInvalid || isMessageEmpty || isPhoneInvalid) {
         submitBtn.disabled = true;
     } else {
         submitBtn.disabled = false;
@@ -30,9 +37,12 @@ const validation = (key, value) => {
     if (isNameEmpty) {
         errorMessage.style.display = 'block';
         errorMessage.textContent = 'Name is required.';
-    } else if (isEmailinValid) {
+    } else if (isEmailInvalid) {
         errorMessage.style.display = 'block';
-        errorMessage.textContent = 'invalid email or you have not enter an email.';
+        errorMessage.textContent = 'Invalid email or you have not enter an email.';
+    } else if (isPhoneInvalid) {
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = 'Invalid phone number.';
     } else if (isMessageEmpty) {
         errorMessage.style.display = 'block';
         errorMessage.textContent = 'Message is required.';

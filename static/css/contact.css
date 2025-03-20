@@ -9,7 +9,7 @@ input, textarea {
     box-sizing: border-box;
     background-color: transparent;
     color: var(--custom-darkBlue);
-    transition: all 750ms;
+    transition: all 250ms;
 }
 
 textarea:hover, input:hover {
@@ -18,19 +18,31 @@ textarea:hover, input:hover {
 
 input[type="submit"] {
     font-weight: 700;
-    font-size: 1.25em;
+    font-size: 1.5em;
     cursor: pointer;
     line-height: 1;
-    width: 50%;
+    width: auto;
+    border-radius: 1.375rem;
+    padding: 0.5rem 1.75rem;
+    background-color: #D9D9D9;
+    border: none;
 }
 
 input[type="submit"]:hover {
-    color: var(--custom-darkBlue);
+    color: var(--custom-primary);
+    border-color: var(--custom-primary);
+    background-color: var(--custom-background);
 }
 
 input:disabled, textarea:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+input:disabled:hover {
+    background-color: #D9D9D9;
+    border: none;
+    color:  var(--custom-darkBlue);
 }
 
 textarea {
@@ -59,21 +71,19 @@ textarea {
 }
 
 .pop-up {
-    border: 3px solid var(--custom-darkBlue);
+    border: 3px solid var(--custom-primary);
     border-radius: 10px;
     background-color: white;
-    font-size: 0.875em;
+    font-size: 1.5em;
     display: inline-flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     font-weight: 700;
-    padding: 2em;
+    padding: 2rem;
     opacity: 0;
     color: var(--custom-primary);
     pointer-events: none;
-    bottom: 0;
-    top: unset;
 }
 
 @media screen and (max-width: 772px) {
