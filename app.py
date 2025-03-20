@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import os
 from dotenv import load_dotenv
 from bikesData import getBikesData
+from storeInfo import sentData
+import requests
 
 load_dotenv() # Load environment variables from .env file
 
@@ -13,11 +15,17 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/api/bikesInfo', methods=['POST'])
+@app.route("/api/bikesInfo", methods=['POST'])
 def getBikesInfo():
     res = getBikesData()
     if res.status_code == 200:
         return jsonify(res.json())
+    
+@app.route("/api/contact_form", methods=["POST"])
+def sentInfo():
+    res = sentData()
+    if res.status_code == 200:
+        return res
 
 @app.route('/map')
 def map():
@@ -36,6 +44,10 @@ def how():
 @app.route('/use')
 def use():
     return render_template("use.html")
+
+@app.route('/contact')
+def contact():
+    return render_template("contact.html")
 
 if __name__ == "__main__":
     app.config['ENV'] = 'development'

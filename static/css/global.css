@@ -1,3 +1,11 @@
+:root {
+    --custom-red: #e63946;
+    --custom-background: #f1faee;
+    --custom-lightBlue: ##a8dadc;
+    --custom-primary: #457b9d;
+    --custom-darkBlue: #1d3557;
+}
+
 body {
     font-family: "Roboto", Arial, Helvetica, sans-serif;
     position: relative;
@@ -21,12 +29,21 @@ header {
 }
 
 .container {
+    position: relative;
     max-width: 1280px;
     margin: 0 auto;
     padding: 7em 1em;
+    color: var(--custom-darkBlue);
 }
 
 .center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.text-center {
     text-align: center;
 }
 
@@ -43,3 +60,8 @@ header {
 .desktop {
     gap: 1.75em;
 }
+
+h1 {
+    font-size: 2.25em;
+}
+
