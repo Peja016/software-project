@@ -1,27 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/global.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <title>Bike stations Maps</title>
-    <style>
-        #map {
-            height: 75vh;
-            width: 100%;
-            position: relative;
-        }
-    </style>
-</head>
-
-<body>
-    <header></header>
-    <script src="{{ url_for('static', filename='js/header.js') }}"></script>
-    <div class="container">
+{% extends "base.html" %}
+{% block title %}Map - Dublin Bikes{% endblock %}
+{% block content %}
+    <div>
         <h2>Find the location</h2>
         <div id="map">
             <div></div>
@@ -40,9 +20,13 @@
             });
             
             bikeData.forEach(({ position }) => {
-                // console.log(bikeData)
                 const infoWindow = new google.maps.InfoWindow();
                 
+                // google.maps.event.addListener(infoWindow, 'domready', function() {
+                //     setTimeout(() => {
+                //         document.activeElement?.blur(); 
+                //     });
+                // });
                 bikeData.forEach(({
                     position,
                     name,
@@ -59,8 +43,8 @@
                             scaledSize: new google.maps.Size(40, 40)
                         }
                     });
-                    
-                    marker.addListener("click", () => {
+
+                    marker.addListener("mouseover", () => {
                         infoWindow.setContent(`
                             <div>
                                 <b>${name}</b>
@@ -71,6 +55,17 @@
                         `);
                         infoWindow.open(map, marker);
                     });
+
+                    marker.addListener("mouseout", () => {
+                        infoWindow.close();
+                    });
+
+                    marker.addListener("click", (e) => {
+                        const markerPosition = marker.getPosition();
+                        // set the station clicked to be the center of page.
+                        map.panTo(markerPosition);
+
+                    })
                 });
             });
 
@@ -78,6 +73,4 @@
     </script>
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ api }}&callback=initMap&libraries=marker"></script>
-</body>
-
-</html>
+{% endblock %}

@@ -45,6 +45,10 @@ def how():
 def use():
     return render_template("use.html")
 
+@app.route('/price')
+def price():
+    return render_template("price.html")
+
 @app.route('/contact')
 def contact():
     return render_template("contact.html")
