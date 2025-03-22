@@ -23,6 +23,7 @@ header {
     left: 0;
     right: 0;
     height: 5em;
+    z-index: 100;
 }
 
 #map {

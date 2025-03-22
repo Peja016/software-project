@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Map - Dublin Bikes{% endblock %}
 {% block content %}
-    <div>
-        <h2>Find the location</h2>
+    <div style="padding: 6.25em 0;">
         <div id="map">
             <div></div>
         </div>
@@ -21,12 +20,6 @@
             
             bikeData.forEach(({ position }) => {
                 const infoWindow = new google.maps.InfoWindow();
-                
-                // google.maps.event.addListener(infoWindow, 'domready', function() {
-                //     setTimeout(() => {
-                //         document.activeElement?.blur(); 
-                //     });
-                // });
                 bikeData.forEach(({
                     position,
                     name,
