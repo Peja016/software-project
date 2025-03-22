@@ -1,20 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Group6 Bikes</title>
-    <link rel="stylesheet" href="static/css/home.css">
-    <link rel="stylesheet" href="static/css/global.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-</head>
-<body>
-    <!-- Navigation Bar -->
-    <header></header>
-    <script src="{{ url_for('static', filename='js/header.js') }}"></script>
-
+{% extends "base.html" %}
+{% block title %}Map - Dublin Bikes{% endblock %}
+{% block content %}
     <!-- Hero Section -->
     <div class="container">
         <section class="hero">
@@ -56,14 +42,4 @@
             </div>
         </section>
     </div>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <p>Roebuck Hall House1, UCD Belfield campus, Dublin, Ireland</p>
-            <p>Email: XXXXXXX@tfibikes.ie</p>
-            <p><a href="#">Terms & Conditions</a> | <a href="#">Privacy Policy</a></p>
-        </div>
-    </footer>
-</body>
-</html>
+{% endblock %}

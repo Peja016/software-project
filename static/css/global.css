@@ -6,10 +6,18 @@
     --custom-darkBlue: #1d3557;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: "Roboto", Arial, Helvetica, sans-serif;
     position: relative;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
     margin: 0;
+}
+
+main {
+    min-height: calc(100vh - 6.25em);
 }
 
 a {
@@ -22,7 +30,7 @@ header {
     top: 0;
     left: 0;
     right: 0;
-    height: 5em;
+    height: 5rem;
     z-index: 100;
 }
 
@@ -81,6 +89,7 @@ footer {
     justify-content: space-between;
     align-items: center;
     padding: 0.5em 1.5em;
+    height: 6.25rem;
 }
 
 .footer-logo {
