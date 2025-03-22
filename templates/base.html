@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Dublin Bikes - Group 6{% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        {% block style %}
+        {% endblock %}
+    </head>
+    <body>
+        <header></header>
+        <script src="{{ url_for('static', filename='js/header.js') }}"></script>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        <footer>
+            <div class="footer-logo"><img src="static/images/logo.svg" alt="brand-logo" /></div>
+            <div>Copyright © 2025 Group 6</div>
+        </footer>
+    </body>
+</html>

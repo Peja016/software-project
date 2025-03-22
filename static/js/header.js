@@ -1,9 +1,9 @@
 let head = document.querySelector('header')
 
 const navs = [
-    { label: 'Price', href: '/price' },
-    { label: 'Rent & Retrun', href: '/use' },
-    { label: 'Contact us', href: '/contact' },
+    { label: 'Price', href: "{{ url_for('price') }}" },
+    { label: 'Rent & Retrun', href: "{{ url_for('use') }}" },
+    { label: 'Contact us', href: "{{ url_for('contact') }}" },
 ]
 
 head.innerHTML = `
