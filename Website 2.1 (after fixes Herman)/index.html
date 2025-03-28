@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dublin Bike Share - Rent Bicycles in Dublin</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Add testimonial specific stylesheet -->
+    <style>
+        /* Testimonial specific styles */
+        .testimonials {
+            padding: 80px 0;
+            background-color: var(--light);
+        }
+
+        .testimonial-slider {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            min-height: 250px; /* Set a fixed minimum height */
+            padding: 20px 0;
+        }
+
+        .testimonial {
+            width: 100%;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .testimonial .quote {
+            font-style: italic;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--dark-blue);
+        }
+
+        .testimonial .author {
+            font-weight: 600;
+            color: var(--primary);
+            text-align: right;
+        }
+    </style>
+    <!-- Load script with defer attribute -->
+    <script src="scripts.js" defer></script>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Dublin<span>Bike</span></h1>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="how.html">How to Use</a></li>
+                    <li><a href="map.html">Map</a></li>
+                    <li><a href="pay.html">Rent Now</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button id="loginBtn">Log In</button>
+                <button id="registerBtn">Register</button>
+            </div>
+            <button class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p class="form-footer">Don't have an account? <a href="#" id="showRegisterForm">Register here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Register</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email:</label>
+                    <input type="email" id="regEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password:</label>
+                    <input type="password" id="regPassword" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <p class="form-footer">Already have an account? <a href="#" id="showLoginForm">Login here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Explore Dublin on Two Wheels</h2>
+            <p>Convenient, affordable, and eco-friendly bicycle rentals throughout Dublin</p>
+            <div class="cta-buttons">
+                <a href="pay.html" class="btn btn-primary">Rent a Bike</a>
+                <a href="how.html" class="btn btn-secondary">How It Works</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose Dublin Bike Share?</h2>
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <div class="icon">🚲</div>
+                    <h3>Over 1,600 Bikes</h3>
+                    <p>Access to our large fleet of well-maintained bicycles across the city</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📍</div>
+                    <h3>115+ Stations</h3>
+                    <p>Conveniently located stations throughout Dublin's city center and beyond</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">💳</div>
+                    <h3>Flexible Plans</h3>
+                    <p>Choose from annual subscriptions, 3-day passes, or pay-as-you-go options</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Register</h3>
+                    <p>Sign up for an account in just a few minutes</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Find a Bike</h3>
+                    <p>Locate your nearest station on our map</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Unlock & Ride</h3>
+                    <p>Use the app or your card to unlock a bike and enjoy your ride</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Return</h3>
+                    <p>Return the bike to any station when you're done</p>
+                </div>
+            </div>
+            <div class="cta-center">
+                <a href="how.html" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Users Say</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                        <img src="tan.jpeg" alt="Tan" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+                        <div>
+                            <p class="author-name" style="font-weight: bold; margin: 0;">Tan</p>
+                            <p class="author-title" style="margin: 0;">Front End Developer</p>
+                        </div>
+                    </div>
+                    <p class="quote">"With bike I can be on time for my basketball games!"</p>
+                </div>
+                <div class="testimonial">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                        <img src="kexun.jpeg" alt="Kexun" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+                        <div>
+                            <p class="author-name" style="font-weight: bold; margin: 0;">Kexun</p>
+                            <p class="author-title" style="margin: 0;">CEO</p>
+                        </div>
+                    </div>
+                    <p class="quote">"Going to Confucius restaraunt by bike is very convenient"</p>
+                </div>
+                <div class="testimonial">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                        <img src="herman.JPG" alt="Herman" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+                        <div>
+                            <p class="author-name" style="font-weight: bold; margin: 0;">Herman</p>
+                            <p class="author-title" style="margin: 0;">Daily Commuter</p>
+                        </div>
+                    </div>
+                    <p class="quote">"Compared to the Dublin bus, Dublin Bike will never ghost you!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Dublin Bike Share</h3>
+                    <p>University College Dublin, Belfield</p>
+                    <p>Dublin 4, Ireland</p>
+                    <p>Eircode: D04 V1W8</p>
+                    <p><a href="#">Terms & Conditions</a></p>
+                    <p><a href="#">Privacy</a></p>
+                    <p><a href="#">Cookie Notice</a></p>
+                    <p>Providing convenient bicycle rentals throughout Dublin since 2025</p>
+                </div>
+                <div class="footer-email">
+    <h3>Email</h3>
+    <p>Tan: <a href="mailto:hsuan-yu.tan@ucdconnect.ie">hsuan-yu.tan@ucdconnect.ie</a></p>
+    <p>Kexun: <a href="mailto:kexun.liu@ucdconnect.ie">kexun.liu@ucdconnect.ie</a></p>
+    <p>Herman: <a href="mailto:herman.dolhyi@ucdconnect.ie">herman.dolhyi@ucdconnect.ie</a></p>
+</div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <p><a href="register.html">Register</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                    <p><a href="faq.html">FAQ</a></p>
+                </div>
+            </div>
+            <div class="footer-credits">
+                <p>© 2025 Dublin Bike Share. Developed by UCD students: Tan, Kexun and Herman</p>
+                <p style="font-size: 12px; margin-top: 5px;">Content adapted from <a href="https://www.bikeshare.ie" target="_blank">bikeshare.ie</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cookie consent button -->
+    <div id="cookieButton" style="position: fixed; bottom: 20px; left: 20px; background-color: var(--dark-blue); color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; z-index: 999; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+        COOKIE SETTINGS
+    </div>
+    
+    <!-- Cookie consent modal -->
+    <div id="cookieModal" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background-color: var(--dark-blue); color: white; padding: 20px; z-index: 1000; box-shadow: 0 -2px 10px rgba(0,0,0,0.2);">
+        <div class="container">
+            <h3 style="margin-top: 0;">Cookie Settings</h3>
+            <p>We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.</p>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button id="acceptCookies" class="btn btn-primary">ACCEPT ALL</button>
+                <button id="declineCookies" class="btn btn-secondary" style="background-color: #6c757d;">DECLINE ALL</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

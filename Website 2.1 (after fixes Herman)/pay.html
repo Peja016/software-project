@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent a Bike - Dublin Bike Share</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+    <style>
+        /* Additional styles for the pay/rent page */
+        .subscription-section {
+            padding: 40px 0;
+            background-color: var(--light);
+        }
+        
+        .subscription-options {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .subscription-card {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            transition: transform var(--transition-speed);
+        }
+        
+        .subscription-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .subscription-card h3 {
+            color: var(--dark-blue);
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        .subscription-price {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+        
+        .subscription-price span {
+            font-size: 16px;
+            font-weight: normal;
+            color: var(--gray);
+        }
+        
+        .feature-list {
+            margin: 20px 0;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            color: var(--secondary);
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .payment-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .payment-modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .payment-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            color: var(--gray);
+            cursor: pointer;
+        }
+        
+        .payment-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .payment-header h2 {
+            color: var(--dark-blue);
+            margin-bottom: 10px;
+        }
+        
+        .payment-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--light-gray);
+            margin-bottom: 20px;
+        }
+        
+        .payment-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+        }
+        
+        .payment-tab.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .payment-methods {
+            margin-bottom: 30px;
+        }
+        
+        .payment-methods label {
+            display: block;
+            padding: 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .payment-methods label:hover {
+            background-color: var(--light);
+        }
+        
+        .payment-methods input[type="radio"] {
+            margin-right: 15px;
+        }
+        
+        .card-details {
+            margin-top: 20px;
+        }
+        
+        .bike-specs-details {
+            margin: 20px 0;
+        }
+        
+        .bike-specs-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .bike-specs-details table tr {
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .bike-specs-details table td {
+            padding: 10px 0;
+        }
+        
+        .bike-specs-details table td:first-child {
+            font-weight: 600;
+            color: var(--dark-blue);
+            width: 40%;
+        }
+        
+        .selected-bike {
+            background-color: var(--light);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+     <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Dublin<span>Bike</span></h1>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="how.html">How to Use</a></li>
+                    <li><a href="map.html">Map</a></li>
+                    <li><a href="pay.html">Rent Now</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button id="loginBtn">Log In</button>
+                <button id="registerBtn">Register</button>
+            </div>
+            <button class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p class="form-footer">Don't have an account? <a href="#" id="showRegisterForm">Register here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Register</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email:</label>
+                    <input type="email" id="regEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password:</label>
+                    <input type="password" id="regPassword" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <p class="form-footer">Already have an account? <a href="#" id="showLoginForm">Login here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="payment-modal">
+        <div class="payment-modal-content">
+            <span class="payment-close">&times;</span>
+            
+            <div class="payment-header">
+                <h2>Complete Your Booking</h2>
+                <p>Enter your payment details to confirm your rental</p>
+            </div>
+            
+            <div class="selected-bike">
+                <h3 id="selectedBikeName">Standard City Bike</h3>
+                <p id="selectedBikePrice">€5.00 for 3-hour rental</p>
+            </div>
+            
+            <div class="payment-tabs">
+                <div class="payment-tab active" data-tab="card">Credit/Debit Card</div>
+                <div class="payment-tab" data-tab="paypal">PayPal</div>
+            </div>
+            
+            <div class="payment-methods">
+                <label>
+                    <input type="radio" name="paymentMethod" value="visa" checked>
+                    Visa/Mastercard
+                </label>
+                <label>
+                    <input type="radio" name="paymentMethod" value="amex">
+                    American Express
+                </label>
+            </div>
+            
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label for="cardName">Name on Card:</label>
+                    <input type="text" id="cardName" name="cardName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cardNumber">Card Number:</label>
+                    <input type="text" id="cardNumber" name="cardNumber" placeholder="XXXX XXXX XXXX XXXX" required>
+                </div>
+                
+                <div style="display: flex; gap: 20px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="expiryDate">Expiry Date:</label>
+                        <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" required>
+                    </div>
+                    
+                    <div class="form-group" style="flex: 1;">
+                        <label for="cvv">CVV:</label>
+                        <input type="text" id="cvv" name="cvv" placeholder="XXX" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Pay Now</button>
+            </form>
+        </div>
+    </div>
+
+    <section class="rentals-section">
+        <div class="container">
+            <h1 class="section-title">Rent a Bike</h1>
+            
+            <div class="subscription-section">
+                <h2 style="color: var(--dark-blue); margin-bottom: 20px;">Choose Your Plan</h2>
+                
+                <div class="subscription-options">
+                    <div class="subscription-card">
+                        <h3>Annual Membership</h3>
+                        <div class="subscription-price">€35 <span>/ year</span></div>
+                        <p>Perfect for daily commuters and regular users</p>
+                        <ul class="feature-list">
+                            <li>Unlimited 30-minute journeys</li>
+                            <li>Quick and easy bike access</li>
+                            <li>Mobile app features</li>
+                            <li>Significant cost savings</li>
+                            <li>Standard city bike</li>
+                        </ul>
+                        <button class="btn btn-primary subscription-btn" data-plan="annual" data-price="35.00">Subscribe Now</button>
+                    </div>
+                    
+                    <div class="subscription-card">
+                        <h3>3-Day Pass</h3>
+                        <div class="subscription-price">€5 <span>/ 3 days</span></div>
+                        <p>Ideal for visitors and short trips around Dublin</p>
+                        <ul class="feature-list">
+                            <li>Unlimited 30-minute journeys for 3 days</li>
+                            <li>Perfect for sightseeing</li>
+                            <li>No need to worry about bike storage</li>
+                            <li>Standard city bike</li>
+                        </ul>
+                        <button class="btn btn-primary subscription-btn" data-plan="3day" data-price="5.00">Get Pass</button>
+                    </div>
+                    
+                    <div class="subscription-card">
+                        <h3>Pay As You Go</h3>
+                        <div class="subscription-price">€2 <span>+ €0.50 per 30 min</span></div>
+                        <p>For occasional rides with no commitment</p>
+                        <ul class="feature-list">
+                            <li>€2 bike unlocking fee</li>
+                            <li>€0.50 for each 30 minutes of use</li>
+                            <li>No subscription required</li>
+                            <li>Perfect for spontaneous journeys</li>
+                            <li>Standard city bike</li>
+                        </ul>
+                        <button class="btn btn-primary subscription-btn" data-plan="payg" data-price="2.00">Start Riding</button>
+                    </div>
+                </div>
+            </div>
+            
+            <h2 style="color: var(--dark-blue); margin: 60px 0 30px;">Rent for 1 hour</h2>
+            
+            <div class="bikes-container">
+                <div class="bike-card">
+                    <div class="bike-image">
+                        <img src="bike.jpeg" alt="Standard City Bike">
+                    </div>
+                    <div class="bike-details">
+                        <h3>Standard City Bike</h3>
+                        <p>Comfortable and reliable for city commuting</p>
+                        
+                        <div class="bike-specs">
+                            <div class="spec-item">
+                                <span>Weight</span>
+                                <span>18 kg</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Gears</span>
+                                <span>3-speed</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Frame</span>
+                                <span>Aluminum</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Brakes</span>
+                                <span>Drum brakes</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bike-price">€2.00 / hour</div>
+                        
+                        <div class="bike-actions">
+                            <button class="btn btn-primary book-btn" data-bike-id="city1" data-bike-name="Standard City Bike" data-bike-price="2.00">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bike-card">
+                    <div class="bike-image">
+                        <img src="electric.jpeg" alt="Electric Bike">
+                    </div>
+                    <div class="bike-details">
+                        <h3>Electric Bike</h3>
+                        <p>Perfect for longer journeys with pedal assistance</p>
+                        
+                        <div class="bike-specs">
+                            <div class="spec-item">
+                                <span>Weight</span>
+                                <span>22 kg</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Motor</span>
+                                <span>250W Mid-drive</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Battery</span>
+                                <span>36V, 10Ah</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Range</span>
+                                <span>Up to 60 km</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bike-price">€5.00 / hour</div>
+                        
+                        <div class="bike-actions">
+                            <button class="btn btn-primary book-btn" data-bike-id="elec1" data-bike-name="Electric Bike" data-bike-price="5.00">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bike-card">
+                    <div class="bike-image">
+                        <img src="hybrid.jpeg" alt="Hybrid Bike">
+                    </div>
+                    <div class="bike-details">
+                        <h3>Hybrid Bike</h3>
+                        <p>Versatile bike suitable for city and light trails</p>
+                        
+                        <div class="bike-specs">
+                            <div class="spec-item">
+                                <span>Weight</span>
+                                <span>14 kg</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Gears</span>
+                                <span>7-speed</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Frame</span>
+                                <span>Lightweight alloy</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Tires</span>
+                                <span>Semi-slick 700c</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bike-price">€3.50 / hour</div>
+                        
+                        <div class="bike-actions">
+                            <button class="btn btn-primary book-btn" data-bike-id="hybrid1" data-bike-name="Hybrid Bike" data-bike-price="3.50">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Dublin Bike Share</h3>
+                    <p>University College Dublin, Belfield</p>
+                    <p>Dublin 4, Ireland</p>
+                    <p>Eircode: D04 V1W8</p>
+                    <p><a href="#">Terms & Conditions</a></p>
+                    <p><a href="#">Privacy</a></p>
+                    <p><a href="#">Cookie Notice</a></p>
+                    <p>Providing convenient bicycle rentals throughout Dublin since 2025</p>
+                </div>
+                <div class="footer-email">
+    <h3>Email</h3>
+    <p>Tan: <a href="mailto:hsuan-yu.tan@ucdconnect.ie">hsuan-yu.tan@ucdconnect.ie</a></p>
+    <p>Kexun: <a href="mailto:kexun.liu@ucdconnect.ie">kexun.liu@ucdconnect.ie</a></p>
+    <p>Herman: <a href="mailto:herman.dolhyi@ucdconnect.ie">herman.dolhyi@ucdconnect.ie</a></p>
+</div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <p><a href="register.html">Register</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                    <p><a href="faq.html">FAQ</a></p>
+                </div>
+            </div>
+            <div class="footer-credits">
+                <p>© 2025 Dublin Bike Share. Developed by UCD students: Tan, Kexun and Herman</p>
+                <p style="font-size: 12px; margin-top: 5px;">Content adapted from <a href="https://www.bikeshare.ie" target="_blank">bikeshare.ie</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Payment modal functionality
+        const bookButtons = document.querySelectorAll('.book-btn');
+        const subscriptionButtons = document.querySelectorAll('.subscription-btn');
+        const paymentModal = document.getElementById('paymentModal');
+        const paymentClose = document.querySelector('.payment-close');
+        const selectedBikeName = document.getElementById('selectedBikeName');
+        const selectedBikePrice = document.getElementById('selectedBikePrice');
+        
+        // Open payment modal from book buttons
+        if (bookButtons) {
+            bookButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const bikeName = this.getAttribute('data-bike-name');
+                    const bikePrice = this.getAttribute('data-bike-price');
+                    
+                    selectedBikeName.textContent = bikeName;
+                    selectedBikePrice.textContent = `€${bikePrice} per hour`;
+                    
+                    paymentModal.style.display = 'block';
+                });
+            });
+        }
+        
+        // Open payment modal from subscription buttons
+        if (subscriptionButtons) {
+            subscriptionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const plan = this.getAttribute('data-plan');
+                    const price = this.getAttribute('data-price');
+                    let planName;
+                    
+                    switch(plan) {
+                        case 'annual':
+                            planName = 'Annual Membership';
+                            break;
+                        case '3day':
+                            planName = '3-Day Pass';
+                            break;
+                        case 'payg':
+                            planName = 'Pay As You Go';
+                            break;
+                        default:
+                            planName = 'Subscription';
+                    }
+                    
+                    selectedBikeName.textContent = planName;
+                    
+                    if (plan === 'annual') {
+                        selectedBikePrice.textContent = `€${price} per year`;
+                    } else if (plan === '3day') {
+                        selectedBikePrice.textContent = `€${price} for 3 days`;
+                    } else {
+                        selectedBikePrice.textContent = `€${price} + €0.50 per 30 min`;
+                    }
+                    
+                    paymentModal.style.display = 'block';
+                });
+            });
+        }
+        
+        // Close payment modal
+        if (paymentClose) {
+            paymentClose.addEventListener('click', function() {
+                paymentModal.style.display = 'none';
+            });
+        }
+        
+        // Close payment modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === paymentModal) {
+                paymentModal.style.display = 'none';
+            }
+        });
+        
+        // Payment tabs
+        const paymentTabs = document.querySelectorAll('.payment-tab');
+        
+        if (paymentTabs) {
+            paymentTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    paymentTabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Here you would show/hide content based on tab
+                    // For demo purposes, we're not implementing this fully
+                });
+            });
+        }
+        
+        // Payment form submission
+        const paymentForm = document.getElementById('paymentForm');
+        
+        if (paymentForm) {
+            paymentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Basic validation for card number
+                const cardNumber = document.getElementById('cardNumber').value;
+                if (cardNumber.replace(/\s/g, '').length < 16) {
+                    alert('Please enter a valid card number');
+                    return;
+                }
+                
+                // Here you would process payment through a payment gateway
+                
+                // For demo purposes
+                alert('Payment successful! Your bike is ready for pickup. (Demo only)');
+                paymentModal.style.display = 'none';
+                paymentForm.reset();
+            });
+        }
+    </script>
+</body>
+</html>

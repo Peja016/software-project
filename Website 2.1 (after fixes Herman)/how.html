@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use - Dublin Bike Share</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+</head>
+<body>
+     <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Dublin<span>Bike</span></h1>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="how.html">How to Use</a></li>
+                    <li><a href="map.html">Map</a></li>
+                    <li><a href="pay.html">Rent Now</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button id="loginBtn">Log In</button>
+                <button id="registerBtn">Register</button>
+            </div>
+            <button class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+    
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p class="form-footer">Don't have an account? <a href="#" id="showRegisterForm">Register here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Register</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email:</label>
+                    <input type="email" id="regEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password:</label>
+                    <input type="password" id="regPassword" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <p class="form-footer">Already have an account? <a href="#" id="showLoginForm">Login here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <section class="how-to-section">
+        <div class="container">
+            <h1 class="section-title">How to Use Dublin Bike Share</h1>
+            
+            <div class="how-to-content">
+                <div class="how-to-text">
+                    <p>Using Dublin Bike Share is quick and easy. Our bike-sharing service provides a convenient and eco-friendly way to navigate Dublin's streets. Follow the simple steps below to start your journey.</p>
+                    
+                    <div class="how-to-steps">
+                        <div class="how-to-step">
+                            <div class="how-to-step-number">1</div>
+                            <h3>Register for an Account</h3>
+                            <p>Sign up through our website or mobile app. You'll need to provide some basic information and payment details. We offer various subscription options including annual memberships, 3-day passes, and pay-as-you-go plans.</p>
+                        </div>
+                        
+                        <div class="how-to-step">
+                            <div class="how-to-step-number">2</div>
+                            <h3>Find a Bike Station</h3>
+                            <p>Use our map to locate the nearest bike station. Dublin Bike Share has over 115 stations strategically placed throughout the city center and surrounding areas. Each station is equipped with multiple bikes ready for use.</p>
+                        </div>
+                        
+                        <div class="how-to-step">
+                            <div class="how-to-step-number">3</div>
+                            <h3>Unlock a Bike</h3>
+                            <p>At the station, you can unlock a bike using our mobile app or by inserting your card into the station terminal. Follow the on-screen instructions, and the system will release a bike for you. Check that the bike is in good condition before riding.</p>
+                        </div>
+                        
+                        <div class="how-to-step">
+                            <div class="how-to-step-number">4</div>
+                            <h3>Enjoy Your Ride</h3>
+                            <p>Cycle safely and follow all traffic rules. Dublin Bike Share bikes are designed for urban riding with adjustable seats and easy handling. The first 30 minutes of each journey are typically free for subscribers (depending on your plan).</p>
+                        </div>
+                        
+                        <div class="how-to-step">
+                            <div class="how-to-step-number">5</div>
+                            <h3>Return the Bike</h3>
+                            <p>When you've reached your destination, return the bike to any Dublin Bike Share station. Simply push the bike firmly into an available dock until you hear a beep and see the green light, indicating a secure lock. Make sure to check that the bike is properly docked to avoid any extra charges.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="how-to-image">
+                    <img src="https://via.placeholder.com/400x600" alt="Illustration of bike rental process">
+                </div>
+            </div>
+            
+            <div class="cta-center" style="margin-top: 60px;">
+                <a href="pay.html" class="btn btn-primary">Rent a Bike Now</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Dublin Bike Share</h3>
+                    <p>University College Dublin, Belfield</p>
+                    <p>Dublin 4, Ireland</p>
+                    <p>Eircode: D04 V1W8</p>
+                    <p><a href="#">Terms & Conditions</a></p>
+                    <p><a href="#">Privacy</a></p>
+                    <p><a href="#">Cookie Notice</a></p>
+                    <p>Providing convenient bicycle rentals throughout Dublin since 2025</p>
+                </div>
+                <div class="footer-email">
+    <h3>Email</h3>
+    <p>Tan: <a href="mailto:hsuan-yu.tan@ucdconnect.ie">hsuan-yu.tan@ucdconnect.ie</a></p>
+    <p>Kexun: <a href="mailto:kexun.liu@ucdconnect.ie">kexun.liu@ucdconnect.ie</a></p>
+    <p>Herman: <a href="mailto:herman.dolhyi@ucdconnect.ie">herman.dolhyi@ucdconnect.ie</a></p>
+</div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <p><a href="register.html">Register</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                    <p><a href="faq.html">FAQ</a></p>
+                </div>
+            </div>
+            <div class="footer-credits">
+                <p>© 2025 Dublin Bike Share. Developed by UCD students: Tan, Kexun and Herman</p>
+                <p style="font-size: 12px; margin-top: 5px;">Content adapted from <a href="https://www.bikeshare.ie" target="_blank">bikeshare.ie</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cookie consent button -->
+    <div id="cookieButton" style="position: fixed; bottom: 20px; left: 20px; background-color: var(--dark-blue); color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; z-index: 999; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+        COOKIE SETTINGS
+    </div>
+    
+    <!-- Cookie consent modal -->
+    <div id="cookieModal" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background-color: var(--dark-blue); color: white; padding: 20px; z-index: 1000; box-shadow: 0 -2px 10px rgba(0,0,0,0.2);">
+        <div class="container">
+            <h3 style="margin-top: 0;">Cookie Settings</h3>
+            <p>We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.</p>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button id="acceptCookies" class="btn btn-primary">ACCEPT ALL</button>
+                <button id="declineCookies" class="btn btn-secondary" style="background-color: #6c757d;">DECLINE ALL</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Cookie consent functionality
+        const cookieButton = document.getElementById('cookieButton');
+        const cookieModal = document.getElementById('cookieModal');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        cookieButton.addEventListener('click', function() {
+            cookieModal.style.display = 'block';
+            cookieButton.style.display = 'none';
+        });
+        
+        acceptCookies.addEventListener('click', function() {
+            // Set cookie acceptance without alert
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieModal.style.display = 'none';
+        });
+        
+        declineCookies.addEventListener('click', function() {
+            // Set cookie rejection without alert
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookieModal.style.display = 'none';
+        });
+        
+        // Check if cookie preference is already set
+        if (localStorage.getItem('cookiesAccepted')) {
+            cookieButton.style.display = 'block';
+            cookieModal.style.display = 'none';
+        } else {
+            // Show cookie modal on first visit
+            setTimeout(function() {
+                cookieModal.style.display = 'block';
+                cookieButton.style.display = 'none';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

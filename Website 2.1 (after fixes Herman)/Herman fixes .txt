@@ -1,0 +1,92 @@
+Applied the fixes for the following pages of the website:
+
+1) Rent Now page 
+
+-add missing pictures for bikes
+1. Standard City Bike - bike.jpeg
+2. Electric Bike - electric.jpeg
+3. Hybrid Bike - hybrid.jpeg
+
+-remove button "View Details"
+-delete "Cargo Bike" section
+- Change "Our Bikes" section name to "Rent for 1 hour"
+- add clarification to each plan (subscription) - "standard city bike" alongside other parameters of each plan
+
+2) About page 
+- remove responsiveness from these elements (when put cursor on them they shouldn't move like now): Environmental Sustainability
+Accessible Mobility
+Urban Development
+Public Health
+
+- add missing images
+Dublin City Council - dcc.png
+National Transport Authority - nta.png
+JCDecaux  - jdc.png
+SEAI - seai.png
+
+add this alongside them: 
+Transport for Ireland - tfi.png
+TFI bikes - tfibikes.png
+
+- check content for mistakes
+
+3) FAQ page
+- check content for mistakes
+
+4) Contact page -
+- change pictures for :
+Kexun  - kexun.jpeg
+Tan - tan.jpeg
+Herman - herman.JPG
+
+- add student numbers
+Tan - 24211515
+Kexun - 24204204
+
+- removed captcha function completely
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Other:
+
+******
+Our Partners: - should be above the rotating stripe
+
+
+and removed all this content:
+Partners and Sponsors
+
+Dublin Bike Share is made possible through our partnerships with:
+Dublin City Council
+DCC
+National Transport Authority
+NTA
+JCDecaux
+JCDecaux
+Sustainable Energy Authority
+SEAI
+Transport for Ireland
+TFI
+TFI Bikes
+TFI Bikes
+Join Us in Transforming Dublin's Transportation
+
+Experience the convenience, health benefits, and environmental advantages of Dublin Bike Share. Together, we're building a more sustainable, connected, and vibrant city.
+Become a Member Contact Us
+
+made Rotating stripe with sponsors
+made sure it is never be empty , it will just repeat the one disappearing on the left. or increase the size of icons and add titles (name of each sponsor below icon)

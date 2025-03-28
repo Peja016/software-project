@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Dublin Bike Share</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+    <style>
+        .about-section {
+            padding: 100px 0 80px;
+        }
+        
+        .about-section h1 {
+            margin-bottom: 40px;
+        }
+        
+        .about-intro {
+            margin-bottom: 50px;
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .about-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            /* Removed transition property to disable hover animation */
+        }
+        
+        /* Removed hover transform effect */
+        
+        .about-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .about-card .icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .stats-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 50px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: var(--dark-blue);
+            font-size: 18px;
+        }
+        
+        .history-timeline {
+            margin: 60px 0;
+            position: relative;
+        }
+        
+        .history-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background-color: var(--light-gray);
+        }
+        
+        .timeline-item {
+            margin-bottom: 50px;
+            position: relative;
+            display: flex;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            justify-content: flex-start;
+            padding-right: 50%;
+        }
+        
+        .timeline-item:nth-child(even) {
+            justify-content: flex-end;
+            padding-left: 50%;
+        }
+        
+        .timeline-content {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            position: relative;
+            width: 80%;
+        }
+        
+        .timeline-date {
+            position: absolute;
+            top: 0;
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-date {
+            right: -20px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-date {
+            left: -20px;
+        }
+        
+        .timeline-content h3 {
+            color: var(--dark-blue);
+            margin: 20px 0 15px;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .team-member {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+        
+        .team-photo {
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .team-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .team-info {
+            padding: 20px;
+        }
+        
+        .team-info h3 {
+            color: var(--dark-blue);
+            margin-bottom: 5px;
+        }
+        
+        .team-position {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        /* Sponsors Stripe Styling */
+        .sponsors-section {
+            margin: 60px 0 0;
+            text-align: center;
+        }
+        
+        .sponsors-section h2 {
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+        }
+        
+        .sponsors-stripe {
+          background-color: var(--light);
+          border-top: 1px solid #e5e5e5;
+          border-bottom: 1px solid #e5e5e5;
+          padding: 15px 0;
+          overflow: hidden;
+          position: relative;
+        }
+
+        .sponsors-slider {
+          width: 100%;
+          overflow: hidden;
+        }
+
+        .sponsors-track {
+          display: flex;
+          animation: scroll 30s linear infinite;
+        }
+
+        .sponsor-slide {
+          flex: 0 0 auto;
+          padding: 0 25px;
+        }
+
+        .sponsor-slide img {
+          height: 40px;
+          width: auto;
+          object-fit: contain;
+          filter: grayscale(100%);
+          opacity: 0.7;
+          transition: all 0.3s ease;
+        }
+
+        .sponsor-slide img:hover {
+          filter: grayscale(0%);
+          opacity: 1;
+        }
+
+        @keyframes scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(calc(-50% - 25px)); /* Move to show the duplicated set */
+          }
+        }
+
+        /* Pause animation on hover */
+        .sponsors-slider:hover .sponsors-track {
+          animation-play-state: paused;
+        }
+        
+        @media (max-width: 768px) {
+            .history-timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                padding-right: 0 !important;
+                padding-left: 60px !important;
+                justify-content: flex-start !important;
+            }
+            
+            .timeline-content {
+                width: 100%;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-date,
+            .timeline-item:nth-child(even) .timeline-date {
+                left: -20px;
+                right: auto;
+            }
+            
+            .sponsor-slide {
+                padding: 0 15px;
+            }
+            
+            .sponsor-slide img {
+                height: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+     <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Dublin<span>Bike</span></h1>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="how.html">How to Use</a></li>
+                    <li><a href="map.html">Map</a></li>
+                    <li><a href="pay.html">Rent Now</a></li>
+                    <li><a href="about.html" class="active">About</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button id="loginBtn">Log In</button>
+                <button id="registerBtn">Register</button>
+            </div>
+            <button class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p class="form-footer">Don't have an account? <a href="#" id="showRegisterForm">Register here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Register</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email:</label>
+                    <input type="email" id="regEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password:</label>
+                    <input type="password" id="regPassword" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <p class="form-footer">Already have an account? <a href="#" id="showLoginForm">Login here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <section class="about-section">
+        <div class="container">
+            <h1 class="section-title">About Dublin Bike Share</h1>
+            
+            <div class="about-intro">
+                <p>Dublin Bike Share is the capital's premier bicycle sharing system, designed to provide an affordable, eco-friendly, and convenient transportation alternative for residents and visitors alike. Since our launch, we've transformed how people move around Dublin, reducing traffic congestion and carbon emissions while promoting healthier lifestyles.</p>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number">1,600+</div>
+                    <div class="stat-label">Bikes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">115</div>
+                    <div class="stat-label">Stations</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10M+</div>
+                    <div class="stat-label">Journeys</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">60K+</div>
+                    <div class="stat-label">Subscribers</div>
+                </div>
+            </div>
+            
+            <!-- Replace the existing mission section with this -->
+            <h2 style="color: var(--dark-blue); margin: 40px 0 20px;">Our Mission</h2>
+            <p>Dublin Bike Share is committed to providing sustainable, accessible transportation options that enhance urban mobility while reducing environmental impact. We aim to:</p>
+            
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="icon">🌱</div>
+                    <h3>Environmental Sustainability</h3>
+                    <p>Reduce carbon emissions and promote eco-friendly transportation alternatives to combat climate change and improve Dublin's air quality.</p>
+                </div>
+                
+                <div class="about-card">
+                    <div class="icon">🚲</div>
+                    <h3>Accessible Mobility</h3>
+                    <p>Make cycling accessible to everyone by providing affordable, convenient transportation options throughout the city.</p>
+                </div>
+                
+                <div class="about-card">
+                    <div class="icon">🏙️</div>
+                    <h3>Urban Development</h3>
+                    <p>Support Dublin's growth as a smart, sustainable city by integrating cycling infrastructure with other public transportation systems.</p>
+                </div>
+                
+            </div>
+            
+            <h2 style="color: var(--dark-blue); margin: 60px 0 20px;">Our History</h2>
+            
+            <div class="history-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2008</div>
+                        <h3>Planning Phase</h3>
+                        <p>Dublin City Council initiated plans for a bike-sharing program after analyzing successful models in other European cities. Partnerships were formed with key stakeholders to develop the infrastructure and operational framework.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2009</div>
+                        <h3>Official Launch</h3>
+                        <p>Dublin Bike Share was officially launched with 450 bicycles and 40 stations strategically placed throughout the city center. The program received overwhelming public support, with over 1,000 subscriptions on the first day.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2013</div>
+                        <h3>Expansion Phase 1</h3>
+                        <p>Following tremendous success, the service expanded to include 950 bicycles and 65 stations, covering a wider area of Dublin and serving more communities.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2018</div>
+                        <h3>Expansion Phase 2</h3>
+                        <p>The network grew to include over 1,600 bicycles and 115 stations, along with the introduction of a modernized mobile app for improved user experience.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2023</div>
+                        <h3>Technological Upgrades</h3>
+                        <p>Introduction of smart bikes with GPS tracking, improved station accessibility, and enhanced digital interfaces for better user experience.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2025</div>
+                        <h3>Looking Forward</h3>
+                        <p>Dublin Bike Share continues to evolve with plans for further expansion, integration with other transport systems, and adoption of the latest sustainable technologies.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sponsors Section with Title above -->
+    <div class="sponsors-section">
+        <h2>Our Partners:</h2>
+        <div class="sponsors-stripe">
+          <div class="sponsors-slider">
+            <div class="sponsors-track">
+              <!-- First set with titles -->
+              <div class="sponsor-slide">
+                <img src="dcc.png" alt="Dublin City Council">
+                <p class="sponsor-name">Dublin City Council</p>
+              </div>
+              <div class="sponsor-slide">
+                <img src="nta.png" alt="National Transport Authority">
+                <p class="sponsor-name">NTA</p>
+              </div>
+              <div class="sponsor-slide">
+                <img src="jdc.png" alt="JCDecaux">
+                <p class="sponsor-name">JCDecaux</p>
+              </div>
+              <div class="sponsor-slide">
+                <img src="seai.png" alt="SEAI">
+                <p class="sponsor-name">SEAI</p>
+              </div>
+              <div class="sponsor-slide">
+                <img src="tfi.png" alt="Transport for Ireland">
+                <p class="sponsor-name">TFI</p>
+              </div>
+              <div class="sponsor-slide">
+                <img src="tfibikes.png" alt="TFI Bikes">
+                <p class="sponsor-name">TFI Bikes</p>
+              </div>
+              
+              <!-- Duplicate set -->
+              <div class="sponsor-slide">
+                <img src="dcc.png" alt="Dublin City Council">
+                <p class="sponsor-name">Dublin City Council</p>
+              </div>
+              <div class="sponsor-slide">
+                <img src="nta.png" alt="National Transport Authority">
+                <p class="sponsor-name">NTA</p>
+              </div>
+              <div class="sponsor-slide">
+                <img src="jdc.png" alt="JCDecaux">
+                <p class="sponsor-name">JCDecaux</p>
+              </div>
+              <div class="sponsor-slide">
+                <img src="seai.png" alt="SEAI">
+                <p class="sponsor-name">SEAI</p>
+              </div>
+              <div class="sponsor-slide">
+                <img src="tfi.png" alt="Transport for Ireland">
+                <p class="sponsor-name">TFI</p>
+              </div>
+              <div class="sponsor-slide">
+                <img src="tfibikes.png" alt="TFI Bikes">
+                <p class="sponsor-name">TFI Bikes</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Dublin Bike Share</h3>
+                    <p>University College Dublin, Belfield</p>
+                    <p>Dublin 4, Ireland</p>
+                    <p>Eircode: D04 V1W8</p>
+                    <p><a href="#">Terms & Conditions</a></p>
+                    <p><a href="#">Privacy</a></p>
+                    <p><a href="#">Cookie Notice</a></p>
+                    <p>Providing convenient bicycle rentals throughout Dublin since 2025</p>
+                </div>
+                <div class="footer-email">
+                    <h3>Email</h3>
+                    <p>Tan: <a href="mailto:hsuan-yu.tan@ucdconnect.ie">hsuan-yu.tan@ucdconnect.ie</a></p>
+                    <p>Kexun: <a href="mailto:kexun.liu@ucdconnect.ie">kexun.liu@ucdconnect.ie</a></p>
+                    <p>Herman: <a href="mailto:herman.dolhyi@ucdconnect.ie">herman.dolhyi@ucdconnect.ie</a></p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <p><a href="register.html">Register</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                    <p><a href="faq.html">FAQ</a></p>
+                </div>
+            </div>
+            <div class="footer-credits">
+                <p>© 2025 Dublin Bike Share. Developed by UCD students: Tan, Kexun and Herman</p>
+                <p style="font-size: 12px; margin-top: 5px;">Content adapted from <a href="https://www.bikeshare.ie" target="_blank">bikeshare.ie</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cookie consent button -->
+    <div id="cookieButton" style="position: fixed; bottom: 20px; left: 20px; background-color: var(--dark-blue); color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; z-index: 999; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+        COOKIE SETTINGS
+    </div>
+    
+    <!-- Cookie consent modal -->
+    <div id="cookieModal" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background-color: var(--dark-blue); color: white; padding: 20px; z-index: 1000; box-shadow: 0 -2px 10px rgba(0,0,0,0.2);">
+        <div class="container">
+            <h3 style="margin-top: 0;">Cookie Settings</h3>
+            <p>We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.</p>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button id="acceptCookies" class="btn btn-primary">ACCEPT ALL</button>
+                <button id="declineCookies" class="btn btn-secondary" style="background-color: #6c757d;">DECLINE ALL</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Cookie consent functionality
+        const cookieButton = document.getElementById('cookieButton');
+        const cookieModal = document.getElementById('cookieModal');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        cookieButton.addEventListener('click', function() {
+            cookieModal.style.display = 'block';
+            cookieButton.style.display = 'none';
+        });
+        
+        acceptCookies.addEventListener('click', function() {
+            // Set cookie acceptance
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieModal.style.display = 'none';
+            alert('Cookies accepted!');
+        });
+        
+        declineCookies.addEventListener('click', function() {
+            // Set cookie rejection
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookieModal.style.display = 'none';
+            alert('Cookies declined!');
+        });
+        
+        // Check if cookie preference is already set
+        if (localStorage.getItem('cookiesAccepted')) {
+            cookieButton.style.display = 'block';
+            cookieModal.style.display = 'none';
+        } else {
+            // Show cookie modal on first visit
+            setTimeout(function() {
+                cookieModal.style.display = 'block';
+                cookieButton.style.display = 'none';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

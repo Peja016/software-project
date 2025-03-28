@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Station Map - Dublin Bike Share</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+    <style>
+        /* Additional styles for the map page */
+        .map-container {
+            height: 600px;
+            margin-top: 40px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .station-list {
+            margin-top: 40px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .station-list h2 {
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+        }
+        
+        .station-list-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .station-item {
+            padding: 15px;
+            border-bottom: 1px solid var(--light-gray);
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .station-item:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .station-item h3 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .station-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .bikes-available, .docks-available {
+            display: flex;
+            align-items: center;
+        }
+        
+        .bikes-available:before {
+            content: "🚲";
+            margin-right: 5px;
+        }
+        
+        .docks-available:before {
+            content: "🔒";
+            margin-right: 5px;
+        }
+        
+        .map-search {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .map-search input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+     <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Dublin<span>Bike</span></h1>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="how.html">How to Use</a></li>
+                    <li><a href="map.html">Map</a></li>
+                    <li><a href="pay.html">Rent Now</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button id="loginBtn">Log In</button>
+                <button id="registerBtn">Register</button>
+            </div>
+            <button class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p class="form-footer">Don't have an account? <a href="#" id="showRegisterForm">Register here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Register</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email:</label>
+                    <input type="email" id="regEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password:</label>
+                    <input type="password" id="regPassword" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <p class="form-footer">Already have an account? <a href="#" id="showLoginForm">Login here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <section class="map-section">
+        <div class="container">
+            <h1 class="section-title">Find a Bike Station</h1>
+            <p style="text-align: center; margin-bottom: 20px;">Locate bike stations throughout Dublin city center. Check real-time availability of bikes and docking spaces.</p>
+            
+            <div class="map-search">
+                <input type="text" id="stationSearch" placeholder="Search for a station...">
+                <button class="btn btn-secondary" id="findNearestBtn">Find Nearest Station</button>
+            </div>
+            
+            <!-- Google Maps container -->
+            <div id="map" class="map-container"></div>
+            
+            <!-- Station list -->
+            <div class="station-list">
+                <h2>Dublin Bike Stations</h2>
+                <div class="station-list-container">
+                    <div class="station-item" data-lat="53.349562" data-lng="-6.278198">
+                        <h3>Parnell Square North</h3>
+                        <p>Located at the north side of Parnell Square</p>
+                        <div class="station-meta">
+                            <span class="bikes-available">15 bikes available</span>
+                            <span class="docks-available">5 docks available</span>
+                        </div>
+                    </div>
+                    
+                    <div class="station-item" data-lat="53.344304" data-lng="-6.250427">
+                        <h3>Custom House Quay</h3>
+                        <p>Near the Custom House building on the River Liffey</p>
+                        <div class="station-meta">
+                            <span class="bikes-available">8 bikes available</span>
+                            <span class="docks-available">12 docks available</span>
+                        </div>
+                    </div>
+                    
+                    <div class="station-item" data-lat="53.338755" data-lng="-6.262003">
+                        <h3>Merrion Square South</h3>
+                        <p>On the south side of Merrion Square</p>
+                        <div class="station-meta">
+                            <span class="bikes-available">12 bikes available</span>
+                            <span class="docks-available">8 docks available</span>
+                        </div>
+                    </div>
+                    
+                    <div class="station-item" data-lat="53.343893" data-lng="-6.267382">
+                        <h3>Grafton Street</h3>
+                        <p>Near Trinity College entrance</p>
+                        <div class="station-meta">
+                            <span class="bikes-available">3 bikes available</span>
+                            <span class="docks-available">17 docks available</span>
+                        </div>
+                    </div>
+                    
+                    <div class="station-item" data-lat="53.347477" data-lng="-6.244612">
+                        <h3>Connolly Station</h3>
+                        <p>Outside Connolly Railway Station</p>
+                        <div class="station-meta">
+                            <span class="bikes-available">20 bikes available</span>
+                            <span class="docks-available">0 docks available</span>
+                        </div>
+                    </div>
+                    
+                    <div class="station-item" data-lat="53.346637" data-lng="-6.252192">
+                        <h3>Talbot Street</h3>
+                        <p>Middle of Talbot Street</p>
+                        <div class="station-meta">
+                            <span class="bikes-available">7 bikes available</span>
+                            <span class="docks-available">13 docks available</span>
+                        </div>
+                    </div>
+                    
+                    <div class="station-item" data-lat="53.334123" data-lng="-6.265436">
+                        <h3>St. Stephen's Green South</h3>
+                        <p>South side of St. Stephen's Green</p>
+                        <div class="station-meta">
+                            <span class="bikes-available">10 bikes available</span>
+                            <span class="docks-available">10 docks available</span>
+                        </div>
+                    </div>
+                    
+                    <div class="station-item" data-lat="53.339005" data-lng="-6.300217">
+                        <h3>Kilmainham Gaol</h3>
+                        <p>Outside Kilmainham Gaol Museum</p>
+                        <div class="station-meta">
+                            <span class="bikes-available">14 bikes available</span>
+                            <span class="docks-available">6 docks available</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Dublin Bike Share</h3>
+                    <p>University College Dublin, Belfield</p>
+                    <p>Dublin 4, Ireland</p>
+                    <p>Eircode: D04 V1W8</p>
+                    <p><a href="#">Terms & Conditions</a></p>
+                    <p><a href="#">Privacy</a></p>
+                    <p><a href="#">Cookie Notice</a></p>
+                    <p>Providing convenient bicycle rentals throughout Dublin since 2025</p>
+                </div>
+                <div class="footer-email">
+    <h3>Email</h3>
+    <p>Tan: <a href="mailto:hsuan-yu.tan@ucdconnect.ie">hsuan-yu.tan@ucdconnect.ie</a></p>
+    <p>Kexun: <a href="mailto:kexun.liu@ucdconnect.ie">kexun.liu@ucdconnect.ie</a></p>
+    <p>Herman: <a href="mailto:herman.dolhyi@ucdconnect.ie">herman.dolhyi@ucdconnect.ie</a></p>
+</div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <p><a href="register.html">Register</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                    <p><a href="faq.html">FAQ</a></p>
+                </div>
+            </div>
+            <div class="footer-credits">
+                <p>© 2025 Dublin Bike Share. Developed by UCD students: Tan, Kexun and Herman</p>
+                <p style="font-size: 12px; margin-top: 5px;">Content adapted from <a href="https://www.bikeshare.ie" target="_blank">bikeshare.ie</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Google Maps Script -->
+    <script>
+        function initMap() {
+            // Initialize the map centered on Dublin
+            const dublin = { lat: 53.3498, lng: -6.2603 };
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 14,
+                center: dublin,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: true,
+                zoomControl: true,
+            });
+            
+            // Add markers for each station
+            const stationItems = document.querySelectorAll('.station-item');
+            const markers = [];
+            
+            stationItems.forEach(station => {
+                const lat = parseFloat(station.getAttribute('data-lat'));
+                const lng = parseFloat(station.getAttribute('data-lng'));
+                const title = station.querySelector('h3').textContent;
+                
+                const marker = new google.maps.Marker({
+                    position: { lat, lng },
+                    map: map,
+                    title: title,
+                    icon: {
+                        url: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
+                        scaledSize: new google.maps.Size(32, 32)
+                    }
+                });
+                
+                // Create an info window for each marker
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `
+                        <div style="padding: 10px;">
+                            <h3 style="margin: 0 0 10px 0; color: #F7444E;">${title}</h3>
+                            <p>${station.querySelector('p').textContent}</p>
+                            <div style="margin-top: 10px;">
+                                <div>${station.querySelector('.bikes-available').textContent}</div>
+                                <div>${station.querySelector('.docks-available').textContent}</div>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <a href="pay.html" style="color: #F7444E; text-decoration: none; font-weight: bold;">Rent a Bike</a>
+                            </div>
+                        </div>
+                    `
+                });
+                
+                // Add click listener to marker
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
+                });
+                
+                markers.push(marker);
+                
+                // Add click listener to station list items
+                station.addEventListener('click', () => {
+                    map.panTo({ lat, lng });
+                    map.setZoom(16);
+                    infoWindow.open(map, marker);
+                    
+                    // Highlight the clicked item
+                    stationItems.forEach(item => {
+                        item.style.backgroundColor = '';
+                    });
+                    station.style.backgroundColor = '#f2f2f2';
+                });
+            });
+            
+            // Search functionality
+            const searchInput = document.getElementById('stationSearch');
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                
+                stationItems.forEach((station, index) => {
+                    const stationName = station.querySelector('h3').textContent.toLowerCase();
+                    const stationDesc = station.querySelector('p').textContent.toLowerCase();
+                    
+                    if (stationName.includes(searchTerm) || stationDesc.includes(searchTerm)) {
+                        station.style.display = 'block';
+                        markers[index].setMap(map);
+                    } else {
+                        station.style.display = 'none';
+                        markers[index].setMap(null);
+                    }
+                });
+            });
+            
+            // Find nearest station button
+            document.getElementById('findNearestBtn').addEventListener('click', () => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const userLocation = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            };
+                            
+                            // Add user marker
+                            const userMarker = new google.maps.Marker({
+                                position: userLocation,
+                                map: map,
+                                title: 'Your Location',
+                                icon: {
+                                    url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+                                    scaledSize: new google.maps.Size(32, 32)
+                                }
+                            });
+                            
+                            // Find nearest station
+                            let nearestStationIndex = 0;
+                            let shortestDistance = Number.MAX_VALUE;
+                            
+                            stationItems.forEach((station, index) => {
+                                const stationLat = parseFloat(station.getAttribute('data-lat'));
+                                const stationLng = parseFloat(station.getAttribute('data-lng'));
+                                
+                                const distance = google.maps.geometry.spherical.computeDistanceBetween(
+                                    new google.maps.LatLng(userLocation.lat, userLocation.lng),
+                                    new google.maps.LatLng(stationLat, stationLng)
+                                );
+                                
+                                if (distance < shortestDistance) {
+                                    shortestDistance = distance;
+                                    nearestStationIndex = index;
+                                }
+                            });
+                            
+                            // Highlight and scroll to nearest station
+                            const nearestStation = stationItems[nearestStationIndex];
+                            nearestStation.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            
+                            stationItems.forEach(item => {
+                                item.style.backgroundColor = '';
+                            });
+                            nearestStation.style.backgroundColor = '#f2f2f2';
+                            
+                            // Center map between user and nearest station
+                            const nearestStationLat = parseFloat(nearestStation.getAttribute('data-lat'));
+                            const nearestStationLng = parseFloat(nearestStation.getAttribute('data-lng'));
+                            
+                            const bounds = new google.maps.LatLngBounds();
+                            bounds.extend(userLocation);
+                            bounds.extend({ lat: nearestStationLat, lng: nearestStationLng });
+                            map.fitBounds(bounds);
+                            
+                            // Draw line between user and nearest station
+                            const path = new google.maps.Polyline({
+                                path: [userLocation, { lat: nearestStationLat, lng: nearestStationLng }],
+                                geodesic: true,
+                                strokeColor: '#78BCC4',
+                                strokeOpacity: 1.0,
+                                strokeWeight: 3
+                            });
+                            
+                            path.setMap(map);
+                            
+                            // Open info window at nearest station
+                            const infoWindow = new google.maps.InfoWindow({
+                                content: `
+                                    <div style="padding: 10px;">
+                                        <h3 style="margin: 0 0 10px 0; color: #F7444E;">${nearestStation.querySelector('h3').textContent}</h3>
+                                        <p>${nearestStation.querySelector('p').textContent}</p>
+                                        <div style="margin-top: 10px;">
+                                            <div>${nearestStation.querySelector('.bikes-available').textContent}</div>
+                                            <div>${nearestStation.querySelector('.docks-available').textContent}</div>
+                                        </div>
+                                        <div style="margin-top: 10px;">
+                                            <strong>Distance: ${(shortestDistance / 1000).toFixed(2)} km</strong>
+                                        </div>
+                                        <div style="margin-top: 10px;">
+                                            <a href="pay.html" style="color: #F7444E; text-decoration: none; font-weight: bold;">Rent a Bike</a>
+                                        </div>
+                                    </div>
+                                `
+                            });
+                            
+                            infoWindow.open(map, markers[nearestStationIndex]);
+                        },
+                        (error) => {
+                            alert("Error: The Geolocation service failed. Please allow location access or search manually.");
+                        }
+                    );
+                } else {
+                    alert("Error: Your browser doesn't support geolocation.");
+                }
+            });
+        }
+    </script>
+    
+    <!-- Load Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=geometry" async defer></script>
+</body>
+</html>
