@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cycling Safety - Dublin Bike Share</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+    <style>
+        .safety-section {
+            padding: 100px 0 80px;
+        }
+        
+        .safety-section h1 {
+            margin-bottom: 40px;
+        }
+        
+        .safety-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .safety-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            transition: transform 0.3s;
+        }
+        
+        .safety-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .safety-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .safety-card h3 span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        
+        .safety-card p {
+            color: var(--dark-blue);
+            margin-bottom: 10px;
+        }
+        
+        .safety-card ul {
+            padding-left: 20px;
+            margin-top: 15px;
+        }
+        
+        .safety-card ul li {
+            margin-bottom: 8px;
+            list-style-type: disc;
+        }
+        
+        .safety-image {
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .safety-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        
+        .safety-cta {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .safety-cta h3 {
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .safety-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+     <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Dublin<span>Bike</span></h1>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="how.html">How to Use</a></li>
+                    <li><a href="safety.html">Safety</a></li>
+                    <li><a href="map.html">Map</a></li>
+                    <li><a href="pay.html">Rent Now</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button id="loginBtn">Log In</button>
+                <button id="registerBtn">Register</button>
+            </div>
+            <button class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p class="form-footer">Don't have an account? <a href="#" id="showRegisterForm">Register here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Register</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email:</label>
+                    <input type="email" id="regEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password:</label>
+                    <input type="password" id="regPassword" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <p class="form-footer">Already have an account? <a href="#" id="showLoginForm">Login here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <section class="safety-section">
+        <div class="container">
+            <h1 class="section-title">Cycling Safety in Dublin</h1>
+            
+            <p>Your safety is our top priority at Dublin Bike Share. Whether you're a daily commuter or occasional rider, following proper cycling practices ensures a positive experience for everyone. Here are important safety guidelines to remember when using our bike share service throughout Dublin.</p>
+            
+            <div class="safety-image">
+                <img src="https://via.placeholder.com/800x400" alt="Cyclist wearing helmet in Dublin">
+            </div>
+            
+            <h2 style="color: var(--dark-blue); margin-bottom: 20px;">Essential Safety Tips</h2>
+            
+            <div class="safety-grid">
+                <div class="safety-card">
+                    <div class="safety-icon">⛑️</div>
+                    <h3><span>1</span> Protective Gear</h3>
+                    <p>While helmets are not provided with our bikes, we strongly encourage all riders to wear their own helmet. According to safety statistics, wearing a helmet reduces the risk of head injury by up to 70%.</p>
+                    <p>Additional recommended protective items include:</p>
+                    <ul>
+                        <li>Reflective clothing, especially during low-light conditions</li>
+                        <li>Gloves for better grip and hand protection</li>
+                        <li>Appropriate footwear that won't slip off pedals</li>
+                    </ul>
+                </div>
+                
+                <div class="safety-card">
+                    <div class="safety-icon">🔍</div>
+                    <h3><span>2</span> Before You Ride</h3>
+                    <p>Always inspect your bike before setting off:</p>
+                    <ul>
+                        <li>Check that brakes function properly</li>
+                        <li>Ensure tires are properly inflated</li>
+                        <li>Test that the handlebars and seat are securely fastened</li>
+                        <li>Make sure the chain runs smoothly</li>
+                        <li>Verify both front and rear lights are working</li>
+                    </ul>
+                    <p>If you find any issues with your bike, return it to the dock and select another one. Report any problems through our app.</p>
+                </div>
+                
+                <div class="safety-card">
+                    <div class="safety-icon">🚦</div>
+                    <h3><span>3</span> Traffic Rules</h3>
+                    <p>Cyclists must follow the same traffic rules as other vehicles:</p>
+                    <ul>
+                        <li>Obey all traffic lights and stop signs</li>
+                        <li>Ride in the same direction as traffic, never against it</li>
+                        <li>Use hand signals to indicate turns and stops</li>
+                        <li>Yield to pedestrians at crosswalks</li>
+                        <li>Stop at red lights and stop signs</li>
+                    </ul>
+                </div>
+                
+                <div class="safety-card">
+                    <div class="safety-icon">🚊</div>
+                    <h3><span>4</span> Luas Tracks Caution</h3>
+                    <p>Dublin's tram tracks present unique hazards for cyclists:</p>
+                    <ul>
+                        <li>Cross tracks at a 90-degree angle whenever possible</li>
+                        <li>Never ride alongside or parallel to tracks</li>
+                        <li>Take extra care when tracks are wet, as they become extremely slippery</li>
+                        <li>Be aware that bicycle wheels can get caught in the track grooves</li>
+                    </ul>
+                </div>
+                
+                <div class="safety-card">
+                    <div class="safety-icon">🚲</div>
+                    <h3><span>5</span> Cycling Lanes</h3>
+                    <p>Dublin has an expanding network of cycling infrastructure:</p>
+                    <ul>
+                        <li>Use dedicated cycle lanes whenever available</li>
+                        <li>On streets without cycle lanes, maintain a position about 1 meter from the curb</li>
+                        <li>Be aware of bus lanes – cyclists are permitted to use most bus lanes during their hours of operation</li>
+                        <li>Watch for opening car doors when cycling alongside parked vehicles</li>
+                    </ul>
+                </div>
+                
+                <div class="safety-card">
+                    <div class="safety-icon">☔</div>
+                    <h3><span>6</span> Weather Conditions</h3>
+                    <p>Dublin's variable weather requires adaptability:</p>
+                    <ul>
+                        <li>Rain: Brake earlier as stopping distances increase on wet surfaces</li>
+                        <li>Wind: Be prepared for strong gusts, especially on bridges and open areas</li>
+                        <li>Fog: Use lights and reflective gear for maximum visibility</li>
+                        <li>Adjust your riding style according to conditions – slow down when necessary</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="night-cycling-section">
+                <div class="safety-icon">🌙</div>
+                <h3>Night Cycling</h3>
+                
+                <p>All Dublin Bike Share bicycles are equipped with front and rear lights that activate automatically. However, to enhance your visibility:</p>
+                <ul>
+                    <li>Wear bright, reflective clothing</li>
+                    <li>Consider additional clip-on lights for extra visibility</li>
+                    <li>Choose well-lit routes when possible</li>
+                    <li>Make eye contact with drivers to ensure they've seen you</li>
+                    <li>Be extra cautious at intersections</li>
+                </ul>
+            </div>
+            
+            <div class="safety-cta">
+                <h3>Remember – Safety is a Shared Responsibility</h3>
+                <p>By cycling safely and responsibly, you not only protect yourself but also contribute to making Dublin's streets safer for everyone. Stay alert, respect other road users, and enjoy your ride!</p>
+                <a href="pay.html" class="btn btn-primary" style="margin-top: 20px;">Rent a Bike</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Dublin Bike Share</h3>
+                    <p>University College Dublin, Belfield</p>
+                    <p>Dublin 4, Ireland</p>
+                    <p>Eircode: D04 V1W8</p>
+                    <p><a href="#">Terms & Conditions</a></p>
+                    <p><a href="#">Privacy</a></p>
+                    <p><a href="#">Cookie Notice</a></p>
+                    <p>Providing convenient bicycle rentals throughout Dublin since 2025</p>
+                </div>
+                <div class="footer-email">
+    <h3>Email</h3>
+    <p>Tan: <a href="mailto:hsuan-yu.tan@ucdconnect.ie">hsuan-yu.tan@ucdconnect.ie</a></p>
+    <p>Kexun: <a href="mailto:kexun.liu@ucdconnect.ie">kexun.liu@ucdconnect.ie</a></p>
+    <p>Herman: <a href="mailto:herman.dolhyi@ucdconnect.ie">herman.dolhyi@ucdconnect.ie</a></p>
+</div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <p><a href="register.html">Register</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                    <p><a href="faq.html">FAQ</a></p>
+                </div>
+            </div>
+            <div class="footer-credits">
+                <p>© 2025 Dublin Bike Share. Developed by UCD students: Tan, Kexun and Herman</p>
+                <p style="font-size: 12px; margin-top: 5px;">Content adapted from <a href="https://www.bikeshare.ie" target="_blank">bikeshare.ie</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cookie consent button -->
+    <div id="cookieButton" style="position: fixed; bottom: 20px; left: 20px; background-color: var(--dark-blue); color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; z-index: 999; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+        COOKIE SETTINGS
+    </div>
+    
+    <!-- Cookie consent modal -->
+    <div id="cookieModal" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background-color: var(--dark-blue); color: white; padding: 20px; z-index: 1000; box-shadow: 0 -2px 10px rgba(0,0,0,0.2);">
+        <div class="container">
+            <h3 style="margin-top: 0;">Cookie Settings</h3>
+            <p>We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.</p>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button id="acceptCookies" class="btn btn-primary">ACCEPT ALL</button>
+                <button id="declineCookies" class="btn btn-secondary" style="background-color: #6c757d;">DECLINE ALL</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Cookie consent functionality
+        const cookieButton = document.getElementById('cookieButton');
+        const cookieModal = document.getElementById('cookieModal');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        cookieButton.addEventListener('click', function() {
+            cookieModal.style.display = 'block';
+            cookieButton.style.display = 'none';
+        });
+        
+        acceptCookies.addEventListener('click', function() {
+            // Set cookie acceptance without alert
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieModal.style.display = 'none';
+        });
+        
+        declineCookies.addEventListener('click', function() {
+            // Set cookie rejection without alert
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookieModal.style.display = 'none';
+        });
+        
+        // Check if cookie preference is already set
+        if (localStorage.getItem('cookiesAccepted')) {
+            cookieButton.style.display = 'block';
+            cookieModal.style.display = 'none';
+        } else {
+            // Show cookie modal on first visit
+            setTimeout(function() {
+                cookieModal.style.display = 'block';
+                cookieButton.style.display = 'none';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

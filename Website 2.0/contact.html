@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Dublin Bike Share</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+    <!-- Google reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+        /* Additional styles for recaptcha container */
+        .recaptcha-container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        
+        .recaptcha-notice {
+            font-size: 12px;
+            margin-top: 8px;
+            color: #6c757d;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+     <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Dublin<span>Bike</span></h1>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="how.html">How to Use</a></li>
+                    <li><a href="safety.html">Safety</a></li>
+                    <li><a href="map.html">Map</a></li>
+                    <li><a href="pay.html">Rent Now</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button id="loginBtn">Log In</button>
+                <button id="registerBtn">Register</button>
+            </div>
+            <button class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p class="form-footer">Don't have an account? <a href="#" id="showRegisterForm">Register here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Register</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email:</label>
+                    <input type="email" id="regEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password:</label>
+                    <input type="password" id="regPassword" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <p class="form-footer">Already have an account? <a href="#" id="showLoginForm">Login here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <section class="contact-section">
+        <div class="container">
+            <h1 class="section-title">Contact Us</h1>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2>Get in Touch</h2>
+                    
+                    <div class="info-item">
+                        <div class="icon">📍</div>
+                        <div>
+                            <p>Address:</p>
+                            <p>University College Dublin, Belfield</p>
+                            <p>Dublin 4, Ireland</p>
+                            <p>Eircode: D04 V1W8</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="icon">📱</div>
+                        <div>
+                            <p>Phone:</p>
+                            <p><a href="tel:+35317167777">UCD phone: +353 1 716 7777</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="icon">🕒</div>
+                        <div>
+                            <p>Opening Hours:</p>
+                            <p>Monday - Friday: 8:00 AM - 8:00 PM</p>
+                            <p>Saturday - Sunday: 9:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="icon">👥</div>
+                        <div>
+                            <p>Our Team:</p>
+                            <div style="margin-top: 15px;">
+                                <!-- Tan -->
+                                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                    <img src="tan.png" alt="Tan" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-right: 15px;">
+                                    <div>
+                                        <p style="margin: 0; font-weight: bold;">Tan</p>
+                                        <p style="margin: 3px 0;">XXXXXXXXX</p>
+                                        <p style="margin: 0;"><a href="mailto:hsuan-yu.tan@ucdconnect.ie">hsuan-yu.tan@ucdconnect.ie</a></p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Kexun -->
+                                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                    <img src="kexun.jpeg" alt="Kexun" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-right: 15px;">
+                                    <div>
+                                        <p style="margin: 0; font-weight: bold;">Kexun</p>
+                                        <p style="margin: 3px 0;">XXXXXXXXX</p>
+                                        <p style="margin: 0;"><a href="mailto:kexun.liu@ucdconnect.ie">kexun.liu@ucdconnect.ie</a></p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Herman -->
+                                <div style="display: flex; align-items: center;">
+                                    <img src="herman.jpeg" alt="Herman" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-right: 15px;">
+                                    <div>
+                                        <p style="margin: 0; font-weight: bold;">Herman</p>
+                                        <p style="margin: 3px 0;">24103685</p>
+                                        <p style="margin: 0;"><a href="mailto:herman.dolhyi@ucdconnect.ie">herman.dolhyi@ucdconnect.ie</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h2>Send Us a Message</h2>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="contactName">Your Name:</label>
+                            <input type="text" id="contactName" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactEmail">Your Email:</label>
+                            <input type="email" id="contactEmail" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactSubject">Subject:</label>
+                            <input type="text" id="contactSubject" name="subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactMessage">Your Message:</label>
+                            <textarea id="contactMessage" name="message" required></textarea>
+                        </div>
+                        
+                        <!-- Fixed reCAPTCHA container with more space -->
+<div class="recaptcha-container" style="width: 100%; margin: 20px 0; min-height: 200px; position: relative;">
+    <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" style="margin-bottom: 40px;"></div>
+    
+    <!-- Add extra spacing div to push down the notice -->
+    <div style="height: 80px; width: 100%;"></div>
+    
+    <div class="recaptcha-notice" style="font-size: 12px; color: #6c757d; position: absolute; bottom: 0; left: 0; width: 100%;">
+        This site is protected by reCAPTCHA and the Google 
+        <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and 
+        <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.
+    </div>
+</div>
+                        
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Dublin Bike Share</h3>
+                    <p>University College Dublin, Belfield</p>
+                    <p>Dublin 4, Ireland</p>
+                    <p>Eircode: D04 V1W8</p>
+                    <p><a href="#">Terms & Conditions</a></p>
+                    <p><a href="#">Privacy</a></p>
+                    <p><a href="#">Cookie Notice</a></p>
+                    <p>Providing convenient bicycle rentals throughout Dublin since 2025</p>
+                </div>
+                <div class="footer-email">
+    <h3>Email</h3>
+    <p>Tan: <a href="mailto:hsuan-yu.tan@ucdconnect.ie">hsuan-yu.tan@ucdconnect.ie</a></p>
+    <p>Kexun: <a href="mailto:kexun.liu@ucdconnect.ie">kexun.liu@ucdconnect.ie</a></p>
+    <p>Herman: <a href="mailto:herman.dolhyi@ucdconnect.ie">herman.dolhyi@ucdconnect.ie</a></p>
+</div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <p><a href="register.html">Register</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                    <p><a href="faq.html">FAQ</a></p>
+                </div>
+            </div>
+            <div class="footer-credits">
+                <p>© 2025 Dublin Bike Share. Developed by UCD students: Tan, Kexun and Herman</p>
+                <p style="font-size: 12px; margin-top: 5px;">Content adapted from <a href="https://www.bikeshare.ie" target="_blank">bikeshare.ie</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cookie consent button -->
+    <div id="cookieButton" style="position: fixed; bottom: 20px; left: 20px; background-color: var(--dark-blue); color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; z-index: 999; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+        COOKIE SETTINGS
+    </div>
+    
+    <!-- Cookie consent modal -->
+    <div id="cookieModal" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background-color: var(--dark-blue); color: white; padding: 20px; z-index: 1000; box-shadow: 0 -2px 10px rgba(0,0,0,0.2);">
+        <div class="container">
+            <h3 style="margin-top: 0;">Cookie Settings</h3>
+            <p>We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.</p>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button id="acceptCookies" class="btn btn-primary">ACCEPT ALL</button>
+                <button id="declineCookies" class="btn btn-secondary" style="background-color: #6c757d;">DECLINE ALL</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Cookie consent functionality
+        const cookieButton = document.getElementById('cookieButton');
+        const cookieModal = document.getElementById('cookieModal');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        cookieButton.addEventListener('click', function() {
+            cookieModal.style.display = 'block';
+            cookieButton.style.display = 'none';
+        });
+        
+        acceptCookies.addEventListener('click', function() {
+            // Set cookie acceptance without alert
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieModal.style.display = 'none';
+        });
+        
+        declineCookies.addEventListener('click', function() {
+            // Set cookie rejection without alert
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookieModal.style.display = 'none';
+        });
+        
+        // Check if cookie preference is already set
+        if (localStorage.getItem('cookiesAccepted')) {
+            cookieButton.style.display = 'block';
+            cookieModal.style.display = 'none';
+        } else {
+            // Show cookie modal on first visit
+            setTimeout(function() {
+                cookieModal.style.display = 'block';
+                cookieButton.style.display = 'none';
+            }, 2000);
+        }
+    </script>

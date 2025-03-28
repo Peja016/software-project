@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions - Dublin Bike Share</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+    <style>
+        .faq-section {
+            padding: 100px 0 80px;
+        }
+        
+        .faq-section h1 {
+            margin-bottom: 40px;
+        }
+        
+        .faq-section p {
+            margin-bottom: 20px;
+        }
+        
+        .faq-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .category-btn {
+            padding: 10px 20px;
+            background-color: white;
+            border: 2px solid var(--light-gray);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        
+        .faq-container {
+            margin-top: 40px;
+        }
+        
+        .faq-category {
+            margin-bottom: 40px;
+        }
+        
+        .faq-category-title {
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+        
+        .faq-item {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--dark-blue);
+        }
+        
+        .faq-question:hover {
+            background-color: var(--light);
+        }
+        
+        .faq-question:after {
+            content: '+';
+            font-size: 24px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        .faq-question.active:after {
+            content: '-';
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: var(--light);
+            padding: 0 20px;
+        }
+        
+        .faq-answer-content {
+            padding: 20px 0;
+        }
+        
+        .search-container {
+            margin-bottom: 30px;
+        }
+        
+        .search-box {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 5px 0 0 5px;
+            font-size: 16px;
+        }
+        
+        .search-box button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        
+        .no-results {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--gray);
+            display: none;
+        }
+        
+        .contact-cta {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .contact-cta h3 {
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+     <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Dublin<span>Bike</span></h1>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="how.html">How to Use</a></li>
+                    <li><a href="safety.html">Safety</a></li>
+                    <li><a href="map.html">Map</a></li>
+                    <li><a href="pay.html">Rent Now</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button id="loginBtn">Log In</button>
+                <button id="registerBtn">Register</button>
+            </div>
+            <button class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p class="form-footer">Don't have an account? <a href="#" id="showRegisterForm">Register here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Register</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email:</label>
+                    <input type="email" id="regEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password:</label>
+                    <input type="password" id="regPassword" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <p class="form-footer">Already have an account? <a href="#" id="showLoginForm">Login here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <section class="faq-section">
+        <div class="container">
+            <h1 class="section-title">Frequently Asked Questions</h1>
+            
+            <p>Find answers to the most common questions about Dublin Bike Share. If you can't find what you're looking for, feel free to <a href="contact.html">contact us</a>.</p>
+            
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="faqSearch" placeholder="Search for a question...">
+                    <button id="searchBtn">Search</button>
+                </div>
+            </div>
+            
+            <div class="faq-categories">
+                <button class="category-btn active" data-category="all">All Questions</button>
+                <button class="category-btn" data-category="subscription">Subscriptions</button>
+                <button class="category-btn" data-category="usage">Using the Service</button>
+                <button class="category-btn" data-category="payment">Payment</button>
+                <button class="category-btn" data-category="technical">Technical Issues</button>
+                <button class="category-btn" data-category="account">Account Management</button>
+            </div>
+            
+            <div class="faq-container">
+                <!-- Subscription Questions -->
+                <div class="faq-category" id="subscription">
+                    <h2 class="faq-category-title">Subscription & Membership</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">What subscription options are available?</div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Dublin Bike Share offers three main subscription options:</p>
+                                <ul>
+                                    <li><strong>Annual Subscription (€35):</strong> Unlimited 30-minute journeys for a full year. Perfect for regular users.</li>
+                                    <li><strong>3-Day Pass (€5):</strong> Unlimited 30-minute journeys over three consecutive days. Ideal for visitors.</li>
+                                    <li><strong>Pay-As-You-Go:</strong> €2 unlock fee plus €0.50 for each 30 minutes of use. No commitment required.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">How do I sign up for a subscription?</div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>You can sign up for a Dublin Bike Share subscription in several ways:</p>
+                                <ul>
+                                    <li>Online through our website by creating an account and selecting your preferred plan</li>
+                                    <li>Through our mobile app, available for iOS and Android devices</li>
+                                    <li>At any service kiosk at major Dublin Bike Share stations</li>
+                                    <li>By calling our customer service at +353 1 716 7777</li>
+                                </ul>
+                                <p>You'll need a valid credit or debit card and an email address to complete your registration.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Can I cancel my subscription?</div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Yes, you can cancel your subscription at any time. Annual subscriptions are non-refundable but will remain active until their expiration date. To cancel auto-renewal:</p>
+                                <ol>
+                                    <li>Log in to your account on our website or app</li>
+                                    <li>Go to 'My Subscription' in your account settings</li>
+                                    <li>Select 'Cancel Auto-Renewal'</li>
+                                </ol>
+                                <p>For 3-Day Passes, these automatically expire after the 3-day period without any further action needed.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Can multiple people use one subscription?</div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>No, subscriptions are individual and non-transferable. Each person who wishes to use Dublin Bike Share must have their own subscription or pass. However, we do offer discounted rates for organizations, universities, and businesses looking to provide access for their members or employees.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Usage Questions -->
+                <div class="faq-category" id="usage">
+                    <h2 class="faq-category-title">Using the Service</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">How do I unlock a bike?</div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>There are two main ways to unlock a Dublin Bike Share bicycle:</p>
+                                <p><strong>Mobile App Method:</strong></p>
+                                <ol>
+                                    <li>Open the Dublin Bike Share app on your smartphone</li>
+                                    <li>Locate the station on the map or scan the QR code on the bike</li>
+                                    <li>Select the bike number you wish to use</li>
+                                    <li>Confirm your selection and the bike will unlock automatically</li>
+                                </ol>
+                                <p><strong>Subscriber Card Method:</strong></p>
+                                <ol>
+                                    <li>Insert your Dublin Bike Share card into the card reader at the station kiosk</li>
+                                    <li>Enter your PIN when prompted</li>
+                                    <li>Select a bike number from the available options</li>
+                                    <li>Remove your card and go to the selected bike, which will be unlocked and ready to use</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">How long can I keep a bike?</div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>With an Annual Subscription or 3-Day Pass, you can take unlimited rides of up to 30 minutes each at no additional cost. For rides longer than 30 minutes, the following charges apply:</p>
+                                <ul>
+                                    <li>30-60 minutes: €0.50</li>
+                                    <li>60-90 minutes: €1.50</li>
+                                    <li>Each additional 30 minutes: €2.00</li>
+                                </ul>
+                                <p>For Pay-As-You-Go users, charges begin from the moment you unlock the bike at a rate of €0.50 per 30 minutes, plus the initial €2 unlock fee.</p>
+                                <p>While there is no absolute maximum time limit, bikes are intended for short trips. For extended use, we recommend returning your bike and checking out a new one to avoid additional charges.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">What if there are no available bikes or docks?</div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>If you encounter a station with no available bikes or docking spaces:</p>
+                                <p><strong>No Available Bikes:</strong></p>
+                                <ul>
+                                    <li>Check our app or website for the nearest station with available bikes</li>
+                                    <li>The app shows real-time availability of bikes at all stations</li>
+                                    <li>Stations are typically located within a 5-minute walk of each other in the city center</li>
+                                </ul>
+                                <p><strong>No Available Docks:</strong></p>
+                                <ul>
+                                    <li>Use the app to find the nearest station with available docking spaces</li>
+                                    <li>If you encounter a full station, you can request a 15-minute extension through the app or by calling customer service to give you time to reach another station</li>
+                                    <li>Annual members can report full stations for service improvements</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">What happens if the bike gets damaged while I'm using it?</div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>If a bike becomes damaged during your journey:</p>
+                                <ol>
+                                    <li>If the damage is minor and doesn't affect safety, return the bike to any station as normal</li>
+                                    <li>Report the issue through the app or website by entering the bike number and describing the problem</li>
+                                    <li>If the bike is unsafe to ride, lock it securely and report its location and condition to our customer service immediately</li>
+                                </ol>
+                                <p>Users are responsible for damages caused by misuse, negligence, or violations of our terms of service. For normal wear and tear or mechanical failures not caused by the user, there is no charge. Each case is evaluated individually, and we may contact you for additional information.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Payment Questions -->
+                <div class="faq-category" id="payment">
+                    <h2 class="faq-category-title">Payment & Charges</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">What payment methods do you accept?</div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Dublin Bike Share accepts the following payment methods:</p>
+                                <ul>
+                                    <li>Credit cards (Visa, Mastercard, American Express)</li>
+                                    <li>Debit cards (with Visa or Mastercard functionality)</li>
+                                    <li>Digital wallets (Apple Pay, Google Pay)</li>
+                                    <li>Bank transfers (for annual subscriptions only)</li>
+                                </ul>
+                                <p>We do not accept cash payments for security reasons. All payment information is encrypted and securely stored in compliance with financial regulations.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">What is the security deposit and when is it refunded?</div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Dublin Bike Share requires a temporary authorization hold of €150 on your card when you sign up for a 3-Day Pass or use the Pay-As-You-Go option. This is not a charge but a temporary hold that is typically released within 7 days after your last ride, provided the bike is returned in good condition.</p>
+                                <p>Annual members do not have a security deposit hold but agree to terms that allow charges for damages or non-return of bikes.</p>
+                                <p>If your deposit hold has not been released after 7 days of your final ride, please contact our customer service for assistance.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">How do I view my billing history?</div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>You can access your complete billing history through your Dublin Bike Share account:</p>
+                                <ol>
+                                    <li>Log in to your account on our website or mobile app</li>
+                                    <li>Navigate to 'My Account' or 'Account Settings'</li>
+                                    <li>Select 'Billing History' or 'Payment History'</li>
+                                </ol>
+                                <p>Here you'll find details of all transactions, including subscription fees, usage fees, and any other charges. You can also download or print receipts for expense tracking or reimbursement purposes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Technical Questions -->
+                <div class="faq-category" id="technical">
+                    <h2 class="faq-category-title">Technical Issues</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">What if the mobile app isn't working?</div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>If you're experiencing issues with the Dublin Bike Share app:</p>
+                                <ol>
+                                    <li>Ensure your app is updated to the latest version</li>
+                                    <li>Check your internet connection, as the app requires data connectivity</li>
+                                    <li>Restart the app or your device</li>
+                                    <li>Clear the app cache in your device settings</li>
+                                </ol>
+                                <p>Alternative access methods if the app continues to malfunction:</p>
+                                <ul>
+                                    <li>Use your Dublin Bike Share card at any station terminal</li>
+                                    <li>Access our mobile-responsive website through your browser</li>
+                                    <li>Call customer service for remote bike unlock assistance</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">What if the docking station is not working?</div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>If you encounter issues with a docking station:</p>
+                                <p><strong>When Returning a Bike:</strong></p>
+                                <ul>
+                                    <li>Ensure you're pushing the bike firmly into the dock – you should hear a beep and see a green light when successfully docked</li>
+                                    <li>Try another docking point at the same station</li>
+                                    <li>If all docking points seem to be malfunctioning, find the nearest alternative station through the app</li>
+                                    <li>If unable to dock due to technical issues, call customer service immediately</li>
+                                </ul>
+                                <p><strong>When Taking a Bike:</strong></p>
+                                <ul>
+                                    <li>If the terminal is unresponsive, try using the mobile app instead</li>
+                                    <li>If neither works, find the nearest operational station on the app map</li>
+                                </ul>
+                                <p>Always report malfunctioning docking stations through the app or by calling customer service to help us maintain the system.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Account Questions -->
+                <div class="faq-category" id="account">
+                    <h2 class="faq-category-title">Account Management</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">How do I reset my password?</div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>To reset your Dublin Bike Share account password:</p>
+                                <ol>
+                                    <li>Go to the login page on our website or app</li>
+                                    <li>Click on "Forgot Password" or "Reset Password"</li>
+                                    <li>Enter the email address associated with your account</li>
+                                    <li>Check your email for a password reset link (be sure to check your spam folder)</li>
+                                    <li>Click the link and follow the instructions to create a new password</li>
+                                </ol>
+                                <p>Reset links are valid for 24 hours. If you don't receive an email or your link expires, you can repeat the process or contact customer service for assistance.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">How do I update my payment information?</div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>To update your payment information:</p>
+                                <ol>
+                                    <li>Log in to your Dublin Bike Share account on our website or app</li>
+                                    <li>Navigate to "Account Settings" or "Payment Methods"</li>
+                                    <li>Select "Edit" next to your current payment method</li>
+                                    <li>Enter your new card information or add a new payment method</li>
+                                    <li>Save your changes</li>
+                                </ol>
+                                <p>We recommend updating your payment information before your current card expires to ensure uninterrupted service. If your subscription payment fails due to expired or invalid card information, your account access may be temporarily suspended until payment is processed.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Can I transfer my subscription to someone else?</div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>No, Dublin Bike Share subscriptions are non-transferable. Each subscription is linked to an individual user account and cannot be transferred to another person. This policy helps us maintain system security and ensures proper account management.</p>
+                                <p>If someone else would like to use the service, they will need to create their own account and purchase their own subscription or pass. We offer various options to suit different needs and usage patterns.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="no-results" id="noResults">
+                <h3>No results found</h3>
+                <p>Try different keywords or browse the categories above.</p>
+            </div>
+            
+            <div class="contact-cta">
+                <h3>Couldn't Find Your Answer?</h3>
+                <p>Our customer service team is ready to assist you with any specific questions about Dublin Bike Share.</p>
+                <a href="contact.html" class="btn btn-primary">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Dublin Bike Share</h3>
+                    <p>University College Dublin, Belfield</p>
+                    <p>Dublin 4, Ireland</p>
+                    <p>Eircode: D04 V1W8</p>
+                    <p><a href="#">Terms & Conditions</a></p>
+                    <p><a href="#">Privacy</a></p>
+                    <p><a href="#">Cookie Notice</a></p>
+                    <p>Providing convenient bicycle rentals throughout Dublin since 2025</p>
+                </div>
+                <div class="footer-email">
+    <h3>Email</h3>
+    <p>Tan: <a href="mailto:hsuan-yu.tan@ucdconnect.ie">hsuan-yu.tan@ucdconnect.ie</a></p>
+    <p>Kexun: <a href="mailto:kexun.liu@ucdconnect.ie">kexun.liu@ucdconnect.ie</a></p>
+    <p>Herman: <a href="mailto:herman.dolhyi@ucdconnect.ie">herman.dolhyi@ucdconnect.ie</a></p>
+</div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <p><a href="register.html">Register</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                    <p><a href="faq.html">FAQ</a></p>
+                </div>
+            </div>
+            <div class="footer-credits">
+                <p>© 2025 Dublin Bike Share. Developed by UCD students: Tan, Kexun and Herman</p>
+                <p style="font-size: 12px; margin-top: 5px;">Content adapted from <a href="https://www.bikeshare.ie" target="_blank">bikeshare.ie</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cookie consent button -->
+    <div id="cookieButton" style="position: fixed; bottom: 20px; left: 20px; background-color: var(--dark-blue); color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; z-index: 999; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+        COOKIE SETTINGS
+    </div>
+    
+    <!-- Cookie consent modal -->
+    <div id="cookieModal" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background-color: var(--dark-blue); color: white; padding: 20px; z-index: 1000; box-shadow: 0 -2px 10px rgba(0,0,0,0.2);">
+        <div class="container">
+            <h3 style="margin-top: 0;">Cookie Settings</h3>
+            <p>We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.</p>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button id="acceptCookies" class="btn btn-primary">ACCEPT ALL</button>
+                <button id="declineCookies" class="btn btn-secondary" style="background-color: #6c757d;">DECLINE ALL</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Cookie consent functionality
+        const cookieButton = document.getElementById('cookieButton');
+        const cookieModal = document.getElementById('cookieModal');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        cookieButton.addEventListener('click', function() {
+            cookieModal.style.display = 'block';
+            cookieButton.style.display = 'none';
+        });
+        
+        acceptCookies.addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieModal.style.display = 'none';
+            alert('Cookies accepted!');
+        });
+        
+        declineCookies.addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookieModal.style.display = 'none';
+            alert('Cookies declined!');
+        });
+        
+        if (localStorage.getItem('cookiesAccepted')) {
+            cookieButton.style.display = 'block';
+            cookieModal.style.display = 'none';
+        } else {
+            setTimeout(function() {
+                cookieModal.style.display = 'block';
+                cookieButton.style.display = 'none';
+            }, 2000);
+        }
+        
+        // FAQ functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            const searchBtn = document.getElementById('searchBtn');
+            const searchInput = document.getElementById('faqSearch');
+            const noResults = document.getElementById('noResults');
+            const faqCategories = document.querySelectorAll('.faq-category');
+            
+            // Toggle FAQ answers
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const answer = this.nextElementSibling;
+                    
+                    if (this.classList.contains('active')) {
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                    } else {
+                        answer.style.maxHeight = 0;
+                    }
+                });
+            });
+            
+            // Filter by category
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    
+                    // Show/hide categories based on selection
+                    if (category === 'all') {
+                        faqCategories.forEach(cat => cat.style.display = 'block');
+                    } else {
+                        faqCategories.forEach(cat => {
+                            if (cat.id === category) {
+                                cat.style.display = 'block';
+                            } else {
+                                cat.style.display = 'none';
+                            }
+                        });
+                    }
+                    
+                    // Reset search
+                    searchInput.value = '';
+                    noResults.style.display = 'none';
+                    
+                    // Reset question visibility
+                    faqQuestions.forEach(q => {
+                        q.parentElement.style.display = 'block';
+                        q.classList.remove('active');
+                        q.nextElementSibling.style.maxHeight = 0;
+                    });
+                });
+            });
+            
+            // Search functionality
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+                let resultsFound = false;
+                
+                if (searchTerm.length < 2) {
+                    // Show all questions if search term is too short
+                    faqQuestions.forEach(q => q.parentElement.style.display = 'block');
+                    faqCategories.forEach(cat => cat.style.display = 'block');
+                    noResults.style.display = 'none';
+                    return;
+                }
+                
+                // Set all category buttons to inactive except "All"
+                categoryButtons.forEach(btn => {
+                    if (btn.getAttribute('data-category') === 'all') {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+                
+                // Show all categories
+                faqCategories.forEach(cat => cat.style.display = 'block');
+                
+                // Filter questions
+                faqQuestions.forEach(question => {
+                    const questionText = question.textContent.toLowerCase();
+                    const answerText = question.nextElementSibling.textContent.toLowerCase();
+                    
+                    if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+                        question.parentElement.style.display = 'block';
+                        resultsFound = true;
+                    } else {
+                        question.parentElement.style.display = 'none';
+                    }
+                });
+                
+                // Check for empty categories
+                faqCategories.forEach(category => {
+                    const visibleQuestions = category.querySelectorAll('.faq-item[style*="display: block"]');
+                    if (visibleQuestions.length === 0) {
+                        category.style.display = 'none';
+                    }
+                });
+                
+                // Show no results message if needed
+                noResults.style.display = resultsFound ? 'none' : 'block';
+            }
+            
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        });
+    </script>
