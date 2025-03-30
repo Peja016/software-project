@@ -1,28 +1,36 @@
 :root {
     --custom-red: #e63946;
     --custom-background: #f1faee;
-    --custom-lightBlue: ##a8dadc;
+    --custom-lightBlue: #a8dadc;
     --custom-primary: #457b9d;
     --custom-darkBlue: #1d3557;
+    --custom--light: #F7F8F3;    
+    --transition-speed: 0.3s;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    --gray: #6c757d;
+    --light-gray: #e9ecef;
 }
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     position: relative;
-    font-family: "Roboto", Arial, Helvetica, sans-serif;
     margin: 0;
+    background-color: var(--custom--light);
 }
 
 main {
-    min-height: calc(100vh - 6.25em);
+    min-height: calc(100vh - 303px);
 }
 
 a {
     text-decoration: none;
     color: inherit;
+    transition: all 250ms;
 }
 
 header {
@@ -32,6 +40,7 @@ header {
     right: 0;
     height: 5rem;
     z-index: 100;
+    background-color: white;
 }
 
 #map {
@@ -41,6 +50,11 @@ header {
 
 .gm-ui-hover-effect {
     display: none !important;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
 }
 
 .flex {
@@ -84,15 +98,55 @@ h1 {
     font-size: 2.25em;
 }
 
+/* Footer Styles */
 footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 0.5em 1.5em;
-    height: 6.25rem;
+    background-color: var(--custom-darkBlue);
 }
 
-.footer-logo {
-    width: 6em;
+.footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2em 1em;
 }
 
+.main-footer {
+    color: white;
+}
+
+.footer-content {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 40px;
+    justify-content: space-between;
+}
+
+.footer-content p {
+    margin-bottom: 10px;
+}
+
+.footer-info, .footer-links {
+    width: 33.33%;
+}
+
+.footer-email {
+    flex: 1;
+}
+
+.footer-info h3, .footer-links h3, .footer-email h3 {
+    color: var(--custom-lightBlue);
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.footer-content a:hover {
+    color: var(--custom-lightBlue);
+}
+
+.footer-credits a {
+    color: var(--custom-red);
+}
+
+.footer-credits a:hover {
+    color: var(--custom-lightBlue);
+}
