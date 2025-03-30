@@ -249,9 +249,8 @@ ul {
 
 .section-title {
     text-align: center;
-    font-size: 32px;
+    font-size: 2em;
     color: var(--custom-darkBlue);
-    margin-bottom: 50px;
 }
 
 .feature-cards {
