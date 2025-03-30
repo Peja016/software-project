@@ -5,31 +5,110 @@
 {% endblock %}
 {% block content %}
     <div class="container">
-        <h1 style="text-align: center;">Contact Us</h1>
-        <div class="form">
-            <div class="label">
-                <p>Full Name</p>
-                <input name="name" />
+        <h1 style="text-align: center; margin-bottom: 2rem;">Contact Us</h1>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Get in Touch</h2>
+                
+                <div class="info-item">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/address.svg') }}" alt="icon-address">
+                    </div>
+                    <div>
+                        <p>Address:</p>
+                        <p>University College Dublin, Belfield</p>
+                        <p>Dublin 4, Ireland</p>
+                        <p>Eircode: D04 V1W8</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/phone.svg') }}" alt="icon-phone">
+                    </div>
+                    <div>
+                        <p>Phone:</p>
+                        <p><a href="tel:+35317167777">UCD phone: +353 1 716 7777</a></p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/time.svg') }}" alt="icon-time">
+                    </div>
+                    <div>
+                        <p>Opening Hours:</p>
+                        <p>Monday - Friday: 8:00 AM - 8:00 PM</p>
+                        <p>Saturday - Sunday: 9:00 AM - 6:00 PM</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/team.svg') }}" alt="icon-team">
+                    </div>
+                    <div>
+                        <p>Our Team:</p>
+                        <div style="margin-top: 15px;">
+                            <!-- Tan -->
+                            <div class="team-member-info">
+                                <img src="{{ url_for('static', filename='images/tan.jpeg') }}" alt="Tan" class="team-member-photo">
+                                <div>
+                                    <p style="margin: 0; font-weight: bold;">Tan</p>
+                                    <p style="margin: 3px 0;">24211515</p>
+                                    <p style="margin: 0;"><a href="mailto:hsuan-yu.tan@ucdconnect.ie">hsuan-yu.tan@ucdconnect.ie</a></p>
+                                </div>
+                            </div>
+                            
+                            <!-- Kexun -->
+                            <div class="team-member-info">
+                                <img src="{{ url_for('static', filename='images/kexun.jpeg') }}" alt="Kexun" class="team-member-photo">
+                                <div>
+                                    <p style="margin: 0; font-weight: bold;">Kexun</p>
+                                    <p style="margin: 3px 0;">24204204</p>
+                                    <p style="margin: 0;"><a href="mailto:kexun.liu@ucdconnect.ie">kexun.liu@ucdconnect.ie</a></p>
+                                </div>
+                            </div>
+                            
+                            <!-- Herman -->
+                            <div class="team-member-info">
+                                <img src="{{ url_for('static', filename='images/herman.JPG') }}" alt="Herman" class="team-member-photo">
+                                <div>
+                                    <p style="margin: 0; font-weight: bold;">Herman</p>
+                                    <p style="margin: 3px 0;">24103685</p>
+                                    <p style="margin: 0;"><a href="mailto:herman.dolhyi@ucdconnect.ie">herman.dolhyi@ucdconnect.ie</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="label">
-                <p>Email</p>
-                <input name="email" type="email" placeholder="example3345678@xmail.com" />
+            
+            <div class="form">
+                <div class="label">
+                    <p>Full Name</p>
+                    <input name="name" />
+                </div>
+                <div class="label">
+                    <p>Email</p>
+                    <input name="email" type="email" placeholder="example3345678@xmail.com" />
+                </div>
+                <div class="label">
+                    <p>phone</p>
+                    <input name="phone" type="phone" />
+                </div>
+                <div class="label">
+                    <p>Message</p>
+                    <textarea name="message" placeholder="Enter your message"></textarea>
+                </div>
+                <p id="errorMessage" style="color: red; display: none; font-size: 0.875em;"></p>
+                <div class="label">
+                    <input type="submit" disabled value="SUBMIT" />
+                </div>
             </div>
-            <div class="label">
-                <p>phone</p>
-                <input name="phone" type="phone" />
+            <div class="center pop-up">
+                Submission Completed
             </div>
-            <div class="label">
-                <p>Message</p>
-                <textarea name="message" placeholder="Enter your message"></textarea>
-            </div>
-            <p id="errorMessage" style="color: red; display: none; font-size: 0.875em;"></p>
-            <div class="label">
-                <input type="submit" disabled value="SUBMIT" />
-            </div>
-        </div>
-        <div class="center pop-up">
-            Submission Completed
         </div>
     </div>
     <script src="static/js/contact.js"></script>

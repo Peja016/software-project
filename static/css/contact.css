@@ -7,7 +7,7 @@ input, textarea {
     font-size: 1rem;
     width: 100%;
     box-sizing: border-box;
-    background-color: transparent;
+    background-color: white;
     color: var(--custom-darkBlue);
     transition: all 250ms;
 }
@@ -50,12 +50,19 @@ textarea {
     padding: 1em;
 }
 
-.form {
-    max-width: 470px;
-    margin: auto;
+
+.contact-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 3.125rem;
 }
 
-.form > .label {
+.contact-info, .form {
+    flex: 1;
+    min-width: 300px;
+}
+
+.form > .label:not(:first-child) {
     margin-top: 1em;
 }
 
@@ -84,6 +91,37 @@ textarea {
     opacity: 0;
     color: var(--custom-primary);
     pointer-events: none;
+}
+
+
+.info-item {
+    margin-top: 20px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.info-item .icon {
+    margin-right: 1rem;
+    color: var(--custom-red);
+    width: 1.5em;
+}
+
+.info-item a {
+    color: var(--custom-darkBlue);
+}
+
+.team-member-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.team-member-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1em;
 }
 
 @media screen and (max-width: 772px) {
