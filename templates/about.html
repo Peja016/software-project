@@ -2,324 +2,9 @@
 {% extends "base.html" %}
 {% block title %}About us - Dublin Bike Share{% endblock %}
 {% block style %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/rent.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
 {% endblock %}
 {% block content %}
-    <script src="scripts.js" defer></script>
-    <style>
-        .about-section {
-            padding: 100px 0 80px;
-        }
-        
-        .about-section h1 {
-            margin-bottom: 40px;
-        }
-        
-        .about-intro {
-            margin-bottom: 50px;
-        }
-        
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
-        }
-        
-        .about-card {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            padding: 25px;
-            /* Removed transition property to disable hover animation */
-        }
-        
-        /* Removed hover transform effect */
-        
-        .about-card h3 {
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-        
-        .about-card .icon {
-            font-size: 40px;
-            margin-bottom: 20px;
-            color: var(--secondary);
-        }
-        
-        .stats-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin: 50px 0;
-        }
-        
-        .stat-item {
-            text-align: center;
-            flex: 1;
-            min-width: 200px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-number {
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-        
-        .stat-label {
-            color: var(--dark-blue);
-            font-size: 18px;
-        }
-        
-        .history-timeline {
-            margin: 60px 0;
-            position: relative;
-        }
-        
-        .history-timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 100%;
-            background-color: var(--light-gray);
-        }
-        
-        .timeline-item {
-            margin-bottom: 50px;
-            position: relative;
-            display: flex;
-        }
-        
-        .timeline-item:nth-child(odd) {
-            justify-content: flex-start;
-            padding-right: 50%;
-        }
-        
-        .timeline-item:nth-child(even) {
-            justify-content: flex-end;
-            padding-left: 50%;
-        }
-        
-        .timeline-content {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            padding: 25px;
-            position: relative;
-            width: 80%;
-        }
-        
-        .timeline-date {
-            position: absolute;
-            top: 0;
-            background-color: var(--primary);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-        
-        .timeline-item:nth-child(odd) .timeline-date {
-            right: -20px;
-        }
-        
-        .timeline-item:nth-child(even) .timeline-date {
-            left: -20px;
-        }
-        
-        .timeline-content h3 {
-            color: var(--dark-blue);
-            margin: 20px 0 15px;
-        }
-        
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
-        }
-        
-        .team-member {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-            transition: transform 0.3s;
-        }
-        
-        .team-member:hover {
-            transform: translateY(-10px);
-        }
-        
-        .team-photo {
-            height: 250px;
-            overflow: hidden;
-        }
-        
-        .team-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .team-info {
-            padding: 20px;
-        }
-        
-        .team-info h3 {
-            color: var(--dark-blue);
-            margin-bottom: 5px;
-        }
-        
-        .team-position {
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-        
-        /* Sponsors Stripe Styling */
-        .sponsors-section {
-            margin: 60px 0 0;
-            text-align: center;
-        }
-        
-        .sponsors-section h2 {
-            color: var(--dark-blue);
-            margin-bottom: 20px;
-        }
-        
-        .sponsors-stripe {
-          background-color: var(--light);
-          border-top: 1px solid #e5e5e5;
-          border-bottom: 1px solid #e5e5e5;
-          padding: 15px 0;
-          overflow: hidden;
-          position: relative;
-        }
-
-        .sponsors-slider {
-          width: 100%;
-          overflow: hidden;
-        }
-
-        .sponsors-track {
-          display: flex;
-          animation: scroll 30s linear infinite;
-        }
-
-        .sponsor-slide {
-          flex: 0 0 auto;
-          padding: 0 25px;
-        }
-
-        .sponsor-slide img {
-          height: 40px;
-          width: auto;
-          object-fit: contain;
-          filter: grayscale(100%);
-          opacity: 0.7;
-          transition: all 0.3s ease;
-        }
-
-        .sponsor-slide img:hover {
-          filter: grayscale(0%);
-          opacity: 1;
-        }
-
-        @keyframes scroll {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(calc(-50% - 25px)); /* Move to show the duplicated set */
-          }
-        }
-
-        /* Pause animation on hover */
-        .sponsors-slider:hover .sponsors-track {
-          animation-play-state: paused;
-        }
-        
-        @media (max-width: 768px) {
-            .history-timeline::before {
-                left: 20px;
-            }
-            
-            .timeline-item {
-                padding-right: 0 !important;
-                padding-left: 60px !important;
-                justify-content: flex-start !important;
-            }
-            
-            .timeline-content {
-                width: 100%;
-            }
-            
-            .timeline-item:nth-child(odd) .timeline-date,
-            .timeline-item:nth-child(even) .timeline-date {
-                left: -20px;
-                right: auto;
-            }
-            
-            .sponsor-slide {
-                padding: 0 15px;
-            }
-            
-            .sponsor-slide img {
-                height: 30px;
-            }
-        }
-    </style>
-
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Login</h2>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-                <p class="form-footer">Don't have an account? <a href="#" id="showRegisterForm">Register here</a></p>
-            </form>
-        </div>
-    </div>
-
-    <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Register</h2>
-            <form id="registerForm">
-                <div class="form-group">
-                    <label for="fullName">Full Name:</label>
-                    <input type="text" id="fullName" name="fullName" required>
-                </div>
-                <div class="form-group">
-                    <label for="regEmail">Email:</label>
-                    <input type="email" id="regEmail" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="regPassword">Password:</label>
-                    <input type="password" id="regPassword" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="confirmPassword">Confirm Password:</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Register</button>
-                <p class="form-footer">Already have an account? <a href="#" id="showLoginForm">Login here</a></p>
-            </form>
-        </div>
-    </div>
 
     <section class="about-section">
         <div class="container">
@@ -349,31 +34,37 @@
             </div>
             
             <!-- Replace the existing mission section with this -->
-            <h2 style="color: var(--dark-blue); margin: 40px 0 20px;">Our Mission</h2>
+            <h2 style="color: var(--custom-darkBlue); margin: 40px 0 20px;">Our Mission</h2>
             <p>Dublin Bike Share is committed to providing sustainable, accessible transportation options that enhance urban mobility while reducing environmental impact. We aim to:</p>
             
             <div class="about-grid">
                 <div class="about-card">
-                    <div class="icon">🌱</div>
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/env.svg') }}" alt="icon-env">
+                    </div>
                     <h3>Environmental Sustainability</h3>
                     <p>Reduce carbon emissions and promote eco-friendly transportation alternatives to combat climate change and improve Dublin's air quality.</p>
                 </div>
                 
                 <div class="about-card">
-                    <div class="icon">🚲</div>
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/bike.svg') }}" alt="icon-bike">
+                    </div>
                     <h3>Accessible Mobility</h3>
                     <p>Make cycling accessible to everyone by providing affordable, convenient transportation options throughout the city.</p>
                 </div>
                 
                 <div class="about-card">
-                    <div class="icon">🏙️</div>
+                    <div class="icon">
+                        <img src="{{ url_for('static', filename='images/urban.svg') }}" alt="icon-urban">
+                    </div>
                     <h3>Urban Development</h3>
                     <p>Support Dublin's growth as a smart, sustainable city by integrating cycling infrastructure with other public transportation systems.</p>
                 </div>
                 
             </div>
             
-            <h2 style="color: var(--dark-blue); margin: 60px 0 20px;">Our History</h2>
+            <h2 style="color: var(--custom-darkBlue); margin: 60px 0 20px;">Our History</h2>
             
             <div class="history-timeline">
                 <div class="timeline-item">
@@ -426,68 +117,6 @@
             </div>
         </div>
     </section>
-    
-    <!-- Sponsors Section with Title above -->
-    <div class="sponsors-section">
-        <h2>Our Partners:</h2>
-        <div class="sponsors-stripe">
-          <div class="sponsors-slider">
-            <div class="sponsors-track">
-              <!-- First set with titles -->
-              <div class="sponsor-slide">
-                <img src="dcc.png" alt="Dublin City Council">
-                <p class="sponsor-name">Dublin City Council</p>
-              </div>
-              <div class="sponsor-slide">
-                <img src="nta.png" alt="National Transport Authority">
-                <p class="sponsor-name">NTA</p>
-              </div>
-              <div class="sponsor-slide">
-                <img src="jdc.png" alt="JCDecaux">
-                <p class="sponsor-name">JCDecaux</p>
-              </div>
-              <div class="sponsor-slide">
-                <img src="seai.png" alt="SEAI">
-                <p class="sponsor-name">SEAI</p>
-              </div>
-              <div class="sponsor-slide">
-                <img src="tfi.png" alt="Transport for Ireland">
-                <p class="sponsor-name">TFI</p>
-              </div>
-              <div class="sponsor-slide">
-                <img src="tfibikes.png" alt="TFI Bikes">
-                <p class="sponsor-name">TFI Bikes</p>
-              </div>
-              
-              <!-- Duplicate set -->
-              <div class="sponsor-slide">
-                <img src="dcc.png" alt="Dublin City Council">
-                <p class="sponsor-name">Dublin City Council</p>
-              </div>
-              <div class="sponsor-slide">
-                <img src="nta.png" alt="National Transport Authority">
-                <p class="sponsor-name">NTA</p>
-              </div>
-              <div class="sponsor-slide">
-                <img src="jdc.png" alt="JCDecaux">
-                <p class="sponsor-name">JCDecaux</p>
-              </div>
-              <div class="sponsor-slide">
-                <img src="seai.png" alt="SEAI">
-                <p class="sponsor-name">SEAI</p>
-              </div>
-              <div class="sponsor-slide">
-                <img src="tfi.png" alt="Transport for Ireland">
-                <p class="sponsor-name">TFI</p>
-              </div>
-              <div class="sponsor-slide">
-                <img src="tfibikes.png" alt="TFI Bikes">
-                <p class="sponsor-name">TFI Bikes</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
     <script>
         // Cookie consent functionality

@@ -5,10 +5,10 @@
     --custom-primary: #457b9d;
     --custom-darkBlue: #1d3557;
     --custom--light: #F7F8F3;    
-    --transition-speed: 0.3s;
-    font-family: "Roboto", Arial, Helvetica, sans-serif;
     --gray: #6c757d;
     --light-gray: #e9ecef;
+    --transition-speed: 0.3s;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
 }
 
 * {
@@ -24,7 +24,7 @@ body {
 }
 
 main {
-    min-height: calc(100vh - 303px);
+    min-height: calc(100vh - 306px);
 }
 
 a {
@@ -33,14 +33,60 @@ a {
     transition: all 250ms;
 }
 
+input, textarea {
+    font-family: inherit;
+    border: 1px solid #002C3E;
+    border-radius: 6px;
+    min-height: 2.5rem;
+    padding: 0.25rem 1em;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: white;
+    color: var(--custom-darkBlue);
+    transition: all 250ms;
+}
+
+textarea:hover, input:hover {
+    border-color: var(--custom-primary);
+}
+
+button {
+    border: 1px solid var(--custom-darkBlue);
+    border-radius: 0.375rem;
+    background-color: var(--custom-lightBlue);
+    color: var(--custom-darkBlue);
+    padding: 1em;
+}
+
 header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    height: 5rem;
     z-index: 100;
     background-color: white;
+}
+
+header a {
+    position: relative;
+    padding: 0.25rem 0;
+}
+
+header a:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--custom-red);
+    transition: width var(--transition-speed);
+}
+
+header a:hover:after,
+header a.active:after {
+    width: 100%;
 }
 
 #map {
@@ -59,6 +105,7 @@ img {
 
 .flex {
     display: flex;
+    gap: 1em
 }
 
 .container {
@@ -92,6 +139,17 @@ img {
 
 .desktop {
     gap: 1.75em;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2em;
+    color: var(--custom-darkBlue);
+}
+
+.icon {
+    margin-right: 1rem;
+    width: 2.5em;
 }
 
 h1 {
@@ -141,6 +199,13 @@ footer {
 
 .footer-content a:hover {
     color: var(--custom-lightBlue);
+}
+
+.footer-credits {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
 }
 
 .footer-credits a {
