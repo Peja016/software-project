@@ -37,10 +37,6 @@ def map():
         bikes_api_url="/api/bikesInfo",
     )
 
-@app.route('/how')
-def how():
-    return render_template("how.html")
-
 @app.route('/use')
 def use():
     return render_template("use.html")

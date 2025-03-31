@@ -1,9 +1,10 @@
 {% extends "base.html" %} {% block title %}Map - Dublin Bike Share{% endblock %}
 {% block style %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}" />
-{% endblock %} {% block content %}
+{% endblock %} 
+{% block content %}
 <div style="padding: 8em 0">
-  <div class="container" style="padding: 0">
+  <div class="container" style="padding: 0 1em">
     <div class="flex journey">
       <input id="origin" type="text" placeholder="Enter start location" />
       <input id="destination" type="text" placeholder="Enter destination" />
@@ -139,7 +140,10 @@
             originMarker = new google.maps.Marker({
               position: startLoc,
               map: map,
-              label: "S",
+              label: {
+                text: 'S',
+                color: 'white'
+              },
               zIndex: 5
             });
 
@@ -147,7 +151,10 @@
             destinationMarker = new google.maps.Marker({
               position: endLoc,
               map: map,
-              label: "D",
+              label: {
+                text: 'D',
+                color: 'white'
+              },
               zIndex: 5
             });
           } else {

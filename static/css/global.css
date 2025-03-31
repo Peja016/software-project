@@ -21,6 +21,7 @@ body {
     position: relative;
     margin: 0;
     background-color: var(--custom--light);
+    color: var(--custom-darkBlue);
 }
 
 main {
@@ -113,7 +114,6 @@ img {
     max-width: 1280px;
     margin: 0 auto;
     padding: 7em 1em;
-    color: var(--custom-darkBlue);
 }
 
 .center {
@@ -149,7 +149,7 @@ img {
 
 .icon {
     margin-right: 1rem;
-    width: 2.5em;
+    width: 2.5rem;
 }
 
 h1 {
