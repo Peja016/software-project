@@ -7,3 +7,28 @@
 .journey button {
     margin-bottom: 1em;
 }
+
+#weather {
+    display: flex;
+    gap: 0.5em;
+    padding: 0em 1em;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    margin: 0 10px;
+    font-size: 1rem;
+}
+
+#weather-icon {
+    width: 4rem;
+}
+
+#legend {
+    background-color: white;
+    padding: 0.25em 0.5em;
+    display: flex;
+    gap: 0.25em;
+    font-size: 1rem;
+    margin: 10px 0;
+    align-items: center;
+}

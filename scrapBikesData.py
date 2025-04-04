@@ -7,7 +7,7 @@ import pandas as pd
 
 from dbConnect import getEngine
 
-from bikesData import getBikesData
+from getBikeData import getBikeData
 
 load_dotenv() # Load environment variables from .env file
 
@@ -45,7 +45,7 @@ def storeBikesData():
     """
     cursor.execute(createPositionTable)
 
-    res = getBikesData()
+    res = getBikeData()
 
     # Check if the request was successful (status code 200 means success)
     if res.status_code == 200:

@@ -12,7 +12,14 @@
     </div>
   </div>
   <div id="map">
-    <div></div>
+  </div>
+  <div id="weather">
+    <img id="weather-icon" alt="weather icon" />
+    <p></p>
+  </div>
+  <div id="legend">
+    <img src="{{ url_for('static', filename='images/location_gray.svg') }}" style="width: 2rem;" />
+    <p>No bikes available</p>
   </div>
 </div>
 <script src="{{ url_for('static', filename='js/fetchData.js') }}"></script>
@@ -28,6 +35,12 @@
       zoom: 15,
       center,
     });
+
+    const weather = document.getElementById("weather");
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(weather);
+
+    const legend = document.getElementById("legend");
+    map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(legend);
 
     directionsService = new google.maps.DirectionsService();
     directionsRenderer = new google.maps.DirectionsRenderer({
@@ -186,7 +199,20 @@
     });
   }
 </script>
-
+<script>
+    const getWeather = async () => {
+      const weatherData = await fetchData("{{ weather_api_url }}");
+      const temp = weatherData.main.temp
+      const iconCode = weatherData.weather[0].icon; // get icon code
+      const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+      const weatherContainer = document.getElementById("weather-icon");
+      document.getElementById("weather-icon").src = iconUrl;
+      const weather = document.getElementById("weather");
+      const text = weather.querySelector("p");
+      text.textContent = `${temp}℃`;
+    }
+    getWeather()
+</script>
 <script
   async
   defer

@@ -2,7 +2,8 @@ from flask import Flask, render_template, jsonify
 from bs4 import BeautifulSoup
 import os
 from dotenv import load_dotenv
-from bikesData import getBikesData
+from getBikeData import getBikeData
+from getWeatherData import getCurrentWeatherData
 from storeInfo import sentData
 import requests
 
@@ -17,7 +18,13 @@ def index():
 
 @app.route("/api/bikesInfo", methods=['POST'])
 def getBikesInfo():
-    res = getBikesData()
+    res = getBikeData()
+    if res.status_code == 200:
+        return jsonify(res.json())
+    
+@app.route("/api/weather", methods=['POST', 'GET'])
+def getCurrentWeatherInfo():
+    res = getCurrentWeatherData()
     if res.status_code == 200:
         return jsonify(res.json())
     
@@ -35,6 +42,7 @@ def map():
         lon=os.getenv('LON'),
         api=os.getenv('GOOGLE_MAP_API'),
         bikes_api_url="/api/bikesInfo",
+        weather_api_url="/api/weather",
     )
 
 @app.route('/use')
