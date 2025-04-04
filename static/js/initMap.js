@@ -1,4 +1,4 @@
-async function initMap() {
+export default async function initMap() {
     const bikeData = await fetchData("{{ bikes_api_url }}");
     const lat = "{{ lat }}"
     const lon = "{{ lon }}"

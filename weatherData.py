@@ -5,7 +5,7 @@ import time
 from dotenv import load_dotenv
 import pandas as pd
 
-from db import getEngine
+from dbConnect import getEngine
 
 # https://openweathermap.org/img/wn/04n.png
 

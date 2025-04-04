@@ -1,80 +1,140 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Group6 Bikes</title>
-    <link rel="stylesheet" href="../static/css/home.css">
-</head>
-<body>
-    <!-- Navigation Bar -->
-    <header>
-        <div class="logo">Dublin <span class="bike-icon">🚲</span> bikes</div>
-        <nav>
-            <ul>
-                <li><a href="#">HOME</a></li>
-                <li><a href="#">Get Started</a></li>
-                <li><a href="#">Pricing</a></li>
-                <li><a href="#">Safety</a></li>
-                <li><a href="#">Report an Issue</a></li>
-                <li><a href="#">News</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-        <div class="auth-buttons">
-            <button class="signup">Signup</button>
-            <button class="signin">Sign In</button>
-            <button class="pass">3-Day Pass</button>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
+{% extends "base.html" %} {% block title %}Home - Dublin Bike Share{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+{% endblock %} 
+{% block content %}
     <section class="hero">
-        <div class="hero-overlay">
-            <h1>Dubilin Bikes</h1>
-            <p>Your Everyday Companion!</p>
+        <div class="container">
+            <h2 style="text-shadow: 2px 2px 3px rgba(0,0,0,0.8);">
+                Explore Dublin on Two Wheels
+            </h2>
+            <p style="text-shadow: 2px 2px 3px rgba(0,0,0,0.8);">
+                Convenient, affordable, and eco-friendly bicycle rentals throughout Dublin
+            </p>
+            <div class="cta-buttons">
+                <a href="{{ url_for('rent') }}" class="btn btn-primary">Rent a Bike</a>
+                <a href="{{ url_for('map') }}" class="btn btn-secondary">Bigger Map</a>
+            </div>
         </div>
     </section>
 
-
-    <!-- Map -->
-    <div class="map">
-        <!-- code here -->
-    </div>
-
-    <!-- Description -->
-    <section class="description">
-        <p>Dublin Bikes offers a convenient and healthy way to explore the vibrant Dublin city center. 
-            With bike stations located throughout the city, it provides an easy and efficient means of transport. 
-            As Dublin's leading local travel and lifestyle service platform, it leverages digital technology to 
-            enhance accessibility, making everyday mobility more seamless and convenient for all.</p>
-        <div class="bike-image"><img src="athlete.jpg" alt="Our Bikes"></div>
-    </section>
-
-    <!-- News Section -->
-    <section class="news">
-        <h2>News</h2>
-        <div class="news-item">Service Disruption Notice: Bad Weather Warning - 22 January 2023</div>
-        <div class="news-item">Service Returned: Galway - Brown Station - 18 January 2023</div>
-    </section>
-
-    <!-- Dublin Bikes App -->
-    <section class="app-download">
-        <h2>Dublin Bikes App</h2>
-        <p>Download the Dublin Bikes App for easy access to rental stations.</p>
-        <div class="app-buttons">
-            <img src="google-play.png" alt="Google Play">
-            <img src="app-store.png" alt="App Store">
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose Dublin Bike Share?</h2>
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <div class="icon">🚲</div>
+                    <h3>Over 1,600 Bikes</h3>
+                    <p>Access to our large fleet of well-maintained bicycles across the city</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📍</div>
+                    <h3>115+ Stations</h3>
+                    <p>Conveniently located stations throughout Dublin's city center and beyond</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">💳</div>
+                    <h3>Flexible Plans</h3>
+                    <p>Choose from annual subscriptions, 3-day passes, or pay-as-you-go options</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <p>Roebuck Hall House1, UCD Belfield campus, Dublin, Ireland</p>
-            <p>Email: XXXXXXX@tfibikes.ie</p>
-            <p><a href="#">Terms & Conditions</a> | <a href="#">Privacy Policy</a></p>
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Register</h3>
+                    <p>Sign up for an account in just a few minutes</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Find a Bike</h3>
+                    <p>Locate your nearest station on our map</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Unlock & Ride</h3>
+                    <p>Use the app or your card to unlock a bike and enjoy your ride</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Return</h3>
+                    <p>Return the bike to any station when you're done</p>
+                </div>
+            </div>
+            <div class="cta-center">
+                <a href="how.html" class="btn btn-secondary">Learn More</a>
+            </div>
         </div>
-    </footer>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Users Say</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                        <img src="{{ url_for('static', filename='images/tan.png') }}" alt="Tan" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+                        <div>
+                            <p class="author-name" style="font-weight: bold; margin: 0;">Tan</p>
+                            <p class="author-title" style="margin: 0;">Full stack Developer</p>
+                        </div>
+                    </div>
+                    <p class="quote">"I am glad I can rent a bike in Dublin, now I can finally be in time for my basketball games"</p>
+                </div>
+                <div class="testimonial">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                        <img src="{{ url_for('static', filename='images/kexun.jpeg') }}" alt="Kexun" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+                        <div>
+                            <p class="author-name" style="font-weight: bold; margin: 0;">Kexun</p>
+                            <p class="author-title" style="margin: 0;">CEO</p>
+                        </div>
+                    </div>
+                    <p class="quote">"Going to Confucius restaraunt by bike is very convenient"</p>
+                </div>
+                <div class="testimonial">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                        <img src="{{ url_for('static', filename='images/herman.JPG') }}" alt="Herman" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+                        <div>
+                            <p class="author-name" style="font-weight: bold; margin: 0;">Herman</p>
+                            <p class="author-title" style="margin: 0;">Daily Commuter</p>
+                        </div>
+                    </div>
+                    <p class="quote">"Compared to the Dublin bus, Dublin Bike will never ghost you!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const testimonials = document.querySelectorAll('.testimonial');
+            let currentIndex = 0;
+            
+            testimonials.forEach((testimonial, index) => {
+                if (index !== 0) {
+                    testimonial.style.opacity = 0;
+                    testimonial.style.visibility = 'hidden';
+                }
+            });
+        
+            function showNextTestimonial() {
+                testimonials[currentIndex].style.opacity = 0;
+                testimonials[currentIndex].style.visibility = 'hidden';
+                
+                currentIndex = (currentIndex + 1) % testimonials.length;
+                
+                testimonials[currentIndex].style.opacity = 1;
+                testimonials[currentIndex].style.visibility = 'visible';
+            }
+        
+            setInterval(showNextTestimonial, 3000);
+        });
+    </script>
+
 </body>
-</html>
+{% endblock %} 

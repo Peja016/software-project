@@ -1,4 +1,4 @@
-from db import getCursor
+from dbConnect import getCursor
 
 cursor, connection = getCursor()
 

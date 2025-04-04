@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Dublin Bikes - Group 6{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/global.css') }}"
+    />
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    {% block style %} {% endblock %}
+  </head>
+  <body>
+    <header></header>
+    <script src="{{ url_for('static', filename='js/header.js') }}"></script>
+    <script>
+      let head = document.querySelector("header");
+
+      const navs = [
+        { label: "How to use", href: "{{ url_for('use') }}" },
+        { label: "Map", href: "{{ url_for('map') }}" },
+        { label: "Rent", href: "{{ url_for('rent') }}" },
+        { label: "About", href: "{{ url_for('about') }}" },
+        { label: "FAQ", href: "{{ url_for('faq') }}" },
+        { label: "Contact us", href: "{{ url_for('contact') }}" },
+      ];
+
+      head.innerHTML = `
+                <div class="flex divided">
+                    <a href="/">
+                        <div class="logo"><img width="100%" src="{{ url_for('static', filename='images/logo.svg') }}" /></div>
+                    </a>
+                    <div class="flex desktop">
+                        ${navs
+                          .map(
+                            ({ label, href }) =>
+                              `<a href=${href}><div style="font-size: 1.5em; font-weight: bold; color: #002C3E">${label}</div></a>`
+                          )
+                          .join("")}
+                    </div>
+                </div>
+            `;
+    </script>
+    <main>{% block content %}{% endblock %}</main>
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Dublin Bike Share</h3>
+                    <p>University College Dublin, Belfield</p>
+                    <p>Dublin 4, Ireland</p>
+                    <p>Eircode: D04 V1W8</p>
+                </div>
+                <div class="footer-email">
+                    <h3>Email</h3>
+                    <p>
+                        Tan:
+                        <a href="mailto:hsuan-yu.tan@ucdconnect.ie">
+                            hsuan-yu.tan@ucdconnect.ie
+                        </a>
+                    </p>
+                    <p>
+                        Kexun:
+                        <a href="mailto:kexun.liu@ucdconnect.ie">
+                            kexun.liu@ucdconnect.ie
+                        </a>
+                    </p>
+                    <p>
+                        Herman:
+                        <a href="mailto:herman.dolhyi@ucdconnect.ie">
+                            herman.dolhyi@ucdconnect.ie
+                        </a>
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <p><a href="{{ url_for('contact') }}">Contact</a></p>
+                    <p><a href="{{ url_for('faq') }}">FAQ</a></p>
+                </div>
+            </div>
+            <div class="footer-credits">
+                <p>
+                    © 2025 Dublin Bike Share. Developed by UCD students: Tan, Kexun and
+                    Herman
+                </p>
+                <p style="font-size: 14px; margin-top: 5px">
+                    Content adapted from
+                    <a href="https://www.bikeshare.ie" target="_blank">bikeshare.ie</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+  </body>
+</html>

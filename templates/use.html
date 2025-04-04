@@ -1,129 +1,97 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How to Use CityBike</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            text-align: center;
-        }
-        header {
-            background-color: #2d87f0;
-            color: white;
-            padding: 20px;
-            font-size: 24px;
-        }
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .steps {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-        }
-        .step {
-            width: 30%;
-            text-align: center;
-        }
-        .step img {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 10px;
-        }
-        .arrow {
-            width: 50px;
-            height: 20px;
-        }
-        .safety {
-            margin-top: 50px;
-            padding: 20px;
-            background-color: #e0f2ff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: left;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .safety h2 {
-            color: #2d87f0;
-            text-align: center;
-        }
-        .safety ul {
-            padding-left: 20px;
-        }
-        .safety ul li {
-            margin: 8px 0;
-            display: flex;
-            align-items: center;
-        }
-        .safety ul li::before {
-            content: "•";
-            color: #2d87f0;
-            font-size: 20px;
-            font-weight: bold;
-            display: inline-block;
-            width: 20px;
-        }
-    </style>
-</head>
-<body>
-    <header>How to Use CityBike</header>
+{% extends "base.html" %} {% block title %}Home - Dublin Bike Share{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/use.css') }}" />
+{% endblock %} 
+{% block content %}
     <div class="container">
-        <div class="steps">
-            <div class="step">
-                <h2>1. Rent a bike</h2>
-                <p>&#8250; Log in and choose a CityBike subscription<br>
-                   &#8250; Check and select your bike<br>
-                   &#8226; Release a bike<br>
-                   &#8250; No bike at the station?</p>
-                <img src="static/images/smartphone.jpg" alt="Renting a Bike">
+        <section class="how-to-section">
+            <h1 class="section-title">How to Use Dublin Bike Share</h1>
+            
+            <div class="intro-full-width">
+                <p>Using Dublin Bike Share is quick and easy. Our bike-sharing service provides a convenient and eco-friendly way to navigate Dublin's streets. Follow the simple steps below to start your journey.</p>
             </div>
-            <img class="arrow" src="static/images/blue_arrow.jpg" alt="Arrow">
-            <div class="step">
-                <h2>2. Using the service</h2>
-                <p>&#8250; The first 30 minutes are free<br>
-                   &#8250; Rules of the road<br>
-                   &#8250; Tips and best practices<br>
-                   &#8250; Locking the bike</p>
-                <img src="static/images/ride.png" alt="Using the Bike">
+            
+            <div class="how-to-content">
+                <div class="how-to-text">
+                    <div class="how-to-steps">
+                        <div class="how-to-step">
+                            <div class="how-to-step-number">
+                                <p>1</p>
+                                <img class="icon" style="margin-right: 0;" src="{{ url_for('static', filename='images/step1.svg') }}" />
+                            </div>
+                            <div>
+                                <h3>Register for an Account</h3>
+                                <p>Sign up via our website or app with basic info and payment details, choosing from annual memberships, 3-day passes, or pay-as-you-go plans.</p>
+                            </div>
+                        </div>
+                    
+                        <div class="how-to-step">
+                            <div class="how-to-step-number">
+                                <p>2</p>
+                                <img class="icon" style="margin-right: 0;" src="{{ url_for('static', filename='images/step2.svg') }}" />
+                            </div>
+                            <div>
+                                <h3>Find a Bike Station</h3>
+                                <p>Locate a nearby station using our map, with over 115 spots across Dublin’s city center and beyond.</p>
+                            </div>
+                        </div>
+                        <div class="how-to-step">
+                            <div class="how-to-step-number">
+                                <p>3</p>
+                                <img class="icon" style="margin-right: 0;" src="{{ url_for('static', filename='images/step3.svg') }}" />
+                            </div>
+                            <div>
+                                <h3>Unlock a Bike</h3>
+                                <p>Unlock a bike at the station with our app or card, then check its condition before you ride.</p>
+                            </div>
+                        </div>
+                        <div class="how-to-step">
+                            <div class="how-to-step-number">
+                                <p>4</p>
+                                <img class="icon" style="margin-right: 0;" src="{{ url_for('static', filename='images/step4.svg') }}" />
+                            </div>
+                            <div>
+                                <h3>Enjoy Your Ride</h3>
+                                <p>Ride safely within traffic rules, enjoying bikes built for city use with adjustable seats.</p>
+                            </div>
+                        </div>
+                        <div class="how-to-step">
+                            <div class="how-to-step-number">
+                                <p>5</p>
+                                <img class="icon" style="margin-right: 0;" src="{{ url_for('static', filename='images/step5.svg') }}" />
+                            </div>
+                            <div>
+                                <h3>Return the Bike</h3>
+                                <p>Dock the bike at any station until it beeps and locks, ensuring it’s secure to avoid extra fees.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="how-to-image">
+                    <img src="{{ url_for('static', filename='images/dbphoto.jpg') }}" alt="Illustration of bike rental process">
+                </div>
             </div>
-            <img class="arrow" src="static/images/blue_arrow.jpg" alt="Arrow">
-            <div class="step">
-                <h2>3. Return a bike</h2>
-                <p>&#8250; Choose a station<br>
-                   &#8226; Park a bike at a station<br>
-                   &#8250; No stands available to park at the station?<br>
-                   &#8250; Write a review</p>
-                <img src="static/images/return.png" alt="Returning a Bike">
+        </section>
+
+        <section class="safety-section">
+            <h1 class="section-title">Safety First</h1>
+            <p class="safety-intro">At Dublin Bike, safety is our top priority. It influences the way we design and enhance our bikes, shape rider education and training, and collaborate with cities to redesign streets, ensuring that people come before cars.</p>
+            
+            <div class="safety-policies">
+                <h2>Dublin Bike Safety Policies</h2>
+                <ol class="safety-list">
+                    <li>Please comply with the traffic safety laws and regulations of the area while riding. Dublin Bike is not responsible for any safety accidents caused by non-compliance with traffic laws and regulations, including but not limited to riding against traffic, ignoring traffic signals, dangerous riding, etc.</li>
+                    <li>To independently use Dublin Bike, you must be at least 18 years old. Young individuals between the ages of 14 and 18 should use Dublin Bike under the supervision of a guardian. Children under the age of 14 are not permitted to use Dublin Bike.</li>
+                    <li>We strongly recommend that you wear a helmet while riding, and we also welcome you to use your own helmet.</li>
+                    <li>We advise you to purchase accident insurance for transportation vehicles before riding.</li>
+                    <li>The final interpretation of the above terms and conditions belongs to Dublin Bike.</li>
+                </ol>
+                <div class="safety-image">
+                    <img src="{{ url_for('static', filename='images/helmet.jpg') }}" alt="Cyclist wearing helmet">
+                </div>
             </div>
-        </div>
-        <!-- Safety Section -->
-        <div class="safety">
-            <h2>Bicycle Safety Tips</h2>
-            <ul>
-                <li>Always wear a helmet for protection.</li>
-                <li>Follow traffic rules and signals.</li>
-                <li>Use hand signals when turning.</li>
-                <li>Stay in designated cycling lanes.</li>
-                <li>Be visible: wear bright clothes and use bike lights at night.</li>
-                <li>Check your bike before riding (brakes, tires, lights).</li>
-                <li>Avoid using headphones while cycling.</li>
-                <li>Be aware of pedestrians and other cyclists.</li>
-                <li>Lock your bike properly when not in use.</li>
-            </ul>
-        </div>
+        </section>
     </div>
-</body>
-</html>
+
+{% endblock %} 
