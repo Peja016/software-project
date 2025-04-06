@@ -1,0 +1,12 @@
+{% macro render_team(members) %}
+    {% for member in members %}
+        <div class="team-member-info">
+            <img src="{{ url_for('static', filename='images/' + member['pic']) }}" alt="{{ member['pic'] }}" class="team-member-photo">
+            <div>
+                <p style="margin: 0; font-weight: bold;">{{ member['name'] }}</p>
+                <p style="margin: 3px 0;">{{ member['id'] }}</p>
+                <p style="margin: 0;"><a href="{{ 'mailto:' + member['email'] }}">{{ member['email'] }}</a></p>
+            </div>
+        </div>
+    {% endfor %}
+{% endmacro %}

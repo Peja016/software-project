@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
 {% endblock %}
 {% block content %}
+{% import "components/contact_comp.html" as module %}
     <div class="container">
         <h1 style="text-align: center; margin-bottom: 2rem;">Contact Us</h1>
         <div class="contact-container">
@@ -50,35 +51,12 @@
                     <div>
                         <p>Our Team:</p>
                         <div style="margin-top: 15px;">
-                            <!-- Tan -->
-                            <div class="team-member-info">
-                                <img src="{{ url_for('static', filename='images/tan.jpeg') }}" alt="Tan" class="team-member-photo">
-                                <div>
-                                    <p style="margin: 0; font-weight: bold;">Tan</p>
-                                    <p style="margin: 3px 0;">24211515</p>
-                                    <p style="margin: 0;"><a href="mailto:hsuan-yu.tan@ucdconnect.ie">hsuan-yu.tan@ucdconnect.ie</a></p>
-                                </div>
-                            </div>
-                            
-                            <!-- Kexun -->
-                            <div class="team-member-info">
-                                <img src="{{ url_for('static', filename='images/kexun.jpeg') }}" alt="Kexun" class="team-member-photo">
-                                <div>
-                                    <p style="margin: 0; font-weight: bold;">Kexun</p>
-                                    <p style="margin: 3px 0;">24204204</p>
-                                    <p style="margin: 0;"><a href="mailto:kexun.liu@ucdconnect.ie">kexun.liu@ucdconnect.ie</a></p>
-                                </div>
-                            </div>
-                            
-                            <!-- Herman -->
-                            <div class="team-member-info">
-                                <img src="{{ url_for('static', filename='images/herman.JPG') }}" alt="Herman" class="team-member-photo">
-                                <div>
-                                    <p style="margin: 0; font-weight: bold;">Herman</p>
-                                    <p style="margin: 3px 0;">24103685</p>
-                                    <p style="margin: 0;"><a href="mailto:herman.dolhyi@ucdconnect.ie">herman.dolhyi@ucdconnect.ie</a></p>
-                                </div>
-                            </div>
+                            {{ module.render_team([
+                                    { 'pic': 'tan.png', 'id': 24211515, 'email': "hsuan-yu.tan@ucdconnect.ie" }, 
+                                    { 'pic': 'kexun.jpeg', 'id': 24204204, 'email': "kexun.liu@ucdconnect.ie" },
+                                    { 'pic': 'herman.JPG', 'id': 24103685, 'email': "herman.dolhyi@ucdconnect.ie" },
+                                ]) 
+                            }}
                         </div>
                     </div>
                 </div>

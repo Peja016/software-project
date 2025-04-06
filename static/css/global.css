@@ -4,7 +4,7 @@
     --custom-lightBlue: #a8dadc;
     --custom-primary: #457b9d;
     --custom-darkBlue: #1d3557;
-    --custom--light: #F7F8F3;    
+    --custom-light: #F7F8F3;    
     --gray: #6c757d;
     --light-gray: #e9ecef;
     --transition-speed: 0.3s;
@@ -20,7 +20,7 @@
 body {
     position: relative;
     margin: 0;
-    background-color: var(--custom--light);
+    background-color: var(--custom-light);
     color: var(--custom-darkBlue);
 }
 

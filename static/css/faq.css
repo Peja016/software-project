@@ -4,8 +4,7 @@
     }
     
     .faq-section p {
-        margin-bottom: 20px;
-        text-align: center;
+        margin-bottom: 10px;
     }
     
     .faq-categories {
@@ -40,7 +39,7 @@
     }
     
     .faq-category-title {
-        color: var(--dark-blue);
+        color: var(--custom-darkBlue);
         margin-bottom: 20px;
         padding-bottom: 10px;
         border-bottom: 2px solid var(--light-gray);
@@ -55,17 +54,18 @@
     }
     
     .faq-question {
-        padding: 20px;
+        padding: 10px 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         cursor: pointer;
         font-weight: 600;
-        color: var(--dark-blue);
+        color: var(--custom-darkBlue);
+        transition: all 0.3s;
     }
     
     .faq-question:hover {
-        background-color: var(--light);
+        background-color: var(--custom-lightBlue);
     }
     
     .faq-question:after {
@@ -83,14 +83,20 @@
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease-out;
-        background-color: var(--light);
+        background-color: white;
         padding: 0 20px;
+        border-top: 2px solid var(--custom-light);
     }
     
     .faq-answer-content {
         padding: 20px 0;
     }
-    
+
+    ul, ol {
+        padding-left: 20px;
+        margin: 10px 0;
+    }
+
     .search-container {
         margin-bottom: 30px;
     }
@@ -126,7 +132,7 @@
     }
     
     .contact-cta {
-        background-color: var(--light);
+        background-color: white;
         border-radius: 10px;
         padding: 30px;
         margin-top: 50px;
@@ -134,6 +140,6 @@
     }
     
     .contact-cta h3 {
-        color: var(--dark-blue);
+        color: var(--custom-darkBlue);
         margin-bottom: 20px;
     }

@@ -62,7 +62,7 @@
 
 /* Features Section */
 .features {
-    background-color: var(--custom--light);
+    background-color: var(--custom-light);
 }
 
 .section-title {
@@ -90,10 +90,10 @@
 }
 
 .feature-card .icon {
-    font-size: 40px;
     margin-bottom: 20px;
-    width: auto;
-    margin-right: 0;
+    width: '2.5rem';
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .feature-card h3 {

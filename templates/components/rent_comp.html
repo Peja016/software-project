@@ -1,0 +1,151 @@
+{% macro render_subscription_card(subscriptions) %}
+    {% for subscription in subscriptions %}
+        <div class="subscription-card">
+            <h3>{{ subscription['title'] }}</h3>
+            <div class="subscription-price">{{ subscription['price'] }} <span>{{ subscription['period'] }}</span></div>
+            <p>{{ subscription['description'] }}</p>
+            <ul class="feature-list">
+                {% for feature in subscription['features'] %}
+                    <li>{{ feature }}</li>
+                {% endfor %}
+            </ul>
+            <button class="btn btn-primary subscription-btn" data-plan="{{ subscription['plan'] }}" data-price="{{ subscription['price_value'] }}">{{ subscription['button_text'] }}</button>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_bike_card(bikes) %}
+    {% for bike in bikes %}
+        <div class="bike-card">
+            <div class="bike-image">
+                <img src="{{ url_for('static', filename=bike['image']) }}" alt="{{ bike['name'] }}">
+            </div>
+            <div class="bike-details">
+                <h3>{{ bike['name'] }}</h3>
+                <p>{{ bike['description'] }}</p>
+                
+                <div class="bike-specs">
+                    {% for spec in bike['specs'] %}
+                        <div class="spec-item">
+                            <span>{{ spec['label'] }}</span>
+                            <span>{{ spec['value'] }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="bike-price">{{ bike['price'] }}</div>
+                
+                <div class="bike-actions">
+                    <button class="btn btn-primary book-btn" data-bike-id="{{ bike['id'] }}" data-bike-name="{{ bike['name'] }}" data-bike-price="{{ bike['price_value'] }}">Book Now</button>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_payment_modal() %}
+    <div id="paymentModal" class="payment-modal">
+        <div class="payment-modal-content">
+            <span class="payment-close">&times;</span>
+            
+            <div class="payment-header">
+                <h2>Complete Your Booking</h2>
+                <p>Enter your payment details to confirm your rental</p>
+            </div>
+            
+            <div class="selected-bike">
+                <h3 id="selectedBikeName">Standard City Bike</h3>
+                <p id="selectedBikePrice">€5.00 for 3-hour rental</p>
+            </div>
+            
+            <div class="payment-tabs">
+                <div class="payment-tab active" data-tab="card">Credit/Debit Card</div>
+                <div class="payment-tab" data-tab="paypal">PayPal</div>
+            </div>
+            
+            <div class="payment-methods">
+                <label>
+                    <input type="radio" name="paymentMethod" value="visa" checked>
+                    Visa/Mastercard
+                </label>
+                <label>
+                    <input type="radio" name="paymentMethod" value="amex">
+                    American Express
+                </label>
+            </div>
+            
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label for="cardName">Name on Card:</label>
+                    <input type="text" id="cardName" name="cardName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cardNumber">Card Number:</label>
+                    <input type="text" id="cardNumber" name="cardNumber" placeholder="XXXX XXXX XXXX XXXX" required>
+                </div>
+                
+                <div style="display: flex; gap: 20px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="expiryDate">Expiry Date:</label>
+                        <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" required>
+                    </div>
+                    
+                    <div class="form-group" style="flex: 1;">
+                        <label for="cvv">CVV:</label>
+                        <input type="text" id="cvv" name="cvv" placeholder="XXX" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Pay Now</button>
+            </form>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro render_auth_modals() %}
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p class="form-footer">Don't have an account? <a href="#" id="showRegisterForm">Register here</a></p>
+            </form>
+        </div>
+    </div>
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Register</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email:</label>
+                    <input type="email" id="regEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password:</label>
+                    <input type="password" id="regPassword" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <p class="form-footer">Already have an account? <a href="#" id="showLoginForm">Login here</a></p>
+            </form>
+        </div>
+    </div>
+{% endmacro %}

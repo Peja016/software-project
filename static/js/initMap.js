@@ -52,7 +52,7 @@ export async function initMap() {
               (available_bikes
                 ? available_bike_stands
                   ? ""
-                  : "_lightBlue"
+                  : "_darkBlue"
                 : "_gray") +
               ".svg",
             scaledSize: new google.maps.Size(40, 40),

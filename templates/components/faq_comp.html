@@ -1,0 +1,24 @@
+{% macro render_category_buttons(categories) %}
+    {% for category in categories %}
+        <button class="category-btn {% if category['active'] %}active{% endif %}" data-category="{{ category['id'] }}">{{ category['name'] }}</button>
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_faq_category(categories) %}
+    {% for category in categories %}
+        <div class="faq-category" id="{{ category['id'] }}">
+            <h2 class="faq-category-title">{{ category['title'] }}</h2>
+            
+            {% for item in category['items'] %}
+                <div class="faq-item">
+                    <div class="faq-question">{{ item['question'] }}</div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            {{ item['answer']|safe }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endmacro %}
