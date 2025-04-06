@@ -21,10 +21,10 @@ export async function initMap() {
     google.maps.ControlPosition.TOP_RIGHT
   ].push(legend);
 
-  if (bikeData) {
-    legend.style.opacity = 1
-    weather.style.opacity = 1
-  }
+  setTimeout(() => {
+    legend.style.opacity = 1;
+    weather.style.opacity = 1;
+  }, 1000);
 
   directionsService = new google.maps.DirectionsService();
   directionsRenderer = new google.maps.DirectionsRenderer({
@@ -203,5 +203,3 @@ export async function initMap() {
     }, 5000);
   });
 }
-
-window.initMap = initMap

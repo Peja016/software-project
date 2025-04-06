@@ -18,16 +18,12 @@
     <p></p>
   </div>
   <div id="legend">
-    {% set items = "bikes" %}
-    {% set icon = "gray" %}
-    {% include "components/legend.html" %}
-    {% set item = "stands" %}
-    {% set icon = "lightBlue" %}
-    {% include "components/legend.html" %}
+    {% from "components/legend.html" import render_legend %}
+    {{ render_legend([{ 'icon': 'gray', 'text': 'bikes' }, { 'icon': 'lightBlue', 'text': 'stands' }]) }}
   </div>
 </div>
 <!-- <script type="module" src="{{ url_for('static', filename='js/initMap.js') }}"></script> -->
-<script>
+<script type="module">
   window.initMap = function () {
     import("{{ url_for('static', filename='js/initMap.js') }}")
       .then(module => module.initMap())

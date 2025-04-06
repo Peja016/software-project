@@ -21,6 +21,7 @@
     background-color: white;
     margin: 0 10px;
     font-size: 1rem;
+    opacity: 0;
 }
 
 #weather-icon {
@@ -28,6 +29,7 @@
 }
 
 #legend {
+    opacity: 0;
     margin: 10px;
 }
 

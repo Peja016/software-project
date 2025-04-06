@@ -1,4 +1,9 @@
-<div class="legend-block">
-    <img src="{{ url_for('static', filename='images/location_' + icon + '.svg') }}" style="width: 2rem;" />
-    <p>No available {{ item }}</p>
-</div>
+
+{% macro render_legend(legends) %}
+    {% for legend in legends %}
+        <div class="legend-block">
+            <img src="{{ url_for('static', filename='images/location_' + legend['icon'] + '.svg') }}" style="width: 2rem;" />
+            <p>No available {{ legend['text'] }}</p>
+        </div>
+    {% endfor %}
+{% endmacro %}

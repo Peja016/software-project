@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
 {% endblock %}
 {% block content %}
-
+{% import "components/about_comp.html" as module %}
     <section class="about-section">
         <div class="container">
             <h1 class="section-title">About Dublin Bike Share</h1>
@@ -15,22 +15,13 @@
             </div>
             
             <div class="stats-container">
-                <div class="stat-item">
-                    <div class="stat-number">1,600+</div>
-                    <div class="stat-label">Bikes</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">115</div>
-                    <div class="stat-label">Stations</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">10M+</div>
-                    <div class="stat-label">Journeys</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">60K+</div>
-                    <div class="stat-label">Subscribers</div>
-                </div>
+                {{ module.render_stats([
+                        { 'number': '1,600+', 'label': 'Bikes' }, 
+                        { 'number': '115', 'label': 'Stations' },
+                        { 'number': '10M+', 'label': 'Journeys' },
+                        { 'number': '60K+', 'label': 'Subscribers' },
+                    ]) 
+                }}
             </div>
             
             <!-- Replace the existing mission section with this -->
@@ -38,122 +29,28 @@
             <p>Dublin Bike Share is committed to providing sustainable, accessible transportation options that enhance urban mobility while reducing environmental impact. We aim to:</p>
             
             <div class="about-grid">
-                <div class="about-card">
-                    <div class="icon">
-                        <img src="{{ url_for('static', filename='images/env.svg') }}" alt="icon-env">
-                    </div>
-                    <h3>Environmental Sustainability</h3>
-                    <p>Reduce carbon emissions and promote eco-friendly transportation alternatives to combat climate change and improve Dublin's air quality.</p>
-                </div>
-                
-                <div class="about-card">
-                    <div class="icon">
-                        <img src="{{ url_for('static', filename='images/bike.svg') }}" alt="icon-bike">
-                    </div>
-                    <h3>Accessible Mobility</h3>
-                    <p>Make cycling accessible to everyone by providing affordable, convenient transportation options throughout the city.</p>
-                </div>
-                
-                <div class="about-card">
-                    <div class="icon">
-                        <img src="{{ url_for('static', filename='images/urban.svg') }}" alt="icon-urban">
-                    </div>
-                    <h3>Urban Development</h3>
-                    <p>Support Dublin's growth as a smart, sustainable city by integrating cycling infrastructure with other public transportation systems.</p>
-                </div>
-                
+                {{ module.render_about_card([
+                        { 'icon': 'env', 'title': 'Environmental Sustainability', 'text': "Reduce carbon emissions and promote eco-friendly transportation alternatives to combat climate change and improve Dublin's air quality." }, 
+                        { 'icon': 'bike', 'title': 'Accessible Mobility', 'text': "Make cycling accessible to everyone by providing affordable, convenient transportation options throughout the city." },
+                        { 'icon': 'urban', 'title': 'Urban Development', 'text': "Support Dublin's growth as a smart, sustainable city by integrating cycling infrastructure with other public transportation systems." },
+                    ]) 
+                }}
             </div>
             
             <h2 style="color: var(--custom-darkBlue); margin: 60px 0 20px;">Our History</h2>
             
             <div class="history-timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-date">2008</div>
-                        <h3>Planning Phase</h3>
-                        <p>Dublin City Council initiated plans for a bike-sharing program after analyzing successful models in other European cities. Partnerships were formed with key stakeholders to develop the infrastructure and operational framework.</p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-date">2009</div>
-                        <h3>Official Launch</h3>
-                        <p>Dublin Bike Share was officially launched with 450 bicycles and 40 stations strategically placed throughout the city center. The program received overwhelming public support, with over 1,000 subscriptions on the first day.</p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-date">2013</div>
-                        <h3>Expansion Phase 1</h3>
-                        <p>Following tremendous success, the service expanded to include 950 bicycles and 65 stations, covering a wider area of Dublin and serving more communities.</p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-date">2018</div>
-                        <h3>Expansion Phase 2</h3>
-                        <p>The network grew to include over 1,600 bicycles and 115 stations, along with the introduction of a modernized mobile app for improved user experience.</p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-date">2023</div>
-                        <h3>Technological Upgrades</h3>
-                        <p>Introduction of smart bikes with GPS tracking, improved station accessibility, and enhanced digital interfaces for better user experience.</p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-date">2025</div>
-                        <h3>Looking Forward</h3>
-                        <p>Dublin Bike Share continues to evolve with plans for further expansion, integration with other transport systems, and adoption of the latest sustainable technologies.</p>
-                    </div>
-                </div>
+
+                {{ module.render_about_timeline([
+                        { 'year': 2008, 'title': 'Planning Phase', 'desc': "Dublin City Council initiated plans for a bike-sharing program after analyzing successful models in other European cities. Partnerships were formed with key stakeholders to develop the infrastructure and operational framework." }, 
+                        { 'year': 2009, 'title': 'Official Launch', 'desc': "Dublin Bike Share was officially launched with 450 bicycles and 40 stations strategically placed throughout the city center. The program received overwhelming public support, with over 1,000 subscriptions on the first day." },
+                        { 'year': 2013, 'title': 'Expansion Phase 1', 'desc': "Following tremendous success, the service expanded to include 950 bicycles and 65 stations, covering a wider area of Dublin and serving more communities." },
+                        { 'year': 2018, 'title': 'Expansion Phase 2', 'desc': "The network grew to include over 1,600 bicycles and 115 stations, along with the introduction of a modernized mobile app for improved user experience." },
+                        { 'year': 2023, 'title': 'Technological Upgrades', 'desc': "Introduction of smart bikes with GPS tracking, improved station accessibility, and enhanced digital interfaces for better user experience." },
+                        { 'year': 2025, 'title': 'Looking Forward', 'desc': "Dublin Bike Share continues to evolve with plans for further expansion, integration with other transport systems, and adoption of the latest sustainable technologies." },
+                    ]) 
+                }}
             </div>
         </div>
     </section>
-
-    <script>
-        // Cookie consent functionality
-        const cookieButton = document.getElementById('cookieButton');
-        const cookieModal = document.getElementById('cookieModal');
-        const acceptCookies = document.getElementById('acceptCookies');
-        const declineCookies = document.getElementById('declineCookies');
-        
-        cookieButton.addEventListener('click', function() {
-            cookieModal.style.display = 'block';
-            cookieButton.style.display = 'none';
-        });
-        
-        acceptCookies.addEventListener('click', function() {
-            // Set cookie acceptance
-            localStorage.setItem('cookiesAccepted', 'true');
-            cookieModal.style.display = 'none';
-            alert('Cookies accepted!');
-        });
-        
-        declineCookies.addEventListener('click', function() {
-            // Set cookie rejection
-            localStorage.setItem('cookiesAccepted', 'false');
-            cookieModal.style.display = 'none';
-            alert('Cookies declined!');
-        });
-        
-        // Check if cookie preference is already set
-        if (localStorage.getItem('cookiesAccepted')) {
-            cookieButton.style.display = 'block';
-            cookieModal.style.display = 'none';
-        } else {
-            // Show cookie modal on first visit
-            setTimeout(function() {
-                cookieModal.style.display = 'block';
-                cookieButton.style.display = 'none';
-            }, 2000);
-        }
-    </script>
 {% endblock %}
