@@ -8,6 +8,10 @@
     margin-bottom: 1em;
 }
 
+#map {
+    position: relative;
+}
+
 #weather {
     display: flex;
     gap: 0.5em;
@@ -24,11 +28,49 @@
 }
 
 #legend {
+    margin: 10px;
+}
+
+.legend-block {
     background-color: white;
     padding: 0.25em 0.5em;
     display: flex;
     gap: 0.25em;
     font-size: 1rem;
-    margin: 10px 0;
     align-items: center;
 }
+
+.info > p {
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.estimation { 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: pre-wrap;
+    padding: 1.5em;
+    z-index: 10;
+    background-color: var(--custom-background);
+    border-radius: 1em;
+}
+
+.estimation > p {
+    line-height: 1.5;
+    font-size: 1.5rem; 
+}
+
+.close-btn {
+    position: absolute;
+    top: 4px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 2em;
+    color: var(--custom-darkBlue);
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+  }

@@ -18,204 +18,26 @@
     <p></p>
   </div>
   <div id="legend">
-    <img src="{{ url_for('static', filename='images/location_gray.svg') }}" style="width: 2rem;" />
-    <p>No bikes available</p>
+    {% set items = "bikes" %}
+    {% set icon = "gray" %}
+    {% include "components/legend.html" %}
+    {% set item = "stands" %}
+    {% set icon = "lightBlue" %}
+    {% include "components/legend.html" %}
   </div>
 </div>
-<script src="{{ url_for('static', filename='js/fetchData.js') }}"></script>
+<!-- <script type="module" src="{{ url_for('static', filename='js/initMap.js') }}"></script> -->
 <script>
-  let directionsService, directionsRenderer;
-  let selectedCount = 0;
-  async function initMap() {
-    const bikeData = await fetchData("{{ bikes_api_url }}");
-    const lat = "{{ lat }}";
-    const lon = "{{ lon }}";
-    const center = { lat: +lat, lng: +lon };
-    const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 15,
-      center,
-    });
-
-    const weather = document.getElementById("weather");
-    map.controls[google.maps.ControlPosition.LEFT_TOP].push(weather);
-
-    const legend = document.getElementById("legend");
-    map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(legend);
-
-    directionsService = new google.maps.DirectionsService();
-    directionsRenderer = new google.maps.DirectionsRenderer({
-      suppressMarkers: true,
-      preserveViewport: true,
-      polylineOptions: {
-        strokeColor: "#e63946",
-        strokeWeight: 6,        
-        strokeOpacity: 0.9
-  }
-    });
-
-    directionsRenderer.setMap(map);
-
-    bikeData.forEach(({ position }) => {
-      const infoWindow = new google.maps.InfoWindow();
-      bikeData.forEach(
-        ({
-          position,
-          name,
-          available_bikes,
-          available_bike_stands,
-          status,
-        }) => {
-          const marker = new google.maps.Marker({
-            position,
-            map,
-            icon: {
-              url:
-                "{{ url_for('static', filename='images/location') }}" +
-                (available_bikes ? "" : "_gray") +
-                ".svg",
-              scaledSize: new google.maps.Size(40, 40),
-            },
-          });
-
-          marker.addListener("mouseover", () => {
-            infoWindow.setContent(`
-                            <div>
-                                <b>${name}</b>
-                                <p><b>Available bikes:</b> ${available_bikes}</p>
-                                <p><b>Available bike stands:</b>  ${available_bike_stands}</p>
-                                <p><b>Status:</b>  ${status}</p>
-                            </div>
-                        `);
-            infoWindow.open(map, marker);
-          });
-
-          marker.addListener("mouseout", () => {
-            infoWindow.close();
-          });
-
-          marker.addListener("click", (e) => {
-            const markerPosition = marker.getPosition();
-            // set the station clicked to be the center of page.
-            map.panTo(markerPosition);
-          });
-        }
-      );
-    });
-    const originInput = document.getElementById("origin");
-    const destinationInput = document.getElementById("destination");
-
-    const options = {
-      componentRestrictions: { country: "ie" }, // Restrict to Ireland
-    };
-
-    // Setup Autocomplete
-    const originAutocomplete = new google.maps.places.Autocomplete(
-      originInput,
-      options
-    );
-    const destinationAutocomplete = new google.maps.places.Autocomplete(
-      destinationInput,
-      options
-    );
-
-    // Save markers and last route globally
-    let originMarker = null;
-    let destinationMarker = null;
-    let lastRouteResponse = null;
-
-    // Function to show markers and path but NOT time yet
-    function updateRoutePreview() {
-      const origin = originInput.value;
-      const destination = destinationInput.value;
-
-      if (!origin || !destination) return;
-
-      directionsService.route(
-        {
-          origin: origin,
-          destination: destination,
-          travelMode: google.maps.TravelMode.BICYCLING,
-        },
-        (response, status) => {
-          if (status === "OK") {
-            lastRouteResponse = response;
-            directionsRenderer.setDirections(response);
-
-            // Get start and end positions
-            const startLoc = response.routes[0].legs[0].start_location;
-            const endLoc = response.routes[0].legs[0].end_location;
-
-            // Remove previous markers
-            if (originMarker) originMarker.setMap(null);
-            if (destinationMarker) destinationMarker.setMap(null);
-
-            // Add origin marker
-            originMarker = new google.maps.Marker({
-              position: startLoc,
-              map: map,
-              label: {
-                text: 'S',
-                color: 'white'
-              },
-              zIndex: 5
-            });
-
-            // Add destination marker
-            destinationMarker = new google.maps.Marker({
-              position: endLoc,
-              map: map,
-              label: {
-                text: 'D',
-                color: 'white'
-              },
-              zIndex: 5
-            });
-          } else {
-            directionsRenderer.set("directions", null);
-            if (originMarker) originMarker.setMap(null);
-            if (destinationMarker) destinationMarker.setMap(null);
-            lastRouteResponse = null;
-            alert("Preview route failed: " + status);
-          }
-        }
-      );
-    }
-
-    // Trigger live preview when place is selected
-    originAutocomplete.addListener("place_changed", updateRoutePreview);
-    destinationAutocomplete.addListener("place_changed", updateRoutePreview);
-
-    // Show time & distance only after clicking "Route" button
-    document.getElementById("routeBtn").addEventListener("click", () => {
-      if (!lastRouteResponse) {
-        alert("Please enter valid origin and destination first.");
-        return;
-      }
-
-      const leg = lastRouteResponse.routes[0].legs[0];
-      const duration = leg.duration.text;
-      const distance = leg.distance.text;
-      alert(`Estimated time: ${duration}, Distance: ${distance}`);
-    });
-  }
+  window.initMap = function () {
+    import("{{ url_for('static', filename='js/initMap.js') }}")
+      .then(module => module.initMap())
+      .catch(console.error);
+  };
 </script>
-<script>
-    const getWeather = async () => {
-      const weatherData = await fetchData("{{ weather_api_url }}");
-      const temp = weatherData.main.temp
-      const iconCode = weatherData.weather[0].icon; // get icon code
-      const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-      const weatherContainer = document.getElementById("weather-icon");
-      document.getElementById("weather-icon").src = iconUrl;
-      const weather = document.getElementById("weather");
-      const text = weather.querySelector("p");
-      text.textContent = `${temp}℃`;
-    }
-    getWeather()
-</script>
+<script type="module" src="{{ url_for('static', filename='js/getWeather.js') }}"></script>
 <script
+  src="https://maps.googleapis.com/maps/api/js?key={{ api }}&callback=initMap&libraries=marker,places&language=en&loading=async"
   async
   defer
-  src="https://maps.googleapis.com/maps/api/js?key={{ api }}&callback=initMap&libraries=marker,places&language=en"
 ></script>
 {% endblock %}

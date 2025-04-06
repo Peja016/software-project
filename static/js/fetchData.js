@@ -1,4 +1,4 @@
-async function fetchData(api) {
+export default async function fetchData(api) {
     const headers = { 'Content-Type': 'application/json' }
 
     const res = await fetch(api, {

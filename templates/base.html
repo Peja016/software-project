@@ -24,6 +24,7 @@
       let head = document.querySelector("header");
 
       const navs = [
+        { label: "Home", href: "{{ url_for('index') }}" },
         { label: "How to use", href: "{{ url_for('use') }}" },
         { label: "Map", href: "{{ url_for('map') }}" },
         { label: "Rent", href: "{{ url_for('rent') }}" },
@@ -33,20 +34,20 @@
       ];
 
       head.innerHTML = `
-                <div class="flex divided">
-                    <a href="/">
-                        <div class="logo"><img width="100%" src="{{ url_for('static', filename='images/logo.svg') }}" /></div>
-                    </a>
-                    <div class="flex desktop">
-                        ${navs
-                          .map(
-                            ({ label, href }) =>
-                              `<a href=${href}><div style="font-size: 1.5em; font-weight: bold; color: #002C3E">${label}</div></a>`
-                          )
-                          .join("")}
-                    </div>
-                </div>
-            `;
+        <div class="flex divided">
+            <a href="/">
+                <div class="logo"><img width="100%" src="{{ url_for('static', filename='images/logo.svg') }}" /></div>
+            </a>
+            <div class="flex desktop">
+                ${navs
+                    .map(
+                    ({ label, href }) =>
+                        `<a href=${href}><div style="font-size: 1.5em; font-weight: bold; color: #002C3E">${label}</div></a>`
+                    )
+                    .join("")}
+            </div>
+        </div>
+     `;
     </script>
     <main>{% block content %}{% endblock %}</main>
     <footer class="main-footer">

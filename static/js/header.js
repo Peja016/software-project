@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('header > .flex .desktop a');
     
     navLinks.forEach(link => {
-        if (currentLocation.includes(link.href)) {
+        if (currentLocation === link.href) {
             link.classList.add('active');
         }
     });

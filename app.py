@@ -41,7 +41,6 @@ def map():
         lat=os.getenv('LAT'),
         lon=os.getenv('LON'),
         api=os.getenv('GOOGLE_MAP_API'),
-        bikes_api_url="/api/bikesInfo",
         weather_api_url="/api/weather",
     )
 
