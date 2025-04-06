@@ -1,0 +1,146 @@
+
+.about-section h1 {
+    margin-bottom: 40px;
+}
+
+.about-intro {
+    margin-bottom: 50px;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.about-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    /* Removed transition property to disable hover animation */
+}
+
+/* Removed hover transform effect */
+
+.about-card h3 {
+    color: var(--custom-red);
+    margin-bottom: 15px;
+}
+
+.about-card .icon {
+    margin-bottom: 20px;
+}
+
+.stats-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 50px 0;
+}
+
+.stat-item {
+    text-align: center;
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 30px;
+}
+
+.stat-number {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--custom-red);
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    color: var(--custom-darkBlue);
+    font-size: 18px;
+}
+
+.history-timeline {
+    margin: 60px 0;
+    position: relative;
+}
+
+.history-timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 100%;
+    background-color: var(--light-gray);
+}
+
+.timeline-item {
+    margin-bottom: 50px;
+    position: relative;
+    display: flex;
+}
+
+.timeline-item:nth-child(odd) {
+    justify-content: flex-start;
+    padding-right: 50%;
+}
+
+.timeline-item:nth-child(even) {
+    justify-content: flex-end;
+    padding-left: 50%;
+}
+
+.timeline-content {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    position: relative;
+    width: 80%;
+}
+
+.timeline-date {
+    position: absolute;
+    top: 0;
+    background-color: var(--custom-red);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.timeline-item:nth-child(odd) .timeline-date {
+    right: -20px;
+}
+
+.timeline-item:nth-child(even) .timeline-date {
+    left: -20px;
+}
+
+.timeline-content h3 {
+    color: var(--custom-darkBlue);
+    margin: 20px 0 15px;
+}
+
+
+@media (max-width: 768px) {
+    .history-timeline::before {
+        left: 20px;
+    }
+    
+    .timeline-item {
+        padding-right: 0 !important;
+        padding-left: 60px !important;
+        justify-content: flex-start !important;
+    }
+    
+    .timeline-content {
+        width: 100%;
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-date,
+    .timeline-item:nth-child(even) .timeline-date {
+        left: -20px;
+        right: auto;
+    }
+}

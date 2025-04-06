@@ -1,0 +1,33 @@
+{% macro render_stats(stats) %}
+    {% for stat in stats %}
+        <div class="stat-item">
+            <div class="stat-number">{{ stat['number'] }}</div>
+            <div class="stat-label">{{ stat['label'] }}</div>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_about_card(cards) %}
+    {% for card in cards %}
+        <div class="about-card">
+            <div class="icon">
+                <img src="{{ url_for('static', filename='images/' + card['icon'] + '.svg') }}" alt="icon-{{ card['icon'] }}">
+            </div>
+            <h3>{{ card['title'] }}</h3>
+            <p>{{ card['text'] }}</p>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_about_timeline(data) %}
+    {% for d in data %}
+        <div class="timeline-item">
+            <div class="timeline-content">
+                <div class="timeline-date">{{ d['year'] }}</div>
+                <h3>{{ d['title'] }}</h3>
+                <p>{{ d['desc'] }}</p>
+            </div>
+        </div>
+    {% endfor %}
+{% endmacro %}
+

@@ -1,73 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bike stations Maps</title>
-    <style>
-        #map {
-            height: 75vh;
-            width: 100%;
-        }
-    </style>
-</head>
-
-<body>
-    <h2>Find the location</h2>
-    <div id="map"></div>
-    <script src="{{ url_for('static', filename='/js/fetchData.js') }}"></script>
-    <script defer>
-
-        async function initMap() {
-            const bikeData = await fetchData("{{ bikes_api_url }}");
-            const lat = "{{ lat }}"
-            const lon = "{{ lon }}"
-            const location = { lat: +lat, lng: +lon };
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 15,
-                center: location
-            });
-
-            bikeData.forEach(({ position }) => {
-                const marker = new google.maps.Marker({
-                    position,
-                    map,
-                });
-
-                // console.log(bikeData)
-                const infoWindow = new google.maps.InfoWindow();
-                
-                bikeData.forEach(({
-                    position,
-                    name,
-                    available_bikes,
-                    available_bike_stands,
-                    status
-                }) => {
-                    const marker = new google.maps.Marker({
-                        position,
-                        map,
-                    });
-                    
-                    marker.addListener("click", () => {
-                        infoWindow.setContent(`
-                            <div>
-                                <b>${name}</b>
-                                <p><b>Available bikes:</b> ${available_bikes}</p>
-                                <p><b>Available bike stands:</b>  ${available_bike_stands}</p>
-                                <p><b>Status:</b>  ${status}</p>
-                            </div>
-                        `);
-                        infoWindow.open(map, marker);
-                    });
-                });
-            });
-
-        }
-    </script>
-
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ api }}&callback=initMap"></script>
-</body>
-
-</html>
+{% extends "base.html" %} {% block title %}Map - Dublin Bike Share{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}" />
+{% endblock %} 
+{% block content %}
+<div style="padding: 8em 0">
+  <div class="container" style="padding: 0 1em">
+    <div class="flex journey">
+      <input id="origin" type="text" placeholder="Enter start location" />
+      <input id="destination" type="text" placeholder="Enter destination" />
+      <button id="routeBtn">Get Estimated Time and Distance</button>
+    </div>
+  </div>
+  <div id="map">
+  </div>
+  <div id="weather">
+    <img id="weather-icon" alt="weather icon" />
+    <p></p>
+  </div>
+  <div id="legend">
+    {% from "components/legend.html" import render_legend %}
+    {{ render_legend([{ 'icon': 'gray', 'text': 'bikes' }, { 'icon': 'lightBlue', 'text': 'stands' }]) }}
+  </div>
+</div>
+<!-- <script type="module" src="{{ url_for('static', filename='js/initMap.js') }}"></script> -->
+<script type="module">
+  window.initMap = function () {
+    import("{{ url_for('static', filename='js/initMap.js') }}")
+      .then(module => module.initMap())
+      .catch(console.error);
+  };
+</script>
+<script type="module" src="{{ url_for('static', filename='js/getWeather.js') }}"></script>
+<script
+  src="https://maps.googleapis.com/maps/api/js?key={{ api }}&callback=initMap&libraries=marker,places&language=en&loading=async"
+  async
+  defer
+></script>
+{% endblock %}
