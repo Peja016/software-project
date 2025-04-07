@@ -6,6 +6,7 @@ from getBikeData import getBikeData
 from getWeatherData import getCurrentWeatherData
 from storeInfo import sentData
 import pandas as pd
+from datetime import datetime, timedelta
 
 # Load csv file data into app
 
@@ -51,8 +52,15 @@ def getStationData(id):
 
 @app.route("/api/oneDayWeather", methods=['POST'])
 def getOneDayWeatherData():
-    weatherData = weather_data.to_dict(orient='records')
-    return jsonify(weatherData.json())
+    data = []
+    for _, row in weather_data.iterrows():
+        formatted_time = (datetime.strptime(row['last_update'], '%Y-%m-%d %H:%M:%S') + timedelta(minutes=1)).strftime('%-H:%M') 
+        data.append({
+            'time': formatted_time,
+            'temperature': round(row['temperature'], 1),
+            'icon': row['icon']
+        })
+    return jsonify(data)
     
 @app.route("/api/contact_form", methods=["POST"])
 def sentInfo():

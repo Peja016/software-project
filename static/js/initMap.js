@@ -152,9 +152,45 @@ document.getElementById("routeBtn").addEventListener("click", () => {
 const lineChart = document.createElement('div')
 lineChart.id = 'line-chart'
 
-const showDailyWeather = async () => {
+const showDailyWeather = async (stationInfo) => {
   const weatherData = await fetchData(`/api/oneDayWeather`);
+  if (!weatherData || weatherData.length === 0) return;
+  const weatherSection = document.createElement('div');
+  weatherSection.className = 'weather-section';
+  const title = document.createElement('h3');
+  title.textContent = 'Historical Weather Overview';
+  weatherSection.appendChild(title);
 
+   // Create wrapper for weather cards
+   const weatherContainer = document.createElement('div');
+   weatherContainer.className = 'weather-cards';
+ 
+   weatherData.forEach(data => {
+     const card = document.createElement('div');
+     card.className = 'weather-card';
+ 
+     const time = document.createElement('p');
+     time.textContent = data.time;
+     time.className = 'weather-hour';
+ 
+     const icon = document.createElement('img');
+     icon.src = `https://openweathermap.org/img/wn/${data.icon}.png`;
+     icon.alt = data.description || "weather icon";
+     icon.className = 'weather-icon';
+ 
+     const temp = document.createElement('p');
+     temp.textContent = `${data.temperature}`;
+     temp.className = 'weather-temp';
+ 
+     card.appendChild(time);
+     card.appendChild(icon);
+     card.appendChild(temp);
+ 
+     weatherContainer.appendChild(card);
+   });
+ 
+   weatherSection.appendChild(weatherContainer);
+   stationInfo.appendChild(weatherSection);
 }
 
 const drawChart = async (number) => {
@@ -274,10 +310,12 @@ const addMarkers = async () => {
         stationInfo.appendChild(stop);
         stationInfo.appendChild(info);
         stationInfo.appendChild(lineChart);
+        showDailyWeather(stationInfo)
 
         setCloseBtn(stationInfo)
 
         mapDiv.appendChild(stationInfo);
+
       });
     }
   );
