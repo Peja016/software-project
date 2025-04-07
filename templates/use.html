@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/use.css') }}" />
 {% endblock %} 
 {% block content %}
+{% import "components/steps.html" as module %}
     <div class="container">
         <section class="how-to-section">
             <h1 class="section-title">How to Use Dublin Bike Share</h1>
@@ -14,57 +15,14 @@
             <div class="how-to-content">
                 <div class="how-to-text">
                     <div class="how-to-steps">
-                        <div class="how-to-step">
-                            <div class="how-to-step-number">
-                                <p>1</p>
-                                <img class="icon" style="margin-right: 0;" src="{{ url_for('static', filename='images/step1.svg') }}" />
-                            </div>
-                            <div>
-                                <h3>Register for an Account</h3>
-                                <p>Sign up via our website or app with basic info and payment details, choosing from annual memberships, 3-day passes, or pay-as-you-go plans.</p>
-                            </div>
-                        </div>
-                    
-                        <div class="how-to-step">
-                            <div class="how-to-step-number">
-                                <p>2</p>
-                                <img class="icon" style="margin-right: 0;" src="{{ url_for('static', filename='images/step2.svg') }}" />
-                            </div>
-                            <div>
-                                <h3>Find a Bike Station</h3>
-                                <p>Locate a nearby station using our map, with over 115 spots across Dublin’s city center and beyond.</p>
-                            </div>
-                        </div>
-                        <div class="how-to-step">
-                            <div class="how-to-step-number">
-                                <p>3</p>
-                                <img class="icon" style="margin-right: 0;" src="{{ url_for('static', filename='images/step3.svg') }}" />
-                            </div>
-                            <div>
-                                <h3>Unlock a Bike</h3>
-                                <p>Unlock a bike at the station with our app or card, then check its condition before you ride.</p>
-                            </div>
-                        </div>
-                        <div class="how-to-step">
-                            <div class="how-to-step-number">
-                                <p>4</p>
-                                <img class="icon" style="margin-right: 0;" src="{{ url_for('static', filename='images/step4.svg') }}" />
-                            </div>
-                            <div>
-                                <h3>Enjoy Your Ride</h3>
-                                <p>Ride safely within traffic rules, enjoying bikes built for city use with adjustable seats.</p>
-                            </div>
-                        </div>
-                        <div class="how-to-step">
-                            <div class="how-to-step-number">
-                                <p>5</p>
-                                <img class="icon" style="margin-right: 0;" src="{{ url_for('static', filename='images/step5.svg') }}" />
-                            </div>
-                            <div>
-                                <h3>Return the Bike</h3>
-                                <p>Dock the bike at any station until it beeps and locks, ensuring it’s secure to avoid extra fees.</p>
-                            </div>
-                        </div>
+                        {{ module.render_use_steps([
+                                { 'num': '1', 'step': 'Register for an Account', 'text': "Sign up via our website or app with basic info and payment details, choosing from annual memberships, 3-day passes, or pay-as-you-go plans." }, 
+                                { 'num': '2', 'step': 'Find a Bike Station', 'text': "Locate a nearby station using our map, with over 115 spots across Dublin’s city center and beyond." },
+                                { 'num': '3', 'step': 'Unlock a Bike', 'text': "Unlock a bike at the station with our app or card, then check its condition before you ride." },
+                                { 'num': '4', 'step': 'Enjoy Your Ride', 'text': "Ride safely within traffic rules, enjoying bikes built for city use with adjustable seats." },
+                                { 'num': '5', 'step': 'Return the Bike', 'text': "Dock the bike at any station until it beeps and locks, ensuring it’s secure to avoid extra fees." },
+                            ]) 
+                        }}
                     </div>
                 </div>
                 

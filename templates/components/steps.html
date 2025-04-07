@@ -1,0 +1,14 @@
+{% macro render_use_steps(steps) %}
+    {% for step in steps %}
+        <div class="how-to-step">
+            <div class="how-to-step-number">
+                <p>{{ step['num'] }}</p>
+                <img class="icon" style="margin-right: 0;" src="{{ url_for('static', filename='images/step' + step['num'] + '.svg') }}" />
+            </div>
+            <div>
+                <h3>{{ step['step'] }}</h3>
+                <p>{{ step['text'] }}</p>
+            </div>
+        </div>
+    {% endfor %}
+{% endmacro %}

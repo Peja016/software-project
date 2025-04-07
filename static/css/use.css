@@ -76,7 +76,7 @@
 .section-title {
     text-align: center;
     font-size: 32px;
-    color: var(--dark-blue);
+    color: var(--custom-darkBlue);
     margin-bottom: 50px;
 }
 
@@ -87,7 +87,7 @@
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    color: var(--dark-blue);
+    color: var(--custom-darkBlue);
 }
 
 .safety-policies {

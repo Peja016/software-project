@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
 {% endblock %} 
 {% block content %}
+{% import "components/home_comp.html" as module %}
     <section class="hero">
         <div class="container">
             <h2 style="text-shadow: 2px 2px 3px rgba(0,0,0,0.8);">
@@ -22,21 +23,12 @@
         <div class="container">
             <h2 class="section-title">Why Choose Dublin Bike Share?</h2>
             <div class="feature-cards">
-                <div class="feature-card">
-                    <div class="icon">🚲</div>
-                    <h3>Over 1,600 Bikes</h3>
-                    <p>Access to our large fleet of well-maintained bicycles across the city</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">📍</div>
-                    <h3>115+ Stations</h3>
-                    <p>Conveniently located stations throughout Dublin's city center and beyond</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">💳</div>
-                    <h3>Flexible Plans</h3>
-                    <p>Choose from annual subscriptions, 3-day passes, or pay-as-you-go options</p>
-                </div>
+                {{ module.render_reasons([
+                        { 'icon': 'step4', 'title': 'Over 1,600 Bikes', 'desc': "Access to our large fleet of well-maintained bicycles across the city" }, 
+                        { 'icon': 'address', 'title': '115+ Stations', 'desc': "Conveniently located stations throughout Dublin's city center and beyond" },
+                        { 'icon': 'fee', 'title': 'Flexible Plans', 'desc': "Choose from annual subscriptions, 3-day passes, or pay-as-you-go options" },
+                    ]) 
+                }}
             </div>
         </div>
     </section>
@@ -45,26 +37,13 @@
         <div class="container">
             <h2 class="section-title">How It Works</h2>
             <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Register</h3>
-                    <p>Sign up for an account in just a few minutes</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Find a Bike</h3>
-                    <p>Locate your nearest station on our map</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Unlock & Ride</h3>
-                    <p>Use the app or your card to unlock a bike and enjoy your ride</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3>Return</h3>
-                    <p>Return the bike to any station when you're done</p>
-                </div>
+                {{ module.render_how_it_works([
+                    { 'num': '1', 'step': 'Register', 'text': "Sign up for an account in just a few minutes" }, 
+                    { 'num': '2', 'step': 'Find a Bike', 'text': "Locate your nearest station on our map" },
+                    { 'num': '3', 'step': 'Unlock & Ride', 'text': "Use the app or your card to unlock a bike and enjoy your ride" },
+                    { 'num': '4', 'step': 'Return', 'text': "Return the bike to any station when you're done" },
+                    ]) 
+                }}
             </div>
             <div class="cta-center">
                 <a href="how.html" class="btn btn-secondary">Learn More</a>
@@ -76,36 +55,12 @@
         <div class="container">
             <h2 class="section-title">What Our Users Say</h2>
             <div class="testimonial-slider">
-                <div class="testimonial">
-                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-                        <img src="{{ url_for('static', filename='images/tan.png') }}" alt="Tan" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
-                        <div>
-                            <p class="author-name" style="font-weight: bold; margin: 0;">Tan</p>
-                            <p class="author-title" style="margin: 0;">Full stack Developer</p>
-                        </div>
-                    </div>
-                    <p class="quote">"I am glad I can rent a bike in Dublin, now I can finally be in time for my basketball games"</p>
-                </div>
-                <div class="testimonial">
-                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-                        <img src="{{ url_for('static', filename='images/kexun.jpeg') }}" alt="Kexun" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
-                        <div>
-                            <p class="author-name" style="font-weight: bold; margin: 0;">Kexun</p>
-                            <p class="author-title" style="margin: 0;">CEO</p>
-                        </div>
-                    </div>
-                    <p class="quote">"Going to Confucius restaraunt by bike is very convenient"</p>
-                </div>
-                <div class="testimonial">
-                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-                        <img src="{{ url_for('static', filename='images/herman.JPG') }}" alt="Herman" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
-                        <div>
-                            <p class="author-name" style="font-weight: bold; margin: 0;">Herman</p>
-                            <p class="author-title" style="margin: 0;">Daily Commuter</p>
-                        </div>
-                    </div>
-                    <p class="quote">"Compared to the Dublin bus, Dublin Bike will never ghost you!"</p>
-                </div>
+                {{ module.render_testimonial([
+                        { 'pic': 'tan.png', 'name': 'Tan', 'title': "Full stack Developer", 'message': "I am glad I can rent a bike in Dublin, now I can finally be in time for my basketball games" }, 
+                        { 'pic': 'kexun.jpeg', 'name': 'Kexun', 'title': "CEO", 'message': "Going to Confucius restaraunt by bike is very convenient" },
+                        { 'pic': 'herman.JPG', 'name': 'Herman', 'title': "Daily Commuter", 'message': "Compared to the Dublin bus, Dublin Bike will never ghost you!" },
+                    ]) 
+                }}
             </div>
         </div>
     </section>

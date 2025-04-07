@@ -1,0 +1,36 @@
+{% macro render_reasons(reasons) %}
+    {% for reason in reasons %}
+        <div class="feature-card">
+            <div class="icon">
+                <img src="{{ url_for('static', filename='images/' + reason['icon'] + '.svg') }}" alt="{{ reason['icon'] }}" />
+            </div>
+            <h3>{{ reason['title'] }}</h3>
+            <p>{{ reason['desc'] }}</p>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_how_it_works(steps) %}
+    {% for step in steps %}
+        <div class="step">
+            <div class="step-number">{{ step['num'] }}</div>
+            <h3>{{ step['step'] }}</h3>
+            <p>{{ step['text'] }}</p>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_testimonial(users) %}
+    {% for user in users %}
+        <div class="testimonial">
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                <img src="{{ url_for('static', filename='images/' + user['pic'] ) }}" alt="{{ user['pic'] }}" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+                <div>
+                    <p class="author-name" style="font-weight: bold; margin: 0;">{{ user['name'] }}</p>
+                    <p class="author-title" style="margin: 0;">{{ user['title'] }}</p>
+                </div>
+            </div>
+            <p class="quote">"{{ user['message'] }}"</p>
+        </div>
+    {% endfor %}
+{% endmacro %}

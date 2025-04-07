@@ -5,11 +5,21 @@ from dotenv import load_dotenv
 from getBikeData import getBikeData
 from getWeatherData import getCurrentWeatherData
 from storeInfo import sentData
-import requests
+import pandas as pd
+from datetime import datetime, timedelta
+
+# Load csv file data into app
+
+availability_data = pd.read_csv("data/availability.csv")
+weather_data = pd.read_csv("data/weather_data.csv")
 
 load_dotenv() # Load environment variables from .env file
 
 app = Flask(__name__)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 @app.route('/')
 def index():
@@ -22,11 +32,35 @@ def getBikesInfo():
     if res.status_code == 200:
         return jsonify(res.json())
     
-@app.route("/api/weather", methods=['POST', 'GET'])
+@app.route("/api/weather", methods=['POST'])
 def getCurrentWeatherInfo():
     res = getCurrentWeatherData()
     if res.status_code == 200:
         return jsonify(res.json())
+    
+@app.route("/api/stations/<int:id>", methods=['POST'])
+def getStationData(id):
+    filtered_data = availability_data[availability_data["number"] == id]
+    data = filtered_data[['available_bikes', 'available_bike_stands', 'last_update']]
+    data_for_chart = [['Time', 'Available Bikes', 'Available Stands']]
+    for _, row in data.iterrows():
+        time_str = pd.to_datetime(row['last_update']).strftime('%H:%M:%S')
+        data_for_chart.append([
+            time_str, row['available_bikes'], row['available_bike_stands']
+        ])
+    return jsonify(data_for_chart)
+
+@app.route("/api/oneDayWeather", methods=['POST'])
+def getOneDayWeatherData():
+    data = []
+    for _, row in weather_data.iterrows():
+        formatted_time = (datetime.strptime(row['last_update'], '%Y-%m-%d %H:%M:%S') + timedelta(minutes=1)).strftime('%-H:%M') 
+        data.append({
+            'time': formatted_time,
+            'temperature': round(row['temperature'], 1),
+            'icon': row['icon']
+        })
+    return jsonify(data)
     
 @app.route("/api/contact_form", methods=["POST"])
 def sentInfo():

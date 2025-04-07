@@ -4,11 +4,12 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/faq.css') }}">
 {% endblock %}
 {% block content %}
+{% import "components/faq_comp.html" as faq_module %}
     <section class="faq-section">
         <div class="container">
             <h1 class="section-title">Frequently Asked Questions</h1>
             
-            <p>Find answers to the most common questions about Dublin Bike Share. If you can't find what you're looking for, feel free to <a href="contact.html">contact us</a>.</p>
+            <p style="text-align: center;">Find answers to the most common questions about Dublin Bike Share. If you can't find what you're looking for, feel free to <a href="{{ url_for('contact') }}">contact us</a>.</p>
             
             <div class="search-container">
                 <div class="search-box">
@@ -18,309 +19,113 @@
             </div>
             
             <div class="faq-categories">
-                <button class="category-btn active" data-category="all">All Questions</button>
-                <button class="category-btn" data-category="subscription">Subscriptions</button>
-                <button class="category-btn" data-category="usage">Using the Service</button>
+                {{ faq_module.render_category_buttons([
+                    {'id': 'all', 'name': 'All Questions', 'active': true},
+                    {'id': 'subscription', 'name': 'Subscriptions', 'active': false},
+                    {'id': 'usage', 'name': 'Using the Service', 'active': false},
+                    {'id': 'payment', 'name': 'Payment & Charges', 'active': false},
+                    {'id': 'technical', 'name': 'Technical Issues', 'active': false}
+                ]) }}
             </div>
             
             <div class="faq-container">
-                <!-- Subscription Questions -->
-                <div class="faq-category" id="subscription">
-                    <h2 class="faq-category-title">Subscription & Membership</h2>
+                {{ faq_module.render_faq_category([
+                    {
+                        'id': 'subscription',
+                        'title': 'Subscription & Membership',
+                        'items': [
+                            {
+                                'question': 'What subscription options are available?',
+                                'answer': '<p>Dublin Bike Share offers three main subscription options:</p><ul><li><strong>Annual Subscription (€35):</strong> Unlimited 30-minute journeys for a full year. Perfect for regular users.</li><li><strong>3-Day Pass (€5):</strong> Unlimited 30-minute journeys over three consecutive days. Ideal for visitors.</li><li><strong>Pay-As-You-Go:</strong> €2 unlock fee plus €0.50 for each 30 minutes of use. No commitment required.</li></ul>'
+                            },
+                            {
+                                'question': 'How do I sign up for a subscription?',
+                                'answer': '<p>You can sign up for a Dublin Bike Share subscription in several ways:</p><ul><li>Online through our website by creating an account and selecting your preferred plan</li><li>Through our mobile app, available for iOS and Android devices</li><li>At any service kiosk at major Dublin Bike Share stations</li><li>By calling our customer service at +353 1 716 7777</li></ul><p>You\'ll need a valid credit or debit card and an email address to complete your registration.</p>'
+                            },
+                            {
+                                'question': 'Can I cancel my subscription?',
+                                'answer': '<p>Yes, you can cancel your subscription at any time. Annual subscriptions are non-refundable but will remain active until their expiration date. To cancel auto-renewal:</p><ol><li style="margin-bottom: 8px;">Log in to your account on our website or app</li><li style="margin-bottom: 8px;">Go to \'My Subscription\' in your account settings</li><li style="margin-bottom: 8px;">Select \'Cancel Auto-Renewal\'</li></ol><p>For 3-Day Passes, these automatically expire after the 3-day period without any further action needed.</p>'
+                            },
+                            {
+                                'question': 'Can multiple people use one subscription?',
+                                'answer': '<p>No, subscriptions are individual and non-transferable. Each person who wishes to use Dublin Bike Share must have their own subscription or pass. However, we do offer discounted rates for organizations, universities, and businesses looking to provide access for their members or employees.</p>'
+                            }
+                        ]
+                    },
+                    {
+                        'id': 'usage',
+                        'title': 'Using the Service',
+                        'items': [
+                            {
+                                'question': 'How do I unlock a bike?',
+                                'answer': '<p>There are two main ways to unlock a Dublin Bike Share bicycle:</p><p><strong>Mobile App Method:</strong></p><ol style="padding-left: 25px; margin: 10px 0;"><li style="margin-bottom: 8px;">Open the Dublin Bike Share app on your smartphone</li><li style="margin-bottom: 8px;">Locate the station on the map or scan the QR code on the bike</li><li style="margin-bottom: 8px;">Select the bike number you wish to use</li><li style="margin-bottom: 8px;">Confirm your selection and the bike will unlock automatically</li></ol><p><strong>Subscriber Card Method:</strong></p><ol style="padding-left: 25px; margin: 10px 0;"><li style="margin-bottom: 8px;">Insert your Dublin Bike Share card into the card reader at the station kiosk</li><li style="margin-bottom: 8px;">Enter your PIN when prompted</li><li style="margin-bottom: 8px;">Select a bike number from the available options</li><li style="margin-bottom: 8px;">Remove your card and go to the selected bike, which will be unlocked and ready to use</li></ol>'
+                            },
+                            {
+                                'question': 'How long can I keep a bike?',
+                                'answer': '<p>With an Annual Subscription or 3-Day Pass, you can take unlimited rides of up to 30 minutes each at no additional cost. For rides longer than 30 minutes, the following charges apply:</p><ul><li>30-60 minutes: €0.50</li><li>60-90 minutes: €1.50</li><li>Each additional 30 minutes: €2.00</li></ul><p>For Pay-As-You-Go users, charges begin from the moment you unlock the bike at a rate of €0.50 per 30 minutes, plus the initial €2 unlock fee.</p><p>While there is no absolute maximum time limit, bikes are intended for short trips. For extended use, we recommend returning your bike and checking out a new one to avoid additional charges.</p>'
+                            },
+                            {
+                                'question': 'What if there are no available bikes or docks?',
+                                'answer': '<p>If you encounter a station with no available bikes or docking spaces:</p><p><strong>No Available Bikes:</strong></p><ul><li>Check our app or website for the nearest station with available bikes</li><li>The app shows real-time availability of bikes at all stations</li><li>Stations are typically located within a 5-minute walk of each other in the city center</li></ul><p><strong>No Available Docks:</strong></p><ul><li>Use the app to find the nearest station with available docking spaces</li><li>If you encounter a full station, you can request a 15-minute extension through the app or by calling customer service to give you time to reach another station</li><li>Annual members can report full stations for service improvements</li></ul>'
+                            },
+                            {
+                                'question': 'What happens if the bike gets damaged while I\'m using it?',
+                                'answer': '<p>If a bike becomes damaged during your journey:</p><ol style="padding-left: 25px; margin: 10px 0;"><li style="margin-bottom: 8px;">If the damage is minor and doesn\'t affect safety, return the bike to any station as normal</li><li style="margin-bottom: 8px;">Report the issue through the app or website by entering the bike number and describing the problem</li><li style="margin-bottom: 8px;">If the bike is unsafe to ride, lock it securely and report its location and condition to our customer service immediately</li></ol><p>Users are responsible for damages caused by misuse, negligence, or violations of our terms of service. For normal wear and tear or mechanical failures not caused by the user, there is no charge. Each case is evaluated individually, and we may contact you for additional information.</p>'
+                            }
+                        ]
+                    },
+                    {
+                        'id': 'payment',
+                        'title': 'Payment & Charges',
+                        'items': [
+                            {
+                                'question': 'What payment methods do you accept?',
+                                'answer': '<p>Dublin Bike Share accepts the following payment methods:</p><ul><li>Credit cards (Visa, Mastercard, American Express)</li><li>Debit cards (with Visa or Mastercard functionality)</li><li>Digital wallets (Apple Pay, Google Pay)</li><li>Bank transfers (for annual subscriptions only)</li></ul><p>We do not accept cash payments for security reasons. All payment information is encrypted and securely stored in compliance with financial regulations.</p>'
+                            },
+                            {
+                                'question': 'What is the security deposit and when is it refunded?',
+                                'answer': '<p>Dublin Bike Share requires a temporary authorization hold of €150 on your card when you sign up for a 3-Day Pass or use the Pay-As-You-Go option. This is not a charge but a temporary hold that is typically released within 7 days after your last ride, provided the bike is returned in good condition.</p><p>Annual members do not have a security deposit hold but agree to terms that allow charges for damages or non-return of bikes.</p><p>If your deposit hold has not been released after 7 days of your final ride, please contact our customer service for assistance.</p>'
+                            }
+                        ]
+                    },
+                    {
+                        'id': 'technical',
+                        'title': 'Technical Issues',
+                        'items': [
+                            {
+                                'question': "What if the docking station is not working?",
+                                'answer': "
+                                    <p>If you encounter issues with a docking station:</p>
+                                    <p><strong>When Returning a Bike:</strong></p>
+                                    <ul>
+                                        <li>Ensure you're pushing the bike firmly into the dock – you should hear a beep and see a green light when successfully docked</li>
+                                        <li>Try another docking point at the same station</li>
+                                        <li>If all docking points seem to be malfunctioning, find the nearest alternative station through the app</li>
+                                        <li>If unable to dock due to technical issues, call customer service immediately</li>
+                                    </ul>
+                                    <p><strong>When Taking a Bike:</strong></p>
+                                    <ul>
+                                        <li>If the terminal is unresponsive, try using the mobile app instead</li>
+                                        <li>If neither works, find the nearest operational station on the app map</li>
+                                    </ul>
+                                    <p>Always report malfunctioning docking stations through the app or by calling customer service to help us maintain the system.</p>
+                                "
+                            }
+                        ]
+                    }
                     
-                    <div class="faq-item">
-                        <div class="faq-question">What subscription options are available?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-content">
-                                <p>Dublin Bike Share offers three main subscription options:</p>
-                                <ul>
-                                    <li><strong>Annual Subscription (€35):</strong> Unlimited 30-minute journeys for a full year. Perfect for regular users.</li>
-                                    <li><strong>3-Day Pass (€5):</strong> Unlimited 30-minute journeys over three consecutive days. Ideal for visitors.</li>
-                                    <li><strong>Pay-As-You-Go:</strong> €2 unlock fee plus €0.50 for each 30 minutes of use. No commitment required.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">How do I sign up for a subscription?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-content">
-                                <p>You can sign up for a Dublin Bike Share subscription in several ways:</p>
-                                <ul>
-                                    <li>Online through our website by creating an account and selecting your preferred plan</li>
-                                    <li>Through our mobile app, available for iOS and Android devices</li>
-                                    <li>At any service kiosk at major Dublin Bike Share stations</li>
-                                    <li>By calling our customer service at +353 1 716 7777</li>
-                                </ul>
-                                <p>You'll need a valid credit or debit card and an email address to complete your registration.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">Can I cancel my subscription?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-content">
-                                <p>Yes, you can cancel your subscription at any time. Annual subscriptions are non-refundable but will remain active until their expiration date. To cancel auto-renewal:</p>
-                                <ol style="padding-left: 25px; margin: 10px 0;">
-                                    <li style="margin-bottom: 8px;">Log in to your account on our website or app</li>
-                                    <li style="margin-bottom: 8px;">Go to 'My Subscription' in your account settings</li>
-                                    <li style="margin-bottom: 8px;">Select 'Cancel Auto-Renewal'</li>
-                                </ol>
-                                <p>For 3-Day Passes, these automatically expire after the 3-day period without any further action needed.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">Can multiple people use one subscription?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-content">
-                                <p>No, subscriptions are individual and non-transferable. Each person who wishes to use Dublin Bike Share must have their own subscription or pass. However, we do offer discounted rates for organizations, universities, and businesses looking to provide access for their members or employees.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Usage Questions -->
-                <div class="faq-category" id="usage">
-                    <h2 class="faq-category-title">Using the Service</h2>
-                    
-                    <div class="faq-item">
-                        <div class="faq-item">
-                            <div class="faq-question">How do I unlock a bike?</div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
-                                    <p>There are two main ways to unlock a Dublin Bike Share bicycle:</p>
-                                    <p><strong>Mobile App Method:</strong></p>
-                                    <ol style="padding-left: 25px; margin: 10px 0;">
-                                        <li style="margin-bottom: 8px;">Open the Dublin Bike Share app on your smartphone</li>
-                                        <li style="margin-bottom: 8px;">Locate the station on the map or scan the QR code on the bike</li>
-                                        <li style="margin-bottom: 8px;">Select the bike number you wish to use</li>
-                                        <li style="margin-bottom: 8px;">Confirm your selection and the bike will unlock automatically</li>
-                                    </ol>
-                                    <p><strong>Subscriber Card Method:</strong></p>
-                                    <ol style="padding-left: 25px; margin: 10px 0;">
-                                        <li style="margin-bottom: 8px;">Insert your Dublin Bike Share card into the card reader at the station kiosk</li>
-                                        <li style="margin-bottom: 8px;">Enter your PIN when prompted</li>
-                                        <li style="margin-bottom: 8px;">Select a bike number from the available options</li>
-                                        <li style="margin-bottom: 8px;">Remove your card and go to the selected bike, which will be unlocked and ready to use</li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">How long can I keep a bike?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-content">
-                                <p>With an Annual Subscription or 3-Day Pass, you can take unlimited rides of up to 30 minutes each at no additional cost. For rides longer than 30 minutes, the following charges apply:</p>
-                                <ul>
-                                    <li>30-60 minutes: €0.50</li>
-                                    <li>60-90 minutes: €1.50</li>
-                                    <li>Each additional 30 minutes: €2.00</li>
-                                </ul>
-                                <p>For Pay-As-You-Go users, charges begin from the moment you unlock the bike at a rate of €0.50 per 30 minutes, plus the initial €2 unlock fee.</p>
-                                <p>While there is no absolute maximum time limit, bikes are intended for short trips. For extended use, we recommend returning your bike and checking out a new one to avoid additional charges.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">What if there are no available bikes or docks?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-content">
-                                <p>If you encounter a station with no available bikes or docking spaces:</p>
-                                <p><strong>No Available Bikes:</strong></p>
-                                <ul>
-                                    <li>Check our app or website for the nearest station with available bikes</li>
-                                    <li>The app shows real-time availability of bikes at all stations</li>
-                                    <li>Stations are typically located within a 5-minute walk of each other in the city center</li>
-                                </ul>
-                                <p><strong>No Available Docks:</strong></p>
-                                <ul>
-                                    <li>Use the app to find the nearest station with available docking spaces</li>
-                                    <li>If you encounter a full station, you can request a 15-minute extension through the app or by calling customer service to give you time to reach another station</li>
-                                    <li>Annual members can report full stations for service improvements</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">What happens if the bike gets damaged while I'm using it?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-content">
-                                <p>If a bike becomes damaged during your journey:</p>
-                                <ol style="padding-left: 25px; margin: 10px 0;">
-                                    <li style="margin-bottom: 8px;">If the damage is minor and doesn't affect safety, return the bike to any station as normal</li>
-                                    <li style="margin-bottom: 8px;">Report the issue through the app or website by entering the bike number and describing the problem</li>
-                                    <li style="margin-bottom: 8px;">If the bike is unsafe to ride, lock it securely and report its location and condition to our customer service immediately</li>
-                                </ol>
-                                <p>Users are responsible for damages caused by misuse, negligence, or violations of our terms of service. For normal wear and tear or mechanical failures not caused by the user, there is no charge. Each case is evaluated individually, and we may contact you for additional information.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Payment Questions -->
-                <div class="faq-category" id="payment">
-                    <h2 class="faq-category-title">Payment & Charges</h2>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">What payment methods do you accept?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-content">
-                                <p>Dublin Bike Share accepts the following payment methods:</p>
-                                <ul>
-                                    <li>Credit cards (Visa, Mastercard, American Express)</li>
-                                    <li>Debit cards (with Visa or Mastercard functionality)</li>
-                                    <li>Digital wallets (Apple Pay, Google Pay)</li>
-                                    <li>Bank transfers (for annual subscriptions only)</li>
-                                </ul>
-                                <p>We do not accept cash payments for security reasons. All payment information is encrypted and securely stored in compliance with financial regulations.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">What is the security deposit and when is it refunded?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-content">
-                                <p>Dublin Bike Share requires a temporary authorization hold of €150 on your card when you sign up for a 3-Day Pass or use the Pay-As-You-Go option. This is not a charge but a temporary hold that is typically released within 7 days after your last ride, provided the bike is returned in good condition.</p>
-                                <p>Annual members do not have a security deposit hold but agree to terms that allow charges for damages or non-return of bikes.</p>
-                                <p>If your deposit hold has not been released after 7 days of your final ride, please contact our customer service for assistance.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">How do I view my billing history?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-content">
-                                <p>You can access your complete billing history through your Dublin Bike Share account:</p>
-                                <ol style="padding-left: 25px; margin: 10px 0;">
-                                    <li style="margin-bottom: 8px;">Log in to your account on our website or mobile app</li>
-                                    <li style="margin-bottom: 8px;">Navigate to 'My Account' or 'Account Settings'</li>
-                                    <li style="margin-bottom: 8px;">Select 'Billing History' or 'Payment History'</li>
-                                </ol>
-                                <p>Here you'll find details of all transactions, including subscription fees, usage fees, and any other charges. You can also download or print receipts for expense tracking or reimbursement purposes.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Technical Questions -->
-                <div class="faq-category" id="technical">
-                    <h2 class="faq-category-title">Technical Issues</h2>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">What if the mobile app isn't working?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-content">
-                                <p>If you're experiencing issues with the Dublin Bike Share app:</p>
-                                <ol style="padding-left: 25px; margin: 10px 0;">
-                                    <li style="margin-bottom: 8px;">Ensure your app is updated to the latest version</li>
-                                    <li style="margin-bottom: 8px;">Check your internet connection, as the app requires data connectivity</li>
-                                    <li style="margin-bottom: 8px;">Restart the app or your device</li>
-                                    <li style="margin-bottom: 8px;">Clear the app cache in your device settings</li>
-                                </ol>
-                                <p>Alternative access methods if the app continues to malfunction:</p>
-                                <ul>
-                                    <li>Use your Dublin Bike Share card at any station terminal</li>
-                                    <li>Access our mobile-responsive website through your browser</li>
-                                    <li>Call customer service for remote bike unlock assistance</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">What if the docking station is not working?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-content">
-                                <p style="margin-bottom: 15px;">If you encounter issues with a docking station:</p>
-                                
-                                <p style="margin-bottom: 10px;"><strong>When Returning a Bike:</strong></p>
-                                <ul style="margin-top: 5px; margin-bottom: 15px; padding-left: 25px;">
-                                    <li style="margin-bottom: 8px;">Ensure you're pushing the bike firmly into the dock – you should hear a beep and see a green light when successfully docked</li>
-                                    <li style="margin-bottom: 8px;">Try another docking point at the same station</li>
-                                    <li style="margin-bottom: 8px;">If all docking points seem to be malfunctioning, find the nearest alternative station through the app</li>
-                                    <li style="margin-bottom: 8px;">If unable to dock due to technical issues, call customer service immediately</li>
-                                </ul>
-                                
-                                <p style="margin-bottom: 10px;"><strong>When Taking a Bike:</strong></p>
-                                <ul style="margin-top: 5px; margin-bottom: 15px; padding-left: 25px;">
-                                    <li style="margin-bottom: 8px;">If the terminal is unresponsive, try using the mobile app instead</li>
-                                    <li style="margin-bottom: 8px;">If neither works, find the nearest operational station on the app map</li>
-                                </ul>
-                                
-                                <p style="margin-bottom: 0;">Always report malfunctioning docking stations through the app or by calling customer service to help us maintain the system.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Account Questions -->
-                <div class="faq-category" id="account">
-                    <h2 class="faq-category-title">Account Management</h2>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">How do I reset my password?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-content">
-                                <p>To reset your Dublin Bike Share account password:</p>
-                                <ol style="padding-left: 25px; margin: 10px 0;">
-                                    <li style="margin-bottom: 8px;">Go to the login page on our website or app</li>
-                                    <li style="margin-bottom: 8px;">Click on "Forgot Password" or "Reset Password"</li>
-                                    <li style="margin-bottom: 8px;">Enter the email address associated with your account</li>
-                                    <li style="margin-bottom: 8px;">Check your email for a password reset link (be sure to check your spam folder)</li>
-                                    <li style="margin-bottom: 8px;">Click the link and follow the instructions to create a new password</li>
-                                </ol>
-                                <p>Reset links are valid for 24 hours. If you don't receive an email or your link expires, you can repeat the process or contact customer service for assistance.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">How do I update my payment information?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-content">
-                                <p>To update your payment information:</p>
-                                <ol style="padding-left: 25px; margin: 10px 0;">
-                                    <li style="margin-bottom: 8px;">Log in to your Dublin Bike Share account on our website or app</li>
-                                    <li style="margin-bottom: 8px;">Navigate to "Account Settings" or "Payment Methods"</li>
-                                    <li style="margin-bottom: 8px;">Select "Edit" next to your current payment method</li>
-                                    <li style="margin-bottom: 8px;">Enter your new card information or add a new payment method</li>
-                                    <li style="margin-bottom: 8px;">Save your changes</li>
-                                </ol>
-                                <p>We recommend updating your payment information before your current card expires to ensure uninterrupted service. If your subscription payment fails due to expired or invalid card information, your account access may be temporarily suspended until payment is processed.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">Can I transfer my subscription to someone else?</div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-content">
-                                <p>No, Dublin Bike Share subscriptions are non-transferable. Each subscription is linked to an individual user account and cannot be transferred to another person. This policy helps us maintain system security and ensures proper account management.</p>
-                                <p>If someone else would like to use the service, they will need to create their own account and purchase their own subscription or pass. We offer various options to suit different needs and usage patterns.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                ]) 
+                }}
             </div>
             
             <div class="no-results" id="noResults">
                 <h3>No results found</h3>
                 <p>Try different keywords or browse the categories above.</p>
             </div>
-            
             <div class="contact-cta">
                 <h3>Couldn't Find Your Answer?</h3>
                 <p>Our customer service team is ready to assist you with any specific questions about Dublin Bike Share.</p>
-                <a href="contact.html" class="btn btn-primary">Contact Us</a>
+                <a href="{{ url_for('contact') }}" class="btn btn-primary">Contact Us</a>
             </div>
         </div>
     </section>
