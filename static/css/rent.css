@@ -3,6 +3,12 @@ ul {
 }
 
 /* Button Styles */
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .btn {
     display: inline-block;
     padding: 10px 25px;
@@ -248,8 +254,8 @@ ul {
 
 .payment-close {
     position: absolute;
-    top: 15px;
-    right: 20px;
+    top: 8px;
+    right: 16px;
     font-size: 28px;
     color: var(--gray);
     cursor: pointer;
@@ -341,6 +347,68 @@ ul {
     margin-bottom: 20px;
 }
 
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .custom-popup {
+    background: white;
+    padding: 2em;
+    border-radius: 10px;
+    text-align: center;
+    width: 30em;
+    position: relative;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .popup-content {
+    h2 {
+        margin-bottom: 0.5em;
+        color: green;
+    }
+    p {
+        line-height: 1.5;
+    }
+  }
+  
+  .pickup-code {
+    margin-top: 1em;
+    font-size: 1.25em;
+    font-weight: bold;
+    letter-spacing: 2px;
+    background: #f0f0f0;
+    padding: 0.5em;
+    border-radius: 5px;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    cursor: pointer;
+    font-size: 1.4em;
+    color: #888;
+  }
+
+  .custom-popup.no-close p {
+    font-size: 1.25rem;
+    line-height: 1.5; 
+  }
+  
+  .custom-popup.no-close .close-btn {
+    display: none;
+  }
+  
+
 @media (max-width: 992px)  {
     .container {
         h2 {
@@ -366,4 +434,8 @@ ul {
     .bike-actions {
         justify-content: center;
     }
+    .custom-popup {
+        padding: 1em;
+        width: 18.75em;
+      }
 }

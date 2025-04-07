@@ -98,55 +98,8 @@
                         <input type="text" id="cvv" name="cvv" placeholder="XXX" required>
                     </div>
                 </div>
-                
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Pay Now</button>
-            </form>
-        </div>
-    </div>
-{% endmacro %}
-
-{% macro render_auth_modals() %}
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Login</h2>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-                <p class="form-footer">Don't have an account? <a href="#" id="showRegisterForm">Register here</a></p>
-            </form>
-        </div>
-    </div>
-    <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Register</h2>
-            <form id="registerForm">
-                <div class="form-group">
-                    <label for="fullName">Full Name:</label>
-                    <input type="text" id="fullName" name="fullName" required>
-                </div>
-                <div class="form-group">
-                    <label for="regEmail">Email:</label>
-                    <input type="email" id="regEmail" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="regPassword">Password:</label>
-                    <input type="password" id="regPassword" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="confirmPassword">Confirm Password:</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Register</button>
-                <p class="form-footer">Already have an account? <a href="#" id="showLoginForm">Login here</a></p>
+                <div id="paymentError" style="color: red; margin: 10px;"></div>
+                <button type="submit" disabled class="btn btn-primary" style="width: 100%; margin-top: 20px;">Pay Now</button>
             </form>
         </div>
     </div>
