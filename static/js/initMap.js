@@ -297,7 +297,7 @@ const addMarkers = async () => {
             Available Bikes: 
             <span style="color: var(--custom-darkBlue); font-size: 18px;">${available_bikes}</span>
           </span>
-          &nbsp;|&nbsp;
+          &nbsp;|& ;
           <span>
             Available Stands:
             <span style="color: var(--custom-red); font-size: 18px;">${available_bike_stands}</span>
@@ -314,7 +314,7 @@ const addMarkers = async () => {
 
         setCloseBtn(stationInfo)
 
-        mapDiv.appendChild(stationInfo);
+        document.body.appendChild(stationInfo);
 
       });
     }

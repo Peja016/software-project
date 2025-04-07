@@ -9,4 +9,14 @@ document.addEventListener('DOMContentLoaded', function() {
             link.classList.add('active');
         }
     });
+
 });
+
+document.getElementById('menu').addEventListener('click', () => {
+    const menuBlock = document.getElementsByClassName('dropdown-content')[0]
+    if (menuBlock.style.display === 'block') {
+        menuBlock.style.display = 'none'
+    } else {
+        menuBlock.style.display = 'block'
+    }
+})

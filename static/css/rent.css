@@ -340,3 +340,30 @@ ul {
     border-radius: 5px;
     margin-bottom: 20px;
 }
+
+@media (max-width: 992px)  {
+    .container {
+        h2 {
+            text-align: center;
+        }
+    }
+    .subscription-options {
+        flex-direction: column;
+        align-items: center;
+    }
+    .subscription-card {
+        max-width: 25rem;
+        width: 100%;
+    }
+    .bikes-container {
+        grid-template-columns: 1fr;
+        max-width: 25em;
+        margin: auto;
+    }
+    .bike-price {
+        text-align: center;
+    }
+    .bike-actions {
+        justify-content: center;
+    }
+}

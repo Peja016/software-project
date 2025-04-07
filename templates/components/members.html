@@ -1,0 +1,10 @@
+{% macro render_members(members) %}
+    {% for member in members %}
+        <p>
+            {{ member['name'] }}:
+            <a href="mailto:{{ member['email'] }}">
+                {{ member['email'] }}
+            </a>
+        </p>
+    {% endfor %}
+{% endmacro %}

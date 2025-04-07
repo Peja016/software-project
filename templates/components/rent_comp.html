@@ -9,7 +9,9 @@
                     <li>{{ feature }}</li>
                 {% endfor %}
             </ul>
-            <button class="btn btn-primary subscription-btn" data-plan="{{ subscription['plan'] }}" data-price="{{ subscription['price_value'] }}">{{ subscription['button_text'] }}</button>
+            <div class="bike-actions">
+                <button class="btn btn-primary subscription-btn" data-plan="{{ subscription['plan'] }}" data-price="{{ subscription['price_value'] }}">{{ subscription['button_text'] }}</button>
+            </div>
         </div>
     {% endfor %}
 {% endmacro %}

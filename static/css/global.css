@@ -215,3 +215,62 @@ footer {
 .footer-credits a:hover {
     color: var(--custom-lightBlue);
 }
+
+.dropdown-content {
+    display: none;
+    border-radius: 1em;
+    background-color: white;
+    padding: 1em;
+}
+
+.dropdown-content div {
+    text-align: right;
+}
+
+.dropdown-content div:not(:first-child) {
+    margin-top: 0.75rem;
+}
+
+.dropdown-content a {
+    font-size: 1.25em;
+    font-weight: 700;
+    text-wrap: nowrap;
+}
+
+.menu:hover .dropdown-content {
+    display: block;
+    position: absolute;
+    top: 100%;
+    right: 0%;
+}
+
+.mobile {
+    display: none;
+}
+
+.menu {
+    position: relative;
+    cursor: pointer;
+}
+
+@media (max-width: 992px) {
+    .desktop {
+        display: none;
+    }
+    .mobile {
+        display: block;
+    }
+    .footer-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .footer-info, .footer-email, .footer-links {
+        width: 100%;
+        text-align: center;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+}

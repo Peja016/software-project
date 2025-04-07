@@ -100,7 +100,7 @@ textarea {
     margin-right: 1em;
 }
 
-@media screen and (max-width: 772px) {
+@media (max-width: 768px) {
     .pop-up {
         font-size: 1.25em;
         width: 90%;
@@ -110,5 +110,9 @@ textarea {
     input[type="submit"] {
         max-width: 10em;
         min-width: 7rem;
+    }
+    .contact-container {
+        flex-direction: column-reverse;
+        align-items: center;
     }
 }

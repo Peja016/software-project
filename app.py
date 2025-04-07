@@ -75,7 +75,6 @@ def map():
         lat=os.getenv('LAT'),
         lon=os.getenv('LON'),
         api=os.getenv('GOOGLE_MAP_API'),
-        weather_api_url="/api/weather",
     )
 
 @app.route('/use')

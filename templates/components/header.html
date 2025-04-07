@@ -1,0 +1,29 @@
+{% set navs = [
+    { 'label': "Home", 'href': url_for('index') },
+    { 'label': "How to use", 'href': url_for('use') },
+    { 'label': "Map", 'href': url_for('map') },
+    { 'label': "Rent", 'href': url_for('rent') },
+    { 'label': "About", 'href': url_for('about') },
+    { 'label': "FAQ", 'href': url_for('faq') },
+    { 'label': "Contact us", 'href': url_for('contact') }
+] %}
+
+{% macro render_desktop_header() %}
+    <div class="flex desktop">
+        {% for nav in navs %}
+            <a href="{{ nav['href'] }}"><div style="font-size: 1.5em; font-weight: bold; color: #002C3E">{{ nav['label'] }}</div></a>
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro render_mobile_header() %}
+    <div class="dropdown-content">
+        {% for nav in navs %}
+            <div>
+                <a href="{{ nav['href'] }}">
+                    {{ nav['label'] }}
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endmacro %}

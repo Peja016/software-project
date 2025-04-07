@@ -78,7 +78,7 @@
 }
 
 #station-info {
-    position: absolute;
+    position: fixed;
     left: 50%;
     top: 50%;
     width: 50%;
@@ -89,7 +89,8 @@
     border-radius: 1em;
     text-align: center;
     padding: 2em;
-
+    height: 75vh;
+    overflow: auto;
     div,
     p {
         line-height: 1.5;

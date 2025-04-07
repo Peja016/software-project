@@ -139,7 +139,6 @@
 @media (max-width: 768px) {
     .safety-policies {
         flex-direction: column;
-        text-align: center;
     }
 
     .safety-image {
@@ -152,6 +151,7 @@
     .safety-intro {
         max-width: 100%;
         padding: 0 10px;
+        text-align: justify;
     }
 
     .how-to-step {
@@ -162,16 +162,21 @@
     .how-to-step-number {
         position: static;
         margin-bottom: 10px;
-        width: 100%;
         max-width: 300px;
         margin-left: auto;
         margin-right: auto;
     }
-}
 
-@media (max-width: 576px) {
+    .how-to-image {
+        width: 100%;
+    }
+
     .section-title {
         font-size: 24px;
         margin-bottom: 30px;
+    }
+
+    .safety-intro {
+        text-align: justify;
     }
 }
