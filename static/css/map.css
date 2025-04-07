@@ -75,4 +75,29 @@
     cursor: pointer;
     padding: 0;
     line-height: 1;
-  }
+}
+
+#station-info {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    display: none;
+    z-index: 5;
+    border-radius: 1em;
+    text-align: center;
+    padding: 1em 2em;
+    div, p {
+        line-height: 1.5;
+    }
+}
+
+
+#line-chart {
+    width: 100%;
+    max-width: 800px; 
+    height: 400px; 
+    margin: 0 auto;
+}

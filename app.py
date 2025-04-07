@@ -5,7 +5,12 @@ from dotenv import load_dotenv
 from getBikeData import getBikeData
 from getWeatherData import getCurrentWeatherData
 from storeInfo import sentData
-import requests
+import pandas as pd
+
+# Load csv file data into app
+
+availability_data = pd.read_csv("data/availability.csv")
+weather_data = pd.read_csv("data/weather_data.csv")
 
 load_dotenv() # Load environment variables from .env file
 
@@ -26,11 +31,28 @@ def getBikesInfo():
     if res.status_code == 200:
         return jsonify(res.json())
     
-@app.route("/api/weather", methods=['POST', 'GET'])
+@app.route("/api/weather", methods=['POST'])
 def getCurrentWeatherInfo():
     res = getCurrentWeatherData()
     if res.status_code == 200:
         return jsonify(res.json())
+    
+@app.route("/api/stations/<int:id>", methods=['POST'])
+def getStationData(id):
+    filtered_data = availability_data[availability_data["number"] == id]
+    data = filtered_data[['available_bikes', 'available_bike_stands', 'last_update']]
+    data_for_chart = [['Time', 'Available Bikes', 'Available Stands']]
+    for _, row in data.iterrows():
+        time_str = pd.to_datetime(row['last_update']).strftime('%H:%M:%S')
+        data_for_chart.append([
+            time_str, row['available_bikes'], row['available_bike_stands']
+        ])
+    return jsonify(data_for_chart)
+
+@app.route("/api/oneDayWeather", methods=['POST'])
+def getOneDayWeatherData():
+    weatherData = weather_data.to_dict(orient='records')
+    return jsonify(weatherData.json())
     
 @app.route("/api/contact_form", methods=["POST"])
 def sentInfo():
