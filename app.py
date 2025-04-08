@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from getBikeData import getBikeData
 from getWeatherData import getCurrentWeatherData
-from storeInfo import sentData
+from storeContactInfo import sentData
 import pandas as pd
 from datetime import datetime, timedelta
 
