@@ -85,7 +85,6 @@ submitBtn.addEventListener('click', async () => {
             window.location.href = "/"; // back to Homepage
         }, 2000);
     } else {
-        console.log(res)
         submitBtn.removeAttribute('disabled')
         const errorMesg = (Boolean(!res.message.isValidName) ? 'error name' : '') + (Boolean(!res.message.isValidPassword) ? 'error password' : '')
         errorMessage.style.display = 'block';
