@@ -1,5 +1,4 @@
 from flask import Flask, render_template, jsonify
-from bs4 import BeautifulSoup
 import os
 from dotenv import load_dotenv
 from getBikeData import getBikeData
@@ -64,7 +63,7 @@ def getOneDayWeatherData():
     
 @app.route("/api/contact_form", methods=["POST"])
 def sentInfo():
-    res = sentData()
+    res = sentData(os.getenv('GOOGLE_APP_SCRIPT_URL'))
     if res.status_code == 200:
         return res
 

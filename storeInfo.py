@@ -1,16 +1,11 @@
 from flask import request, jsonify
-import os
 import requests
-from dotenv import load_dotenv
 
-load_dotenv() # Load environment variables from .env file
-
-def sentData():
-    url_end = os.getenv('GOOGLE_APP_SCRIPT_URL')
+def sentData(url_end):
+    print(url_end)
     try:
         # get the data from frontend
         form_data = request.form.to_dict()
-        print(form_data)
         # check if get the data
         if not form_data:
             return jsonify({"status": "error", "message": "No data received"}), 400
