@@ -1,3 +1,5 @@
+import fetchData from './fetchData.js'
+
 const labels = ['name', 'email', 'phone', 'message']
 
 const submitBtn = document.querySelector('input[type="submit"]') 
@@ -56,7 +58,7 @@ labels.forEach(key => {
     })
 })
 
-submitBtn.addEventListener('click', () => {
+submitBtn.addEventListener('click', async () => {
     let formData = new FormData()
     Object.keys(info).forEach(key => {
         document.getElementsByName(key)[0].setAttribute('disabled', true)
@@ -65,37 +67,26 @@ submitBtn.addEventListener('click', () => {
     formData.append('time', new Date())
     submitBtn.setAttribute('disabled', true)
     submitBtn.value = 'SENDING...'
-    fetch(
-        '/api/contact_form',
-        {
-            method: 'POST',
-            body: formData,
-            redirect: "follow",
-        } 
-    ).then(res => res.json()).then(async (d) => {
-        if (d.status == "success") {
-            labels.forEach(key => {
-                info[key] = ''
-                document.getElementsByName(key)[0].value = ''
-                document.getElementsByName(key)[0].removeAttribute('disabled')
-            })
-            submitBtn.removeAttribute('disabled')
-            submitBtn.value = 'SUBMIT'
-            popUp.style.opacity = 1
-            setTimeout(() => popUp.style.opacity = 0, 2250)
-        } else {
-            popUp.style.opacity = 1
-            popUp.textContent = 'Failed to submit'
-            setTimeout(() => {
-                popUp.style.opacity = 0
-                popUp.textContent = 'Submission Completed'
-            }, 2250)
-            submitBtn.removeAttribute('disabled')
-            submitBtn.value = 'SUBMIT'  
-        }
-    }).catch((e) => {
-        console.log(e)
+    const d = await fetchData('/api/contact_form', formData)
+    if (d.status == "success") {
+        labels.forEach(key => {
+            info[key] = ''
+            document.getElementsByName(key)[0].value = ''
+            document.getElementsByName(key)[0].removeAttribute('disabled')
+        })
+        submitBtn.removeAttribute('disabled')
+        submitBtn.value = 'SUBMIT'
+        popUp.style.opacity = 1
+        setTimeout(() => popUp.style.opacity = 0, 2250)
+    } else {
+        popUp.style.opacity = 1
+        popUp.textContent = 'Failed to submit'
+        setTimeout(() => {
+            popUp.style.opacity = 0
+            popUp.textContent = 'Submission Completed'
+        }, 2250)
         submitBtn.removeAttribute('disabled')
         submitBtn.value = 'SUBMIT'  
-    })
+    }
+
 })
