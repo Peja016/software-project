@@ -1,3 +1,8 @@
+.journey {
+    display: flex;
+    gap: 1em;
+}
+
 .journey input {
     margin-bottom: 1em;
     flex: 1;
@@ -31,6 +36,7 @@
 #legend {
     opacity: 0;
     margin: 10px;
+    display: inline-block;
 }
 
 .legend-block {
@@ -147,4 +153,14 @@
     font-size: 14px;
     font-weight: bold;
     color: var(--custom-darkBlue);
+}
+
+@media (max-width: 768px) {
+    .journey {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    #map {
+        height: 50vh;
+    }
 }

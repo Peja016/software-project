@@ -15,6 +15,8 @@ directionsRenderer = new google.maps.DirectionsRenderer({
   },
 });
 
+const isMobile = window.innerWidth <= 768;
+
 const mapDiv = document.getElementById("map");
 
 const weather = document.getElementById("weather");
@@ -99,22 +101,22 @@ const updateRoutePreview = () => {
       }
     }
   );
-}
+};
 
 // Trigger live preview when place is selected
 originAutocomplete.addListener("place_changed", updateRoutePreview);
 destinationAutocomplete.addListener("place_changed", updateRoutePreview);
 
-// add close button 
+// add close button
 const setCloseBtn = (dom) => {
   const closeBtn = document.createElement("button");
   closeBtn.textContent = "×";
   closeBtn.className = "close-btn";
   closeBtn.addEventListener("click", () => {
-    dom.remove()
+    dom.remove();
   });
   dom.appendChild(closeBtn);
-}
+};
 
 // Show time & distance only after clicking "Route" button
 document.getElementById("routeBtn").addEventListener("click", () => {
@@ -129,7 +131,7 @@ document.getElementById("routeBtn").addEventListener("click", () => {
   const estimation = document.createElement("div");
   estimation.className = "estimation";
 
-  setCloseBtn(estimation)
+  setCloseBtn(estimation);
 
   const line1 = document.createElement("p");
   line1.textContent = `Estimated time: ${duration}`;
@@ -149,79 +151,86 @@ document.getElementById("routeBtn").addEventListener("click", () => {
   }, 5000);
 });
 
-const lineChart = document.createElement('div')
-lineChart.id = 'line-chart'
+const lineChart = document.createElement("div");
+lineChart.id = "line-chart";
 
 const showDailyWeather = async (stationInfo) => {
   const weatherData = await fetchData(`/api/oneDayWeather`);
   if (!weatherData || weatherData.length === 0) return;
-  const weatherSection = document.createElement('div');
-  weatherSection.className = 'weather-section';
-  const title = document.createElement('h3');
-  title.textContent = 'Historical Weather Overview';
+  const weatherSection = document.createElement("div");
+  weatherSection.className = "weather-section";
+  const title = document.createElement("h3");
+  title.textContent = "Historical Weather Overview";
   weatherSection.appendChild(title);
 
-   // Create wrapper for weather cards
-   const weatherContainer = document.createElement('div');
-   weatherContainer.className = 'weather-cards';
- 
-   weatherData.forEach(data => {
-     const card = document.createElement('div');
-     card.className = 'weather-card';
- 
-     const time = document.createElement('p');
-     time.textContent = data.time;
-     time.className = 'weather-hour';
- 
-     const icon = document.createElement('img');
-     icon.src = `https://openweathermap.org/img/wn/${data.icon}.png`;
-     icon.alt = data.description || "weather icon";
-     icon.className = 'weather-icon';
- 
-     const temp = document.createElement('p');
-     temp.textContent = `${data.temperature}`;
-     temp.className = 'weather-temp';
- 
-     card.appendChild(time);
-     card.appendChild(icon);
-     card.appendChild(temp);
- 
-     weatherContainer.appendChild(card);
-   });
- 
-   weatherSection.appendChild(weatherContainer);
-   stationInfo.appendChild(weatherSection);
-}
+  // Create wrapper for weather cards
+  const weatherContainer = document.createElement("div");
+  weatherContainer.className = "weather-cards";
+
+  weatherData.forEach((data) => {
+    const card = document.createElement("div");
+    card.className = "weather-card";
+
+    const time = document.createElement("p");
+    time.textContent = data.time;
+    time.className = "weather-hour";
+
+    const icon = document.createElement("img");
+    icon.src = `https://openweathermap.org/img/wn/${data.icon}.png`;
+    icon.alt = data.description || "weather icon";
+    icon.className = "weather-icon";
+
+    const temp = document.createElement("p");
+    temp.textContent = `${data.temperature}`;
+    temp.className = "weather-temp";
+
+    card.appendChild(time);
+    card.appendChild(icon);
+    card.appendChild(temp);
+
+    weatherContainer.appendChild(card);
+  });
+
+  weatherSection.appendChild(weatherContainer);
+  stationInfo.appendChild(weatherSection);
+};
 
 const drawChart = async (number) => {
   const stationData = await fetchData(`/api/stations/${number}`);
   const data = google.visualization.arrayToDataTable(stationData);
   const options = {
-    title: 'Bike Availability & Stand Availability Over Time (historical data)',
+    title: "Bike Availability & Stand Availability Over Time (historical data)",
     titleTextStyle: {
       fontSize: 16,
     },
-    curveType: 'function',
-    legend: { position: 'bottom' },
-    hAxis: { title: 'Time' },
+    curveType: "function",
+    legend: { position: "bottom" },
+    hAxis: { title: "Time" },
     vAxis: {
-      title: 'Quantity',
+      title: "Quantity",
       viewWindow: {
-        min: 0 
-      }
+        min: 0,
+      },
     },
-    colors: ['#457b9d', '#e63946']
+    colors: ["#457b9d", "#e63946"],
   };
 
   const chart = new google.visualization.LineChart(lineChart);
   chart.draw(data, options);
-}
+};
 
 const addMarkers = async () => {
   const infoWindow = new google.maps.InfoWindow();
   const bikeData = await fetchData("/api/bikesInfo");
   bikeData.forEach(
-    ({ position, name, available_bikes, available_bike_stands, status, number }) => {
+    ({
+      position,
+      name,
+      available_bikes,
+      available_bike_stands,
+      status,
+      number,
+    }) => {
       const marker = new google.maps.Marker({
         position,
         map,
@@ -253,9 +262,9 @@ const addMarkers = async () => {
       marker.addListener("mouseout", () => {
         infoWindow.close();
       });
-      
+
       // Now start drawing the chart
-      google.charts.load('current', { packages: ['corechart'] });
+      google.charts.load("current", { packages: ["corechart"] });
 
       marker.addListener("click", (e) => {
         const markerPosition = marker.getPosition();
@@ -263,16 +272,16 @@ const addMarkers = async () => {
         // remove the previous stationInfo
         const existingInfo = document.getElementById("station-info");
         if (existingInfo) {
-            existingInfo.remove();
+          existingInfo.remove();
         }
         // set the station clicked to be the center of page.
         map.panTo(markerPosition);
         google.charts.setOnLoadCallback(drawChart(number));
-        
-        const stationInfo = document.createElement("div");
-        stationInfo.id = 'station-info'
 
-        stationInfo.style.display = 'block'
+        const stationInfo = document.createElement("div");
+        stationInfo.id = "station-info";
+
+        stationInfo.style.display = "block";
 
         const stop = document.createElement("div");
         const id = document.createElement("p");
@@ -280,14 +289,14 @@ const addMarkers = async () => {
         id.textContent = `Station ID: ${number}`;
 
         const stationName = document.createElement("p");
-        stationName.style.fontSize = '20px'
-        stationName.style.fontWeight = 'bold'
-        stationName.style.color = 'var(--custom-primary)'
-        stationName.textContent = name
+        stationName.style.fontSize = "20px";
+        stationName.style.fontWeight = "bold";
+        stationName.style.color = "var(--custom-primary)";
+        stationName.textContent = name;
 
-        stop.appendChild(id)
-        stop.appendChild(stationName)
-      
+        stop.appendChild(id);
+        stop.appendChild(stationName);
+
         const info = document.createElement("div");
         const line1 = document.createElement("p");
         line1.textContent = `Current status: ${status}`;
@@ -310,12 +319,11 @@ const addMarkers = async () => {
         stationInfo.appendChild(stop);
         stationInfo.appendChild(info);
         stationInfo.appendChild(lineChart);
-        showDailyWeather(stationInfo)
+        showDailyWeather(stationInfo);
 
-        setCloseBtn(stationInfo)
+        setCloseBtn(stationInfo);
 
         document.body.appendChild(stationInfo);
-
       });
     }
   );
@@ -330,7 +338,9 @@ export const initMap = async () => {
 
   map.controls[google.maps.ControlPosition.LEFT_TOP].push(weather);
 
-  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);
+  if (!isMobile) {
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(legend);
+  }
 
   setTimeout(() => {
     legend.style.opacity = 1;
