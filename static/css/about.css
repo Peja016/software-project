@@ -9,7 +9,7 @@
 
 .about-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
     margin: 40px 0;
 }
@@ -121,6 +121,14 @@
     margin: 20px 0 15px;
 }
 
+@media (max-width: 992px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+        max-width: 30rem;
+        margin: 40px auto;
+    }
+}
+
 
 @media (max-width: 768px) {
     .history-timeline::before {
@@ -141,12 +149,6 @@
     .timeline-item:nth-child(even) .timeline-date {
         left: -20px;
         right: auto;
-    }
-
-    .about-grid {
-        grid-template-columns: 1fr;
-        max-width: 30rem;
-        margin: 40px auto;
     }
 
     .stats-container {

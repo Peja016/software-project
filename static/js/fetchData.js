@@ -1,11 +1,16 @@
-export default async function fetchData(api) {
+export default async function fetchData(api, info) {
     const headers = { 'Content-Type': 'application/json' }
 
-    const res = await fetch(api, {
-      headers,
+    const options = {
       method: 'POST',
-      body: JSON.stringify(),
-    })
+      body: info ? info : JSON.stringify(),
+    };
+    
+    if (!info) {
+      options.headers = headers;
+    }
+    
+    const res = await fetch(api, options);
 
     const data = await res.json()
     

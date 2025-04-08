@@ -114,7 +114,7 @@ function validatePaymentForm() {
     return false;
   }
 
-  if (isCvvValid && !isCvvValid) {
+  if (cvv && !isCvvValid) {
     errorDiv.textContent = "Please enter a valid 3-digit CVV.";
     return false;
   }

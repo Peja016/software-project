@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from getBikeData import getBikeData
 from getWeatherData import getCurrentWeatherData
 from storeContactInfo import sentData
+from accountApiFunction import accessData
 import pandas as pd
 from datetime import datetime, timedelta
 
@@ -66,6 +67,12 @@ def sentInfo():
     res = sentData(os.getenv('GOOGLE_APP_SCRIPT_URL'))
     if res.status_code == 200:
         return res
+    
+@app.route("/api/account", methods=["POST"])
+def loginApi():
+    res = accessData(os.getenv('GOOGLE_APP_SCRIPT_ACCOUNT_URL'))
+    return res
+
 
 @app.route('/map')
 def map():
@@ -95,6 +102,10 @@ def faq():
 @app.route('/contact')
 def contact():
     return render_template("contact.html")
+
+@app.route('/login')
+def login():
+    return render_template("login.html")
 
 if __name__ == "__main__":
     app.config['ENV'] = 'development'

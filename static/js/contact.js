@@ -8,7 +8,6 @@ const info = {}
 const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]/
 const phonePattern = /^(?:\+?\d{1,4})?[ -.]?(?:\(?\d{2,4}\)?)[ -.]?\d{3,4}[ -.]?\d{3,4}$/
 
-
 var isNameEmpty = true
 var isEmailInvalid = true
 var isMessageEmpty = true
@@ -85,7 +84,6 @@ submitBtn.addEventListener('click', () => {
             popUp.style.opacity = 1
             setTimeout(() => popUp.style.opacity = 0, 2250)
         } else {
-            console.log(d.message)
             popUp.style.opacity = 1
             popUp.textContent = 'Failed to submit'
             setTimeout(() => {

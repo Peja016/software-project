@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block title %}Login - Dublin Bike Share{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}" />
+{% endblock %} 
+{% block content %}
+    <div class="container" style="max-width: 30em;">
+        <h2 id="form-title">Login / Sign up</h2>
+        <div>
+            <label for="name">name</label>
+            <input id="name" name="name" required />
+
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required />
+
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required />
+
+            <div id="errorMessage" style="color: red; margin: 10px;"></div>
+            <button type="submit" disabled>Submit</button>
+        </div>
+        <div class="center pop-up"></div>
+        <!-- <span class="toggle-link" id="toggle-form">Don't have an account? Register</span> -->
+    </div>
+    <script type="module" src="{{ url_for('static', filename='js/account.js') }}">
+    </script>
+    
+{% endblock %} 

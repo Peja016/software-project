@@ -60,6 +60,11 @@ button {
     padding: 1em;
 }
 
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 header {
     position: fixed;
     top: 0;
@@ -253,6 +258,22 @@ footer {
     cursor: pointer;
 }
 
+.pop-up {
+    border: 3px solid var(--custom-primary);
+    border-radius: 10px;
+    background-color: white;
+    font-size: 1.5em;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    padding: 2rem;
+    opacity: 0;
+    color: var(--custom-primary);
+    pointer-events: none;
+}
+
 @media (max-width: 992px) {
     .desktop {
         display: none;
@@ -272,5 +293,14 @@ footer {
 
     .social-icons {
         justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .pop-up {
+        font-size: 1.25em;
+        width: 90%;
+        height: 300px;
+        padding: 0 1em;
     }
 }

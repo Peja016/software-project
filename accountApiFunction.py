@@ -1,9 +1,8 @@
 from flask import request, jsonify
 import requests
 
-def sentData(url_end):
+def accessData(url_end):
     try:
-        # get the data from frontend
         form_data = request.form.to_dict()
         # check if get the data
         if not form_data:
