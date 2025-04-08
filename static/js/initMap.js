@@ -181,7 +181,7 @@ const showDailyWeather = async (stationInfo) => {
     icon.className = "weather-icon";
 
     const temp = document.createElement("p");
-    temp.textContent = `${data.temperature}`;
+    temp.textContent = `${data.temperature}℃`;
     temp.className = "weather-temp";
 
     card.appendChild(time);
@@ -199,7 +199,7 @@ const drawChart = async (number) => {
   const stationData = await fetchData(`/api/stations/${number}`);
   const data = google.visualization.arrayToDataTable(stationData);
   const options = {
-    title: "Bike Availability & Stand Availability Over Time (historical data)",
+    title: "Bike & Stand Availability Over Time (historical data)",
     titleTextStyle: {
       fontSize: 16,
     },
@@ -306,7 +306,7 @@ const addMarkers = async () => {
             Available Bikes: 
             <span style="color: var(--custom-darkBlue); font-size: 18px;">${available_bikes}</span>
           </span>
-          &nbsp;|& ;
+          &nbsp;|&nbsp;
           <span>
             Available Stands:
             <span style="color: var(--custom-red); font-size: 18px;">${available_bike_stands}</span>

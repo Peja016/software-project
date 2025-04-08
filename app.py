@@ -41,7 +41,7 @@ def getCurrentWeatherInfo():
 def getStationData(id):
     filtered_data = availability_data[availability_data["number"] == id]
     data = filtered_data[['available_bikes', 'available_bike_stands', 'last_update']]
-    data_for_chart = [['Time', 'Available Bikes', 'Available Stands']]
+    data_for_chart = [['Time', 'Bikes', 'Stands']]
     for _, row in data.iterrows():
         time_str = pd.to_datetime(row['last_update']).strftime('%H:%M:%S')
         data_for_chart.append([

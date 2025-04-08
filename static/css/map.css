@@ -87,7 +87,8 @@
     position: fixed;
     left: 50%;
     top: 50%;
-    width: 50%;
+    width: 66%;
+    min-width: 360px;
     transform: translate(-50%, -50%);
     background-color: white;
     display: none;
@@ -118,7 +119,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    justify-content: flex-start;
+    justify-content: center;
     margin-top: 1em;
 }
 
@@ -162,5 +163,9 @@
     }
     #map {
         height: 50vh;
+    }
+
+    #station-info {
+        padding: 1em;
     }
 }
