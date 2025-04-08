@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 availability_data = pd.read_csv("data/availability.csv")
 weather_data = pd.read_csv("data/weather_data.csv")
 
-load_dotenv() # Load environment variables from .env file
+load_dotenv(override=True) # Load environment variables from .env file
 
 app = Flask(__name__)
 
