@@ -70,7 +70,7 @@ submitBtn.addEventListener('click', async () => {
         setTimeout(() => {
             popUp.style.opacity = 0;
             window.location.href = "/"; // back to Homepage
-        }, 2000);
+        }, 1500);
 
     } else if (res.status == "login") {
         sessionStorage.setItem('name', info.name);
@@ -83,10 +83,11 @@ submitBtn.addEventListener('click', async () => {
         setTimeout(() => {
             popUp.style.opacity = 0;
             window.location.href = "/"; // back to Homepage
-        }, 2000);
+        }, 1500);
     } else {
         submitBtn.removeAttribute('disabled')
-        const errorMesg = (Boolean(!res.message.isValidName) ? 'error name' : '') + (Boolean(!res.message.isValidPassword) ? 'error password' : '')
+        const errorMesg = (Boolean(!res.message.isValidName) ? 'error name' + (Boolean(!res.message.isValidName) && Boolean(!res.message.isValidPassword)) ? ', ' : '' : '') + (Boolean(!res.message.isValidPassword) ? 'error password' : '')
+        console.log(res)
         errorMessage.style.display = 'block';
         errorMessage.textContent = errorMesg
         labels.forEach(key => {

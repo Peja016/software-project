@@ -1,22 +1,35 @@
-{% set navs = [
+{% set base_navs = [
     { 'label': "Home", 'href': url_for('index') },
     { 'label': "How to use", 'href': url_for('use') },
     { 'label': "Map", 'href': url_for('map') },
     { 'label': "Rent", 'href': url_for('rent') },
     { 'label': "About", 'href': url_for('about') },
     { 'label': "FAQ", 'href': url_for('faq') },
-    { 'label': "Contact us", 'href': url_for('contact') }
+    { 'label': "Contact us", 'href': url_for('contact') },
 ] %}
 
-{% macro render_desktop_header() %}
+{% macro render_desktop_header(name) %}
+    {% if name %}
+        {% set navs = base_navs + [{ 'label': "Log out", 'href': url_for('logout') }] %}
+    {% else %}
+        {% set navs = base_navs + [{ 'label': "Log in", 'href': url_for('login') }] %}
+    {% endif %}
     <div class="flex desktop">
         {% for nav in navs %}
-            <a href="{{ nav['href'] }}"><div style="font-size: 1.5em; font-weight: bold; color: #002C3E">{{ nav['label'] }}</div></a>
+            <a href="{{ nav['href'] }}"><div>{{ nav['label'] }}</div></a>
         {% endfor %}
+        {% if name %}
+            <div style="padding: 0.25rem 0;">Hi, {{ name }}</div>
+        {% endif %}
     </div>
 {% endmacro %}
 
-{% macro render_mobile_header() %}
+{% macro render_mobile_header(name) %}
+    {% if name %}
+        {% set navs = base_navs + [{ 'label': "Log out", 'href': url_for('logout') }] %}
+    {% else %}
+        {% set navs = base_navs + [{ 'label': "Log in", 'href': url_for('login') }] %}
+    {% endif %}
     <div class="dropdown-content">
         {% for nav in navs %}
             <div>
@@ -25,5 +38,8 @@
                 </a>
             </div>
         {% endfor %}
+        {% if name %}
+            <div style="padding: 0.25rem 0;">Hi, {{ name }}</div>
+        {% endif %}
     </div>
 {% endmacro %}

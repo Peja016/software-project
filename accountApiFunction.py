@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, session
 import requests
 
 def accessData(url_end):
@@ -10,6 +10,10 @@ def accessData(url_end):
 
         # send request to Google Apps Script
         response = requests.post(url_end, data=form_data)
+
+        if response.json().get("status") != 'error':
+            name = form_data.get('name')
+            session['name'] = name
         # return Google Apps Script response to frontend
         return jsonify(response.json())
 

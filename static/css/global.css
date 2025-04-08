@@ -72,6 +72,11 @@ header {
     right: 0;
     z-index: 100;
     background-color: white;
+    .desktop {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #002C3E;
+    }
 }
 
 header a {
@@ -143,7 +148,7 @@ img {
 }
 
 .desktop {
-    gap: 1.75em;
+    gap: 1.75rem;
 }
 
 .section-title {
@@ -230,6 +235,7 @@ footer {
 
 .dropdown-content div {
     text-align: right;
+    font-weight: 700;
 }
 
 .dropdown-content div:not(:first-child) {
