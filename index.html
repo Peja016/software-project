@@ -13,7 +13,7 @@
             display: block;
             margin-bottom: 8px;
         }
-        input, button {
+        input, select, button {
             margin-bottom: 16px;
             padding: 8px;
             font-size: 16px;
@@ -25,7 +25,6 @@
     </style>
 </head>
 <body>
-
     <h1>Bike Availability Prediction</h1>
 
     <label for="date">Select Date:</label>
@@ -34,14 +33,41 @@
     <label for="time">Select Time:</label>
     <input type="time" id="time" required>
 
-    <label for="time">Select Station:</label>
-    <input type="number" id="station_id" required>
+    <label for="station_id">Select Station:</label>
+    <select id="station_id" required>
+        <option value="">-- Select a station --</option>
+    </select>
 
     <button onclick="predict()">Predict</button>
 
     <div id="result"></div>
 
     <script>
+        // Global object to store station capacities
+        let stationCapacities = {};
+
+        // Load station list
+        window.onload = function() {
+            fetch("/stations")
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById("station_id");
+                    data.forEach(station => {
+                        const option = document.createElement("option");
+                        option.value = station.station_id;
+                        option.text = station.name;
+                        select.appendChild(option);
+                        // Store mapping between station_id and capacity
+                        stationCapacities[station.station_id] = station.capacity;
+                    });
+                })
+                .catch(error => {
+                    console.error("Error loading stations:", error);
+                    document.getElementById("result").innerHTML = "Error loading station list.";
+                });
+        };
+
+        // Prediction function
         function predict() {
             const date = document.getElementById("date").value;
             const time = document.getElementById("time").value;
@@ -50,7 +76,7 @@
 
             // Validate input
             if (!date || !time || !station_id) {
-                resultDiv.innerHTML = "Please select date time and station.";
+                resultDiv.innerHTML = "Please select date, time, and station.";
                 return;
             }
 
@@ -64,7 +90,21 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.predicted_available_bikes !== undefined) {
-                        resultDiv.innerHTML = `Predicted Available Bikes: ${data.predicted_available_bikes}`;
+                        const predictedBikes = data.predicted_available_bikes;
+                        const capacity = stationCapacities[station_id]; // Get capacity for the station
+                        let message = `Predicted Available Bikes: ${predictedBikes}`;
+
+                        // Check if less than half the capacity
+                        if (predictedBikes < capacity / 2) {
+                            message += "<br>Available bikes are less than half of the station's total capacity!";
+                        }
+
+                        // Check if less than 3
+                        if (predictedBikes < 3) {
+                            message += "<br>Warning! Very few bikes available!";
+                        }
+
+                        resultDiv.innerHTML = message;
                     } else {
                         resultDiv.innerHTML = `Error: ${data.error || "Something went wrong"}`;
                     }
@@ -74,6 +114,5 @@
                 });
         }
     </script>
-
 </body>
 </html>
