@@ -1,4 +1,4 @@
-import fetchData from './fetchData.js'
+import fetchData from './fetch-data.js'
 
 const getWeather = async () => {
     const weatherData = await fetchData('/api/weather');

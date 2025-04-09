@@ -1,4 +1,4 @@
-import fetchData from "./fetchData.js";
+import fetchData from "./fetch-data.js";
 
 let directionsService, directionsRenderer;
 

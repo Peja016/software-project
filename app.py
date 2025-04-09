@@ -21,7 +21,14 @@ app.secret_key = os.getenv('SECRET_KEY')
 
 @app.context_processor
 def globalData():
-    return { 'name': session.get('name') }
+    return { 
+        'name': session.get('name'), 
+        'team': [
+            { 'name': 'Tan', 'pic': 'tan.png', 'id': 24211515, 'email': "hsuan-yu.tan@ucdconnect.ie" }, 
+            { 'name': 'Kexun', 'pic': 'kexun.jpeg', 'id': 24204204, 'email': "kexun.liu@ucdconnect.ie" },
+            { 'name': 'Herman', 'pic': 'herman.JPG', 'id': 24103685, 'email': "herman.dolhyi@ucdconnect.ie" },
+        ] 
+    }
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -76,7 +83,8 @@ def sentInfo():
 @app.route("/api/account", methods=["POST"])
 def loginApi():
     res = accessData(os.getenv('GOOGLE_APP_SCRIPT_ACCOUNT_URL'))
-    return res
+    if res.status_code == 200:
+        return res
 
 @app.route('/map')
 def map():

@@ -1,4 +1,4 @@
-import fetchData from './fetchData.js'
+import fetchData from './fetch-data.js'
 
 const labels = ['name', 'email', 'phone', 'message']
 

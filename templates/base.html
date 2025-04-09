@@ -45,12 +45,7 @@
                 <div class="footer-email">
                     <h3>Email</h3>
                     {% from "components/members.html" import render_members %}
-                    {{ render_members([
-                        { 'name': 'Tan', 'email': 'hsuan-yu.tan@ucdconnect.ie' }, 
-                        { 'name': 'Kexun', 'email': 'kexun.liu@ucdconnect.ie' },
-                        { 'name': 'Herman', 'email': 'herman.dolhyi@ucdconnect.ie' },
-                        ]) 
-                    }}
+                    {{ render_members(team) }}
                 </div>
                 <div class="footer-links">
                     <h3>Quick Links</h3>

@@ -1,4 +1,4 @@
-import fetchData from './fetchData.js'
+import fetchData from './fetch-data.js'
 
 const labels = ['name', 'email', 'password']
 
@@ -54,7 +54,7 @@ submitBtn.addEventListener('click', async () => {
         formData.append(key, info[key])
     });
     submitBtn.setAttribute('disabled', true)
-    submitBtn.value = 'loading...'
+    submitBtn.textContent = 'loading...'
     const res = await fetchData('/api/account', formData)
 
     if (res.status == "success") {
@@ -87,11 +87,11 @@ submitBtn.addEventListener('click', async () => {
     } else {
         submitBtn.removeAttribute('disabled')
         const errorMesg = (Boolean(!res.message.isValidName) ? 'error name' + (Boolean(!res.message.isValidName) && Boolean(!res.message.isValidPassword)) ? ', ' : '' : '') + (Boolean(!res.message.isValidPassword) ? 'error password' : '')
-        console.log(res)
         errorMessage.style.display = 'block';
         errorMessage.textContent = errorMesg
         labels.forEach(key => {
             document.getElementsByName(key)[0].removeAttribute('disabled')
         })
+        submitBtn.textContent = 'Login / Sign up'
     }
 })

@@ -1,4 +1,4 @@
-from flask import request, jsonify, session
+from flask import request, jsonify, session, make_response
 import requests
 
 def accessData(url_end):
@@ -6,7 +6,7 @@ def accessData(url_end):
         form_data = request.form.to_dict()
         # check if get the data
         if not form_data:
-            return jsonify({"status": "error", "message": "No data received"}), 400
+            return make_response(jsonify({"status": "error", "message": "No data received"}), 400)
 
         # send request to Google Apps Script
         response = requests.post(url_end, data=form_data)
@@ -18,4 +18,4 @@ def accessData(url_end):
         return jsonify(response.json())
 
     except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
+        return make_response(jsonify({"status": "error", "message": str(e)}), 500)
