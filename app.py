@@ -17,11 +17,11 @@ from datetime import datetime, timedelta
 
 availability_data = pd.read_csv("data/availability.csv")
 weather_data = pd.read_csv("data/weather_data.csv")
+default_lags = pd.read_csv("data/default_lags.csv")
 
 # Load the model and pre-generated data
 model = joblib.load("bike_availability_rf_model_with_new_features.joblib")
 weather_encoder = joblib.load("weather_label_encoder.joblib")
-default_lags = pd.read_csv("default_lags.csv")
 station_info = pd.read_csv("station_info.csv")
 
 # Initialize Ireland holidays
