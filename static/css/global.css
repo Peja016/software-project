@@ -103,7 +103,7 @@ header a.active:after {
 #errorMessage {
     color: red;
     font-size: 0.875em;
-    margin: 10px 0;
+    margin-bottom: 10px;
 }
 
 #map {
