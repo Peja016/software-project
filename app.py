@@ -32,8 +32,6 @@ load_dotenv(override=True) # Load environment variables from .env file
 
 app = Flask(__name__)
 
-print(os.getenv('GOOGLE_APP_SCRIPT_ACCOUNT_URL'))
-
 app.secret_key = os.getenv('SECRET_KEY')
 
 @app.context_processor

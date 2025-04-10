@@ -58,10 +58,6 @@ submitBtn.addEventListener('click', async () => {
     const res = await fetchData('/api/account', formData)
 
     if (res.status == "success") {
-
-        // set login data to sessionStorage
-        sessionStorage.setItem('name', info.name);
-        sessionStorage.setItem('email', info.email);
         
         popUp.style.opacity = 1
 
@@ -73,8 +69,6 @@ submitBtn.addEventListener('click', async () => {
         }, 1500);
 
     } else if (res.status == "login") {
-        sessionStorage.setItem('name', info.name);
-        sessionStorage.setItem('email', info.email);
 
         popUp.style.opacity = 1
 
@@ -86,14 +80,13 @@ submitBtn.addEventListener('click', async () => {
         }, 1500);
     } else {
         submitBtn.removeAttribute('disabled')
-        console.log(res.message)
         let errorMesg = ''
-        if (!res.message.isValidName && !res.message.isValidPassword) {
+        if (!res.message?.isValidName && !res.message?.isValidPassword) {
             errorMesg += 'Your name and password is incorrect.'
         } else {
-            if (!res.message.isValidName) {
+            if (!res.message?.isValidName) {
                 errorMesg += 'Your name is incorrect.'
-            } else if (!res.message.isValidPassword) {
+            } else if (!res.message?.isValidPassword) {
                 errorMesg += 'Password is incorrect.'
             }
         }
