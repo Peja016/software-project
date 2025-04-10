@@ -241,7 +241,7 @@ const predict = async () => {
   if (data.predicted_available_bikes !== undefined) {
       const predictedBikes = data.predicted_available_bikes;
       const capacity = stationCapacities[station_id]; // Get capacity for the station
-      let message = `Predicted Available Bikes: ${predictedBikes}`;
+      let message = `Predicted Available Bikes: ${predictedBikes}<br>Predicted Available Stands: ${capacity - predictedBikes}`;
 
       // Check if less than half the capacity
       if (predictedBikes < capacity / 2) {
@@ -310,6 +310,8 @@ const addMarkers = async () => {
   const bikeData = await fetchData("/api/bikesInfo");
   const select = document.getElementById("station_id");
 
+  // console.log(bikeData)
+
   bikeData.sort((a, b) => a.name.localeCompare(b.name)).forEach(
     ({
       position,
@@ -318,14 +320,14 @@ const addMarkers = async () => {
       available_bike_stands,
       status,
       number,
-      capacity
+      bike_stands
     }) => {
       const option = document.createElement("option");
       option.value = number;
       option.text = name;
       select.appendChild(option);
       // Store mapping between station_id and capacity
-      stationCapacities[number] = capacity;
+      stationCapacities[number] = bike_stands;
 
       const marker = new google.maps.Marker({
         position,
