@@ -17,17 +17,17 @@
       <h3 style="font-size: 1.25rem;">Bike Availability Prediction</h3>
 
       <label for="date">Select Date:</label>
-      <input type="date" id="date" required>
+      <input type="date" name="date" id="date" required>
 
       <label for="time">Select Time:</label>
-      <input type="time" id="time" required>
+      <input type="time" name="time" id="time" required>
 
       <label for="station_id">Select Station:</label>
-      <select id="station_id" required>
+      <select id="station_id" name="station_id" required>
           <option value="">-- Select a station --</option>
       </select>
-
-      <button onclick="predict()">Predict</button>
+      <div id="errorMessage"></div>
+      <button id="prediction" type="submit" disabled>Predict</button>
 
       <div id="result"></div>
     </div>

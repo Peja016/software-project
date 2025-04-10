@@ -1,8 +1,9 @@
 import fetchData from "./fetch-data.js";
 
 let directionsService, directionsRenderer;
-
+let stationCapacities = {};
 let map;
+let info = {}
 
 directionsService = new google.maps.DirectionsService();
 directionsRenderer = new google.maps.DirectionsRenderer({
@@ -219,9 +220,96 @@ const drawChart = async (number) => {
   chart.draw(data, options);
 };
 
+const predict = async () => {
+  const date = document.getElementById("date").value;
+  const time = document.getElementById("time").value;
+  const station_id = document.getElementById("station_id").value;
+  const resultDiv = document.getElementById("result");
+
+  // Validate input
+  if (!date || !time || !station_id) {
+      resultDiv.innerHTML = "Please select date, time, and station.";
+      return;
+  }
+
+  // Format time to HH:MM:SS
+  const formattedTime = `${time}:00`;
+
+  // Send GET request to Flask API
+  const data = fetchData(`/predict?date=${date}&time=${formattedTime}&station_id=${station_id}`)
+  if (data.predicted_available_bikes !== undefined) {
+      const predictedBikes = data.predicted_available_bikes;
+      const capacity = stationCapacities[station_id]; // Get capacity for the station
+      let message = `Predicted Available Bikes: ${predictedBikes}`;
+
+      // Check if less than half the capacity
+      if (predictedBikes < capacity / 2) {
+          message += "<br>Available bikes are less than half of the station's total capacity!";
+      }
+
+      // Check if less than 3
+      if (predictedBikes < 3) {
+          message += "<br>Warning! Very few bikes available!";
+      }
+
+      resultDiv.innerHTML = message;
+  } else {
+      resultDiv.innerHTML = `Error: ${data.error || "Something went wrong"}`;
+  }
+
+}
+
+const labels = ['date', 'time', 'station_id']
+
+const predictBtn = document.getElementById("prediction")
+const errorMessage = document.getElementById('errorMessage')
+
+predictBtn.addEventListener('click', predict)
+
+var isDateEmpty = true
+var isTimeEmpty = true
+var isNoStation = true
+
+const validation = (key, value) => {
+    if (key == 'date') {
+        isDateEmpty = !Boolean(value)
+    } else if (key == 'time') {
+        isTimeEmpty = !Boolean(value)
+    } else {
+        isNoStation = !Boolean(value)
+    }
+    if (isDateEmpty || isTimeEmpty || isNoStation) {
+        predictBtn.disabled = true;
+    } else {
+        predictBtn.disabled = false;
+        errorMessage.style.display = 'none';
+    }
+    if (isDateEmpty) {
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = 'Date is required.';
+    } else if (isTimeEmpty) {
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = 'Time is required.';
+    } else if (isNoStation) {
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = 'Station is required.';
+    }
+}
+
+labels.forEach(key => {
+    const dom = document.getElementById(key)
+    dom.addEventListener('change', () => {
+        console.log(dom.value)
+        info[key] = dom.value
+        validation(key, dom.value)
+    })
+})
+
 const addMarkers = async () => {
   const infoWindow = new google.maps.InfoWindow();
   const bikeData = await fetchData("/api/bikesInfo");
+  const select = document.getElementById("station_id");
+
   bikeData.forEach(
     ({
       position,
@@ -230,7 +318,15 @@ const addMarkers = async () => {
       available_bike_stands,
       status,
       number,
+      capacity
     }) => {
+      const option = document.createElement("option");
+      option.value = number;
+      option.text = name;
+      select.appendChild(option);
+      // Store mapping between station_id and capacity
+      stationCapacities[number] = capacity;
+
       const marker = new google.maps.Marker({
         position,
         map,

@@ -1,3 +1,8 @@
+select {
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
 .journey {
     display: flex;
     gap: 1em;
