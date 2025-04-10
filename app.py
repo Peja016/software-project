@@ -1,17 +1,26 @@
-from flask import Flask, render_template, jsonify, session, redirect, url_for
+from flask import Flask, request, render_template, jsonify, session, redirect, url_for
+
 import os
+import numpy as np
+import pandas as pd
+import pickle
+
 from dotenv import load_dotenv
 from getBikeData import getBikeData
 from getWeatherData import getCurrentWeatherData
 from storeContactInfo import sentData
 from accountApiFunction import accessData
-import pandas as pd
 from datetime import datetime, timedelta
 
 # Load csv file data into app
 
 availability_data = pd.read_csv("data/availability.csv")
 weather_data = pd.read_csv("data/weather_data.csv")
+
+model_filename = "bike_availability_rf_model_with_new_features.pkl"
+
+with open(model_filename, "rb") as file:
+    model = pickle.load(file)
 
 load_dotenv(override=True) # Load environment variables from .env file
 
@@ -85,6 +94,40 @@ def loginApi():
     res = accessData(os.getenv('GOOGLE_APP_SCRIPT_ACCOUNT_URL'))
     if res.status_code == 200:
         return res
+    
+# Define a route for predictions
+@app.route("/api/predict", methods=["GET"])
+def predict():
+    try:
+        # Get date and time from request
+        date = request.args.get("date")
+        time = request.args.get("time")
+        station_id = request.args.get("station_id")  #station_id as an input parameter
+        
+        if not date or not time or not station_id:
+            return jsonify({"error": "Missing date, time, or station_id parameter"}), 400
+
+        # Combine date and time into a single datetime object
+        dt = datetime.strptime(f"{date} {time}", "%Y-%m-%d %H:%M:%S")
+        hour = dt.hour
+        day_of_week = dt.weekday()
+
+        # Combine data into input features
+        input_features = [
+            station_id,
+            
+            hour,
+            day_of_week,
+        ]
+        input_array = np.array(input_features).reshape(1, -1)
+
+        # Make a prediction
+        prediction = model.predict(input_array)
+        
+        return jsonify({"predicted_available_bikes": prediction[0]})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/map')
 def map():
