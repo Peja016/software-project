@@ -237,7 +237,7 @@ const predict = async () => {
 
   // Send GET request to Flask API
   const data = await fetchData(`/predict?date=${date}&time=${formattedTime}&station_id=${station_id}`)
-  console.log(data)
+
   if (data.predicted_available_bikes !== undefined) {
       const predictedBikes = data.predicted_available_bikes;
       const capacity = stationCapacities[station_id]; // Get capacity for the station
@@ -310,7 +310,7 @@ const addMarkers = async () => {
   const bikeData = await fetchData("/api/bikesInfo");
   const select = document.getElementById("station_id");
 
-  bikeData.forEach(
+  bikeData.sort((a, b) => a.name.localeCompare(b.name)).forEach(
     ({
       position,
       name,

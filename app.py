@@ -32,6 +32,8 @@ load_dotenv(override=True) # Load environment variables from .env file
 
 app = Flask(__name__)
 
+print(os.getenv('GOOGLE_APP_SCRIPT_ACCOUNT_URL'))
+
 app.secret_key = os.getenv('SECRET_KEY')
 
 @app.context_processor
@@ -102,7 +104,7 @@ def loginApi():
         return res
     
 # Define a route for predictions
-@app.route("/predict", methods=["GET", "POST"])
+@app.route("/predict", methods=["POST"])
 def predict():
     try:
         # Get user input
