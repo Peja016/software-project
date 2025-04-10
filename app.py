@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import joblib
 import holidays  # Import holidays package
+import math
 
 from dotenv import load_dotenv
 from getBikeData import getBikeData
@@ -128,7 +129,7 @@ def predict():
         hour_cos = np.cos(2 * np.pi * hour / 24)
 
         # Get area_cluster and capacity from station_info.csv
-        station_row = station_info[station_info["number"] == station_id]
+        station_row = station_info[station_info["station_id"] == station_id]
         if station_row.empty:
             return jsonify({"error": f"Station ID {station_id} not found in station_info.csv"}), 404
 
@@ -138,7 +139,8 @@ def predict():
         lon = station_row["lon"].values[0]
 
         # Get weather data from OpenWeather
-        weather_data = getCurrentWeatherData(lat, lon)
+        res = getCurrentWeatherData(lat, lon)
+        weather_data = res.json()
         temp_max = weather_data["main"]["temp_max"]
         humidity = weather_data["main"]["humidity"]
         wind_speed = weather_data["wind"]["speed"]
@@ -178,11 +180,9 @@ def predict():
             weather_main_encoded # Encoded from OpenWeather
         ]
         input_array = np.array(input_features).reshape(1, -1)
-
         # Make prediction
         prediction = model.predict(input_array)
-        prediction_int = int(np.floor(prediction[0]))
-        prediction_int = max(prediction_int, 0)
+        prediction_int = max(math.floor(prediction[0]), 0)
 
         return jsonify({"predicted_available_bikes": prediction_int})
 

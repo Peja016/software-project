@@ -12,7 +12,7 @@
       <button id="routeBtn">Get Estimated Time and Distance</button>
     </div>
   </div>
-  <div class="flex">
+  <div class="flex map-section">
     <div class="prediction">
       <h3 style="font-size: 1.25rem;">Bike Availability Prediction</h3>
 
@@ -31,16 +31,18 @@
 
       <div id="result"></div>
     </div>
-    <div id="map">
+    <div class="map-info">
+      <div id="map">
+      </div>
+      <div id="legend">
+        {% from "components/legend.html" import render_legend %}
+        {{ render_legend([{ 'icon': 'gray', 'text': 'bikes' }, { 'icon': 'darkBlue', 'text': 'stands' }]) }}
+      </div>
     </div>
   </div>
   <div id="weather">
     <img id="weather-icon" alt="weather icon" />
     <p></p>
-  </div>
-  <div id="legend">
-    {% from "components/legend.html" import render_legend %}
-    {{ render_legend([{ 'icon': 'gray', 'text': 'bikes' }, { 'icon': 'darkBlue', 'text': 'stands' }]) }}
   </div>
 </div>
 <!-- <script type="module" src="{{ url_for('static', filename='js/initMap.js') }}"></script> -->

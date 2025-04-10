@@ -66,6 +66,10 @@ select {
     line-height: 1.5;
 }
 
+.map-info {
+    flex: 1;
+}
+
 .estimation {
     position: absolute;
     top: 50%;
@@ -174,11 +178,18 @@ select {
         flex-direction: column;
         gap: 0.5rem;
     }
+
     #map {
         height: 50vh;
     }
 
     #station-info {
         padding: 1em;
+    }
+    .map-section {
+        flex-direction: column-reverse;
+    }
+    .prediction {
+        width: 100%;
     }
 }

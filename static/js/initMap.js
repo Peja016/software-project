@@ -236,7 +236,8 @@ const predict = async () => {
   const formattedTime = `${time}:00`;
 
   // Send GET request to Flask API
-  const data = fetchData(`/predict?date=${date}&time=${formattedTime}&station_id=${station_id}`)
+  const data = await fetchData(`/predict?date=${date}&time=${formattedTime}&station_id=${station_id}`)
+  console.log(data)
   if (data.predicted_available_bikes !== undefined) {
       const predictedBikes = data.predicted_available_bikes;
       const capacity = stationCapacities[station_id]; // Get capacity for the station
@@ -299,7 +300,6 @@ const validation = (key, value) => {
 labels.forEach(key => {
     const dom = document.getElementById(key)
     dom.addEventListener('change', () => {
-        console.log(dom.value)
         info[key] = dom.value
         validation(key, dom.value)
     })
