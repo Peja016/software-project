@@ -86,7 +86,17 @@ submitBtn.addEventListener('click', async () => {
         }, 1500);
     } else {
         submitBtn.removeAttribute('disabled')
-        const errorMesg = (Boolean(!res.message.isValidName) ? 'error name' + (Boolean(!res.message.isValidName) && Boolean(!res.message.isValidPassword)) ? ', ' : '' : '') + (Boolean(!res.message.isValidPassword) ? 'error password' : '')
+        console.log(res.message)
+        let errorMesg = ''
+        if (!res.message.isValidName && !res.message.isValidPassword) {
+            errorMesg += 'Your name and password is incorrect.'
+        } else {
+            if (!res.message.isValidName) {
+                errorMesg += 'Your name is incorrect.'
+            } else if (!res.message.isValidPassword) {
+                errorMesg += 'Password is incorrect.'
+            }
+        }
         errorMessage.style.display = 'block';
         errorMessage.textContent = errorMesg
         labels.forEach(key => {
