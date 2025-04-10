@@ -13,6 +13,14 @@
     margin-bottom: 1em;
 }
 
+.prediction {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 20rem;
+    padding: 1em;
+}
+
 #map {
     position: relative;
 }

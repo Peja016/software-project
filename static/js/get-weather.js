@@ -8,7 +8,8 @@ const getWeather = async () => {
     document.getElementById("weather-icon").src = iconUrl;
     const weather = document.getElementById("weather");
     const text = weather.querySelector("p");
-    text.textContent = `${Math.round(temp * 10) / 10}℃`;
+    text.textContent = `Current:\n${Math.round(temp * 10) / 10}℃`;
+    text.style.whiteSpace = 'pre-wrap'
 }
 
 getWeather()

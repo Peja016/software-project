@@ -13,22 +13,24 @@
     </div>
   </div>
   <div class="flex">
-    <h1>Bike Availability Prediction</h1>
+    <div class="prediction">
+      <h3 style="font-size: 1.25rem;">Bike Availability Prediction</h3>
 
-    <label for="date">Select Date:</label>
-    <input type="date" id="date" required>
+      <label for="date">Select Date:</label>
+      <input type="date" id="date" required>
 
-    <label for="time">Select Time:</label>
-    <input type="time" id="time" required>
+      <label for="time">Select Time:</label>
+      <input type="time" id="time" required>
 
-    <label for="station_id">Select Station:</label>
-    <select id="station_id" required>
-        <option value="">-- Select a station --</option>
-    </select>
+      <label for="station_id">Select Station:</label>
+      <select id="station_id" required>
+          <option value="">-- Select a station --</option>
+      </select>
 
-    <button onclick="predict()">Predict</button>
+      <button onclick="predict()">Predict</button>
 
-    <div id="result"></div>
+      <div id="result"></div>
+    </div>
     <div id="map">
     </div>
   </div>
@@ -49,7 +51,7 @@
       .catch(console.error);
   };
 </script>
-<script type="module" src="{{ url_for('static', filename='js/getWeather.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='js/get-weather.js') }}"></script>
 <script
   src="https://maps.googleapis.com/maps/api/js?key={{ api }}&callback=initMap&libraries=marker,places&language=en&loading=async"
   async

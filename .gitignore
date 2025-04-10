@@ -1,3 +1,4 @@
 # env
 deploy.yml
 bike_scraper.py
+bike_availability_rf_model_with_new_features.joblib
