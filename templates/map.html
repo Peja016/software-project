@@ -12,7 +12,25 @@
       <button id="routeBtn">Get Estimated Time and Distance</button>
     </div>
   </div>
-  <div id="map">
+  <div class="flex">
+    <h1>Bike Availability Prediction</h1>
+
+    <label for="date">Select Date:</label>
+    <input type="date" id="date" required>
+
+    <label for="time">Select Time:</label>
+    <input type="time" id="time" required>
+
+    <label for="station_id">Select Station:</label>
+    <select id="station_id" required>
+        <option value="">-- Select a station --</option>
+    </select>
+
+    <button onclick="predict()">Predict</button>
+
+    <div id="result"></div>
+    <div id="map">
+    </div>
   </div>
   <div id="weather">
     <img id="weather-icon" alt="weather icon" />
