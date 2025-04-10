@@ -3,7 +3,8 @@ from flask import Flask, request, render_template, jsonify, session, redirect, u
 import os
 import numpy as np
 import pandas as pd
-import pickle
+import joblib
+import holidays  # Import holidays package
 
 from dotenv import load_dotenv
 from getBikeData import getBikeData
@@ -17,10 +18,14 @@ from datetime import datetime, timedelta
 availability_data = pd.read_csv("data/availability.csv")
 weather_data = pd.read_csv("data/weather_data.csv")
 
-model_filename = "bike_availability_rf_model_with_new_features.pkl"
+# Load the model and pre-generated data
+model = joblib.load("bike_availability_rf_model_with_new_features.joblib")
+weather_encoder = joblib.load("weather_label_encoder.joblib")
+default_lags = pd.read_csv("default_lags.csv")
+station_info = pd.read_csv("station_info.csv")
 
-with open(model_filename, "rb") as file:
-    model = pickle.load(file)
+# Initialize Ireland holidays
+ie_holidays = holidays.Ireland()
 
 load_dotenv(override=True) # Load environment variables from .env file
 
