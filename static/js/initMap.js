@@ -229,7 +229,8 @@ const predict = async () => {
 
   const station_id = document.getElementById("station_id").value;
   const resultDiv = document.getElementById("result");
-
+  const date = document.getElementById("date").value;
+  const time = document.getElementById("time").value;
   // Format time to HH:MM:SS
   const formattedTime = `${time}:00`;
 
