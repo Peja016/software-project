@@ -27,6 +27,9 @@ const legend = document.getElementById("legend");
 const originInput = document.getElementById("origin");
 const destinationInput = document.getElementById("destination");
 
+let date = document.getElementById("date").value;
+let time = document.getElementById("time").value;
+
 const options = {
   componentRestrictions: { country: "ie" }, // Restrict to Ireland
 };
@@ -221,10 +224,14 @@ const drawChart = async (number) => {
 };
 
 const predict = async () => {
-  const date = document.getElementById("date").value;
-  const time = document.getElementById("time").value;
+
   const station_id = document.getElementById("station_id").value;
   const resultDiv = document.getElementById("result");
+
+  if (isPast) {
+    resultDiv.innerHTML = "Please select date, time, and station.";
+    return;
+  }
 
   // Validate input
   if (!date || !time || !station_id) {
@@ -267,11 +274,16 @@ const errorMessage = document.getElementById('errorMessage')
 
 predictBtn.addEventListener('click', predict)
 
-var isDateEmpty = true
-var isTimeEmpty = true
-var isNoStation = true
+let isDateEmpty = true
+let isTimeEmpty = true
+let isNoStation = true
+let isPast = false
 
 const validation = (key, value) => {
+    const userDateTimeString = `${date}T${time}:00`;
+    const userDateTime = new Date(userDateTimeString);
+    isPast = userDateTime < new Date();
+    console.log(isPast)
     if (key == 'date') {
         isDateEmpty = !Boolean(value)
     } else if (key == 'time') {
@@ -279,7 +291,7 @@ const validation = (key, value) => {
     } else {
         isNoStation = !Boolean(value)
     }
-    if (isDateEmpty || isTimeEmpty || isNoStation) {
+    if (isDateEmpty || isTimeEmpty || isNoStation || isPast) {
         predictBtn.disabled = true;
     } else {
         predictBtn.disabled = false;
@@ -291,10 +303,13 @@ const validation = (key, value) => {
     } else if (isTimeEmpty) {
         errorMessage.style.display = 'block';
         errorMessage.textContent = 'Time is required.';
+    } else if (isPast) {
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = 'Cannot select a past date and time.';
     } else if (isNoStation) {
         errorMessage.style.display = 'block';
         errorMessage.textContent = 'Station is required.';
-    }
+    } 
 }
 
 labels.forEach(key => {
@@ -309,8 +324,6 @@ const addMarkers = async () => {
   const infoWindow = new google.maps.InfoWindow();
   const bikeData = await fetchData("/api/bikesInfo");
   const select = document.getElementById("station_id");
-
-  // console.log(bikeData)
 
   bikeData.sort((a, b) => a.name.localeCompare(b.name)).forEach(
     ({
