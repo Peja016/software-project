@@ -157,7 +157,7 @@ function validatePaymentForm() {
       : expiry.split("-");
     const now = new Date();
     const expDate = new Date(
-      `20${expYear.length === 2 ? expYear : expYear.slice(-2)}`,
+      `20${expYear?.length === 2 ? expYear : expYear?.slice(-2)}`,
       parseInt(expMonth) - 1
     );
     expValid = expDate >= now;
