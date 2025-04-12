@@ -58,6 +58,7 @@ button {
     background-color: var(--custom-lightBlue);
     color: var(--custom-darkBlue);
     padding: 1em;
+    cursor: pointer;
 }
 
 button:disabled {

@@ -119,6 +119,11 @@ const setCloseBtn = (dom) => {
   dom.appendChild(closeBtn);
 };
 
+// reset path on map
+document.getElementById("clear").addEventListener("click", () => {
+    directionsRenderer.setDirections({ routes: [] });
+})
+
 // Show time & distance only after clicking "Route" button
 document.getElementById("routeBtn").addEventListener("click", () => {
   if (!lastRouteResponse) {
