@@ -135,7 +135,7 @@ document.getElementById("routeBtn").addEventListener("click", () => {
   setCloseBtn(estimation);
 
   const line1 = document.createElement("p");
-  line1.textContent = `Estimated time: ${duration}`;
+  line1.textContent = `Estimated time: ${duration} (by bike)`;
 
   const line2 = document.createElement("p");
   line2.textContent = `Distance: ${distance}`;
