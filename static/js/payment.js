@@ -5,6 +5,9 @@ const paymentModal = document.getElementById("paymentModal");
 const paymentClose = document.querySelector(".payment-close");
 const selectedBikeName = document.getElementById("selectedBikeName");
 const selectedBikePrice = document.getElementById("selectedBikePrice");
+const expiryDate = document.getElementById("expiryDate");
+
+let expiry
 
 // Open payment modal from book buttons
 if (bookButtons) {
@@ -106,11 +109,22 @@ if (paymentTabs) {
   });
 }
 
+expiryDate.addEventListener("input", function (e) {
+  expiry = expiryDate.value.replace(/\D/g, ""); // 只留數字
+
+  if (expiry.length >= 3) {
+    expiry = expiry.slice(0, 2) + "/" + expiry.slice(2, 4);
+  } else if (expiry.length >= 2) {
+    expiry = expiry.slice(0, 2) + "/";
+  }
+
+  expiryDate.value = expiry.slice(0, 5);
+});
+
 // validation function
 function validatePaymentForm() {
   const cardNumber = document.getElementById("cardNumber").value;
   const cardName = document.getElementById("cardName").value;
-  const expiry = document.getElementById("expiryDate").value;
   const cvv = document.getElementById("cvv").value;
   const errorDiv = document.getElementById("paymentError");
 
@@ -132,11 +146,6 @@ function validatePaymentForm() {
 
   if (cvv && !isCvvValid) {
     errorDiv.textContent = "Please enter a valid 3-digit CVV.";
-    return false;
-  }
-
-  if (expiry && !expiry.includes('/')) {
-    errorDiv.textContent = "Card expiry date doesn't include '/'.";
     return false;
   }
 
