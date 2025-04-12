@@ -27,9 +27,6 @@ const legend = document.getElementById("legend");
 const originInput = document.getElementById("origin");
 const destinationInput = document.getElementById("destination");
 
-let date = document.getElementById("date").value;
-let time = document.getElementById("time").value;
-
 const options = {
   componentRestrictions: { country: "ie" }, // Restrict to Ireland
 };
@@ -228,17 +225,6 @@ const predict = async () => {
   const station_id = document.getElementById("station_id").value;
   const resultDiv = document.getElementById("result");
 
-  if (isPast) {
-    resultDiv.innerHTML = "Please select date, time, and station.";
-    return;
-  }
-
-  // Validate input
-  if (!date || !time || !station_id) {
-      resultDiv.innerHTML = "Please select date, time, and station.";
-      return;
-  }
-
   // Format time to HH:MM:SS
   const formattedTime = `${time}:00`;
 
@@ -280,9 +266,14 @@ let isNoStation = true
 let isPast = false
 
 const validation = (key, value) => {
-    const userDateTimeString = `${date}T${time}:00`;
-    const userDateTime = new Date(userDateTimeString);
-    isPast = userDateTime < new Date();
+    let date = document.getElementById("date").value;
+    let time = document.getElementById("time").value;
+    if (date && time) {
+      const userDateTimeString = `${date}T${time}:00`;
+      const userDateTime = new Date(userDateTimeString);
+      console.log('hi')
+      isPast = userDateTime < new Date();
+    }
     console.log(isPast)
     if (key == 'date') {
         isDateEmpty = !Boolean(value)
