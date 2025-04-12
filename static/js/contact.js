@@ -79,8 +79,14 @@ submitBtn.addEventListener('click', async () => {
         popUp.style.opacity = 1
         setTimeout(() => popUp.style.opacity = 0, 2250)
     } else {
+        console.log(d.message)
         popUp.style.opacity = 1
         popUp.textContent = 'Failed to submit'
+        labels.forEach(key => {
+            info[key] = ''
+            document.getElementsByName(key)[0].value = ''
+            document.getElementsByName(key)[0].removeAttribute('disabled')
+        })
         setTimeout(() => {
             popUp.style.opacity = 0
             popUp.textContent = "Submission Completed\nWe'll inform you by email."

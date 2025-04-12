@@ -91,13 +91,13 @@ def getOneDayWeatherData():
     
 @app.route("/api/contact_form", methods=["POST"])
 def sentInfo():
-    res = sentData(os.getenv('GOOGLE_APP_SCRIPT_URL'))
+    res = sentData(os.getenv('GOOGLE_APP_SCRIPT_URL') + 'form')
     if res.status_code == 200:
         return res
     
 @app.route("/api/account", methods=["POST"])
 def loginApi():
-    res = accessData(os.getenv('GOOGLE_APP_SCRIPT_ACCOUNT_URL'))
+    res = accessData(os.getenv('GOOGLE_APP_SCRIPT_URL') + 'account')
     if res.status_code == 200:
         return res
     
