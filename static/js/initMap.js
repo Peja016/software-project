@@ -271,10 +271,8 @@ const validation = (key, value) => {
     if (date && time) {
       const userDateTimeString = `${date}T${time}:00`;
       const userDateTime = new Date(userDateTimeString);
-      console.log('hi')
       isPast = userDateTime < new Date();
     }
-    console.log(isPast)
     if (key == 'date') {
         isDateEmpty = !Boolean(value)
     } else if (key == 'time') {
