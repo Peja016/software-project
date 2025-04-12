@@ -56,27 +56,27 @@
             </div>
             
             <div class="selected-bike">
-                <h3 id="selectedBikeName">Standard City Bike</h3>
-                <p id="selectedBikePrice">€5.00 for 3-hour rental</p>
+                <h3 id="selectedBikeName"></h3>
+                <p id="selectedBikePrice"></p>
             </div>
-            
+
             <div class="payment-tabs">
                 <div class="payment-tab active" data-tab="card">Credit/Debit Card</div>
                 <div class="payment-tab" data-tab="paypal">PayPal</div>
             </div>
             
-            <div class="payment-methods">
-                <label>
-                    <input type="radio" name="paymentMethod" value="visa" checked>
-                    Visa/Mastercard
-                </label>
-                <label>
-                    <input type="radio" name="paymentMethod" value="amex">
-                    American Express
-                </label>
-            </div>
-            
             <form id="paymentForm">
+                
+                <div class="payment-methods">
+                    <label>
+                        <input type="radio" name="paymentMethod" value="visa" checked>
+                        Visa/Mastercard
+                    </label>
+                    <label>
+                        <input type="radio" name="paymentMethod" value="amex">
+                        American Express
+                    </label>
+                </div>
                 <div class="form-group">
                     <label for="cardName">Name on Card:</label>
                     <input type="text" id="cardName" name="cardName" required>

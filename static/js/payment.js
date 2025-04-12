@@ -62,6 +62,14 @@ if (subscriptionButtons) {
 if (paymentClose) {
   paymentClose.addEventListener("click", function () {
     paymentModal.style.display = "none";
+    paymentForm.reset();
+    paymentTabs.forEach((tab, index) => {
+      if (index === 0) {
+        tab.classList.add("active");
+      } else {
+        tab.classList.remove("active");
+      }
+    });
   });
 }
 
@@ -69,6 +77,14 @@ if (paymentClose) {
 window.addEventListener("click", function (event) {
   if (event.target === paymentModal) {
     paymentModal.style.display = "none";
+    paymentForm.reset();
+    paymentTabs.forEach((tab, index) => {
+      if (index === 0) {
+        tab.classList.add("active");
+      } else {
+        tab.classList.remove("active");
+      }
+    });
   }
 });
 
@@ -159,6 +175,7 @@ if (paymentForm) {
   paymentForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
+    submitBtn.disabled = true;
     // hide payment method
     paymentModal.style.display = "none";
 
