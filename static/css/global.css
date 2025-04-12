@@ -284,6 +284,7 @@ footer {
     opacity: 0;
     color: var(--custom-primary);
     pointer-events: none;
+    white-space: 'pre-wrap';
 }
 
 @media (max-width: 992px) {

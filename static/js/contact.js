@@ -83,7 +83,7 @@ submitBtn.addEventListener('click', async () => {
         popUp.textContent = 'Failed to submit'
         setTimeout(() => {
             popUp.style.opacity = 0
-            popUp.textContent = 'Submission Completed'
+            popUp.textContent = "Submission Completed\nWe'll inform you by email."
         }, 2250)
         submitBtn.removeAttribute('disabled')
         submitBtn.value = 'SUBMIT'  
