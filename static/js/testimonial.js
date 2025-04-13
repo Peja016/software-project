@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    function showNextTestimonial() {
+    const showNextTestimonial = () => {
         testimonials[currentIndex].style.opacity = 0;
         testimonials[currentIndex].style.visibility = 'hidden';
         

@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Search functionality
-    function performSearch() {
+    const performSearch = () => {
         const searchTerm = searchInput.value.toLowerCase();
         let resultsFound = false;
         

@@ -122,7 +122,7 @@ expiryDate.addEventListener("input", function (e) {
 });
 
 // validation function
-function validatePaymentForm() {
+const validatePaymentForm = () => {
   const cardNumber = document.getElementById("cardNumber").value;
   const cardName = document.getElementById("cardName").value;
   const cvv = document.getElementById("cvv").value;
