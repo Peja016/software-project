@@ -1,0 +1,48 @@
+Last login: Sat Apr 12 14:16:59 on ttys008
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+(base) Mac:~ Herman$ cd /Users/Herman/Desktop/Software\ PROJECT/software-project-main
+(base) Mac:software-project-main Herman$ python -m pytest -v
+============================= test session starts ==============================
+platform darwin -- Python 3.12.4, pytest-7.4.4, pluggy-1.0.0 -- /opt/anaconda3/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.12.4', 'Platform': 'macOS-15.3.2-arm64-arm-64bit', 'Packages': {'pytest': '7.4.4', 'pluggy': '1.0.0'}, 'Plugins': {'html': '4.1.1', 'metadata': '3.1.1', 'anyio': '4.2.0', 'cov': '6.1.1'}}
+rootdir: /Users/Herman/Desktop/Software PROJECT/software-project-main
+plugins: html-4.1.1, metadata-3.1.1, anyio-4.2.0, cov-6.1.1
+collected 30 items                                                             
+
+tests/functional/test_map_features.py::test_map_loads_markers SKIPPED    [  3%]
+tests/functional/test_map_features.py::test_station_details_on_click SKIPPED [  6%]
+tests/functional/test_weather_display.py::test_weather_widget_display SKIPPED [ 10%]
+tests/functional/test_weather_display.py::test_weather_forecast_display SKIPPED [ 13%]
+tests/functional/test_weather_display.py::test_weather_updates SKIPPED   [ 16%]
+tests/functional/test_weather_display.py::test_weather_integration_with_bike_data SKIPPED [ 20%]
+tests/integration/test_data_flow.py::test_bike_data_to_frontend_flow PASSED [ 23%]
+tests/integration/test_data_flow.py::test_weather_data_to_frontend_flow PASSED [ 26%]
+tests/integration/test_data_flow.py::test_station_data_transformation PASSED [ 30%]
+tests/integration/test_data_flow.py::test_contact_form_submission_flow PASSED [ 33%]
+tests/integration/test_data_flow.py::test_login_data_flow PASSED         [ 36%]
+tests/integration/test_routes.py::test_index_route PASSED                [ 40%]
+tests/integration/test_routes.py::test_map_route PASSED                  [ 43%]
+tests/integration/test_routes.py::test_api_bikes_info PASSED             [ 46%]
+tests/integration/test_routes.py::test_api_weather PASSED                [ 50%]
+tests/integration/test_routes.py::test_api_station_data PASSED           [ 53%]
+tests/integration/test_routes.py::test_login_logout_flow PASSED          [ 56%]
+tests/ml/test_prediction_model.py::test_model_prediction_format SKIPPED  [ 60%]
+tests/ml/test_prediction_model.py::test_model_accuracy SKIPPED (ML m...) [ 63%]
+tests/ml/test_prediction_model.py::test_model_feature_importance SKIPPED [ 66%]
+tests/unit/test_accountApiFunction.py::test_accessData_success PASSED    [ 70%]
+tests/unit/test_accountApiFunction.py::test_accessData_api_error PASSED  [ 73%]
+tests/unit/test_accountApiFunction.py::test_accessData_exception PASSED  [ 76%]
+tests/unit/test_accountApiFunction.py::test_accessData_empty_form PASSED [ 80%]
+tests/unit/test_getBikeData.py::test_getBikeData_direct SKIPPED (Ext...) [ 83%]
+tests/unit/test_getBikeData.py::test_getBikeData_mocked PASSED           [ 86%]
+tests/unit/test_getBikeData.py::test_getBikeData_error_handling PASSED   [ 90%]
+tests/unit/test_getWeatherData.py::test_getCurrentWeatherData_direct SKIPPED [ 93%]
+tests/unit/test_getWeatherData.py::test_getCurrentWeatherData_mocked PASSED [ 96%]
+tests/unit/test_getWeatherData.py::test_getCurrentWeatherData_custom_location SKIPPED [100%]
+
+======================== 18 passed, 12 skipped in 0.13s ========================
+(base) Mac:software-project-main Herman$ 

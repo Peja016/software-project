@@ -1,0 +1,1130 @@
+Last login: Sat Apr 12 14:35:14 on ttys008
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+(base) Mac:~ Herman$ cd /Users/Herman/Desktop/Software\ PROJECT/software-project-main
+(base) Mac:software-project-main Herman$ python -m pytest -v
+============================= test session starts ==============================
+platform darwin -- Python 3.12.4, pytest-7.4.4, pluggy-1.0.0 -- /opt/anaconda3/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.12.4', 'Platform': 'macOS-15.3.2-arm64-arm-64bit', 'Packages': {'pytest': '7.4.4', 'pluggy': '1.0.0'}, 'Plugins': {'html': '4.1.1', 'metadata': '3.1.1', 'anyio': '4.2.0', 'cov': '6.1.1'}}
+rootdir: /Users/Herman/Desktop/Software PROJECT/software-project-main
+plugins: html-4.1.1, metadata-3.1.1, anyio-4.2.0, cov-6.1.1
+collected 30 items                                                             
+
+tests/functional/test_map_features.py::test_map_loads_markers FAILED     [  3%]
+tests/functional/test_map_features.py::test_station_details_on_click FAILED [  6%]
+tests/functional/test_weather_display.py::test_weather_widget_display FAILED [ 10%]
+tests/functional/test_weather_display.py::test_weather_forecast_display FAILED [ 13%]
+tests/functional/test_weather_display.py::test_weather_updates FAILED    [ 16%]
+tests/functional/test_weather_display.py::test_weather_integration_with_bike_data FAILED [ 20%]
+tests/integration/test_data_flow.py::test_bike_data_to_frontend_flow FAILED [ 23%]
+tests/integration/test_data_flow.py::test_weather_data_to_frontend_flow FAILED [ 26%]
+tests/integration/test_data_flow.py::test_station_data_transformation PASSED [ 30%]
+tests/integration/test_data_flow.py::test_contact_form_submission_flow PASSED [ 33%]
+tests/integration/test_data_flow.py::test_login_data_flow FAILED         [ 36%]
+tests/integration/test_routes.py::test_index_route PASSED                [ 40%]
+tests/integration/test_routes.py::test_map_route PASSED                  [ 43%]
+tests/integration/test_routes.py::test_api_bikes_info FAILED             [ 46%]
+tests/integration/test_routes.py::test_api_weather FAILED                [ 50%]
+tests/integration/test_routes.py::test_api_station_data PASSED           [ 53%]
+tests/integration/test_routes.py::test_login_logout_flow FAILED          [ 56%]
+tests/ml/test_prediction_model.py::test_model_prediction_format SKIPPED  [ 60%]
+tests/ml/test_prediction_model.py::test_model_accuracy SKIPPED (Pred...) [ 63%]
+tests/ml/test_prediction_model.py::test_model_feature_importance SKIPPED [ 66%]
+tests/unit/test_accountApiFunction.py::test_accessData_success PASSED    [ 70%]
+tests/unit/test_accountApiFunction.py::test_accessData_api_error PASSED  [ 73%]
+tests/unit/test_accountApiFunction.py::test_accessData_exception FAILED  [ 76%]
+tests/unit/test_accountApiFunction.py::test_accessData_empty_form FAILED [ 80%]
+tests/unit/test_getBikeData.py::test_getBikeData_direct SKIPPED (Ski...) [ 83%]
+tests/unit/test_getBikeData.py::test_getBikeData_mocked PASSED           [ 86%]
+tests/unit/test_getBikeData.py::test_getBikeData_error_handling PASSED   [ 90%]
+tests/unit/test_getWeatherData.py::test_getCurrentWeatherData_direct SKIPPED [ 93%]
+tests/unit/test_getWeatherData.py::test_getCurrentWeatherData_mocked PASSED [ 96%]
+tests/unit/test_getWeatherData.py::test_getCurrentWeatherData_custom_location SKIPPED [100%]
+
+=================================== FAILURES ===================================
+____________________________ test_map_loads_markers ____________________________
+
+selenium_driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="6a144199b6aeb57fad12bed745a75333")>
+
+    def test_map_loads_markers(selenium_driver):
+        """Test that the map loads and displays bike station markers."""
+        # Skip if running in CI environment with no browser
+        if os.environ.get('CI', '0') == '1':
+            pytest.skip("Skipping browser test in CI environment")
+    
+        # Navigate to the map page
+>       selenium_driver.get('http://localhost:5000/map')
+
+tests/functional/test_map_features.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py:454: in get
+    self.execute(Command.GET, {"url": url})
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py:429: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1252711c0>
+response = {'status': 500, 'value': '{"value":{"error":"unknown error","message":"unknown error: net::ERR_CONNECTION_REFUSED\\n  ...00019721c2e4 _pthread_start + 136\\n24  libsystem_pthread.dylib             0x00000001972170fc thread_start + 8\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_CONNECTION_REFUSED
+E         (Session info: chrome=135.0.7049.42)
+E       Stacktrace:
+E       0   chromedriver                        0x00000001012b6dec cxxbridge1$str$ptr + 2817040
+E       1   chromedriver                        0x00000001012af088 cxxbridge1$str$ptr + 2784940
+E       2   chromedriver                        0x0000000100df68d8 cxxbridge1$string$len + 93028
+E       3   chromedriver                        0x0000000100deee38 cxxbridge1$string$len + 61636
+E       4   chromedriver                        0x0000000100de0fec cxxbridge1$string$len + 4728
+E       5   chromedriver                        0x0000000100de29cc cxxbridge1$string$len + 11352
+E       6   chromedriver                        0x0000000100de1454 cxxbridge1$string$len + 5856
+E       7   chromedriver                        0x0000000100de0dc8 cxxbridge1$string$len + 4180
+E       8   chromedriver                        0x0000000100de0b14 cxxbridge1$string$len + 3488
+E       9   chromedriver                        0x0000000100dde8f8 chromedriver + 190712
+E       10  chromedriver                        0x0000000100ddf354 chromedriver + 193364
+E       11  chromedriver                        0x0000000100df9888 cxxbridge1$string$len + 105236
+E       12  chromedriver                        0x0000000100e7f224 cxxbridge1$string$len + 652464
+E       13  chromedriver                        0x0000000100e7e7b8 cxxbridge1$string$len + 649796
+E       14  chromedriver                        0x0000000100e31a80 cxxbridge1$string$len + 335116
+E       15  chromedriver                        0x000000010127bc74 cxxbridge1$str$ptr + 2575000
+E       16  chromedriver                        0x000000010127ef40 cxxbridge1$str$ptr + 2588004
+E       17  chromedriver                        0x000000010125b9fc cxxbridge1$str$ptr + 2443296
+E       18  chromedriver                        0x000000010127f7bc cxxbridge1$str$ptr + 2590176
+E       19  chromedriver                        0x000000010124caf0 cxxbridge1$str$ptr + 2382100
+E       20  chromedriver                        0x000000010129f9a0 cxxbridge1$str$ptr + 2721732
+E       21  chromedriver                        0x000000010129fb2c cxxbridge1$str$ptr + 2722128
+E       22  chromedriver                        0x00000001012aecd4 cxxbridge1$str$ptr + 2783992
+E       23  libsystem_pthread.dylib             0x000000019721c2e4 _pthread_start + 136
+E       24  libsystem_pthread.dylib             0x00000001972170fc thread_start + 8
+
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py:232: WebDriverException
+________________________ test_station_details_on_click _________________________
+
+selenium_driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="86efa3769339ba8f02849195e2aed59e")>
+
+    def test_station_details_on_click(selenium_driver):
+        """Test that clicking a station shows its details."""
+        # Skip if running in CI environment
+        if os.environ.get('CI', '0') == '1':
+            pytest.skip("Skipping browser test in CI environment")
+    
+        # Navigate to the map page
+>       selenium_driver.get('http://localhost:5000/map')
+
+tests/functional/test_map_features.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py:454: in get
+    self.execute(Command.GET, {"url": url})
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py:429: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1252c5ca0>
+response = {'status': 500, 'value': '{"value":{"error":"unknown error","message":"unknown error: net::ERR_CONNECTION_REFUSED\\n  ...00019721c2e4 _pthread_start + 136\\n24  libsystem_pthread.dylib             0x00000001972170fc thread_start + 8\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_CONNECTION_REFUSED
+E         (Session info: chrome=135.0.7049.42)
+E       Stacktrace:
+E       0   chromedriver                        0x0000000100836dec cxxbridge1$str$ptr + 2817040
+E       1   chromedriver                        0x000000010082f088 cxxbridge1$str$ptr + 2784940
+E       2   chromedriver                        0x00000001003768d8 cxxbridge1$string$len + 93028
+E       3   chromedriver                        0x000000010036ee38 cxxbridge1$string$len + 61636
+E       4   chromedriver                        0x0000000100360fec cxxbridge1$string$len + 4728
+E       5   chromedriver                        0x00000001003629cc cxxbridge1$string$len + 11352
+E       6   chromedriver                        0x0000000100361454 cxxbridge1$string$len + 5856
+E       7   chromedriver                        0x0000000100360dc8 cxxbridge1$string$len + 4180
+E       8   chromedriver                        0x0000000100360b14 cxxbridge1$string$len + 3488
+E       9   chromedriver                        0x000000010035e8f8 chromedriver + 190712
+E       10  chromedriver                        0x000000010035f354 chromedriver + 193364
+E       11  chromedriver                        0x0000000100379888 cxxbridge1$string$len + 105236
+E       12  chromedriver                        0x00000001003ff224 cxxbridge1$string$len + 652464
+E       13  chromedriver                        0x00000001003fe7b8 cxxbridge1$string$len + 649796
+E       14  chromedriver                        0x00000001003b1a80 cxxbridge1$string$len + 335116
+E       15  chromedriver                        0x00000001007fbc74 cxxbridge1$str$ptr + 2575000
+E       16  chromedriver                        0x00000001007fef40 cxxbridge1$str$ptr + 2588004
+E       17  chromedriver                        0x00000001007db9fc cxxbridge1$str$ptr + 2443296
+E       18  chromedriver                        0x00000001007ff7bc cxxbridge1$str$ptr + 2590176
+E       19  chromedriver                        0x00000001007ccaf0 cxxbridge1$str$ptr + 2382100
+E       20  chromedriver                        0x000000010081f9a0 cxxbridge1$str$ptr + 2721732
+E       21  chromedriver                        0x000000010081fb2c cxxbridge1$str$ptr + 2722128
+E       22  chromedriver                        0x000000010082ecd4 cxxbridge1$str$ptr + 2783992
+E       23  libsystem_pthread.dylib             0x000000019721c2e4 _pthread_start + 136
+E       24  libsystem_pthread.dylib             0x00000001972170fc thread_start + 8
+
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py:232: WebDriverException
+_________________________ test_weather_widget_display __________________________
+
+selenium_driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="c89256c9a47f9d2049bc8d8f4aea46b8")>
+
+    def test_weather_widget_display(selenium_driver):
+        """Test that the weather widget displays correctly on the homepage."""
+        # Skip if running in CI environment with no browser
+        if os.environ.get('CI', '0') == '1':
+            pytest.skip("Skipping browser test in CI environment")
+    
+        # Navigate to the homepage
+>       selenium_driver.get('http://localhost:5000/')
+
+tests/functional/test_weather_display.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py:454: in get
+    self.execute(Command.GET, {"url": url})
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py:429: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1250c07d0>
+response = {'status': 500, 'value': '{"value":{"error":"unknown error","message":"unknown error: net::ERR_CONNECTION_REFUSED\\n  ...00019721c2e4 _pthread_start + 136\\n24  libsystem_pthread.dylib             0x00000001972170fc thread_start + 8\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_CONNECTION_REFUSED
+E         (Session info: chrome=135.0.7049.42)
+E       Stacktrace:
+E       0   chromedriver                        0x0000000101502dec cxxbridge1$str$ptr + 2817040
+E       1   chromedriver                        0x00000001014fb088 cxxbridge1$str$ptr + 2784940
+E       2   chromedriver                        0x00000001010428d8 cxxbridge1$string$len + 93028
+E       3   chromedriver                        0x000000010103ae38 cxxbridge1$string$len + 61636
+E       4   chromedriver                        0x000000010102cfec cxxbridge1$string$len + 4728
+E       5   chromedriver                        0x000000010102e9cc cxxbridge1$string$len + 11352
+E       6   chromedriver                        0x000000010102d454 cxxbridge1$string$len + 5856
+E       7   chromedriver                        0x000000010102cdc8 cxxbridge1$string$len + 4180
+E       8   chromedriver                        0x000000010102cb14 cxxbridge1$string$len + 3488
+E       9   chromedriver                        0x000000010102a8f8 chromedriver + 190712
+E       10  chromedriver                        0x000000010102b354 chromedriver + 193364
+E       11  chromedriver                        0x0000000101045888 cxxbridge1$string$len + 105236
+E       12  chromedriver                        0x00000001010cb224 cxxbridge1$string$len + 652464
+E       13  chromedriver                        0x00000001010ca7b8 cxxbridge1$string$len + 649796
+E       14  chromedriver                        0x000000010107da80 cxxbridge1$string$len + 335116
+E       15  chromedriver                        0x00000001014c7c74 cxxbridge1$str$ptr + 2575000
+E       16  chromedriver                        0x00000001014caf40 cxxbridge1$str$ptr + 2588004
+E       17  chromedriver                        0x00000001014a79fc cxxbridge1$str$ptr + 2443296
+E       18  chromedriver                        0x00000001014cb7bc cxxbridge1$str$ptr + 2590176
+E       19  chromedriver                        0x0000000101498af0 cxxbridge1$str$ptr + 2382100
+E       20  chromedriver                        0x00000001014eb9a0 cxxbridge1$str$ptr + 2721732
+E       21  chromedriver                        0x00000001014ebb2c cxxbridge1$str$ptr + 2722128
+E       22  chromedriver                        0x00000001014facd4 cxxbridge1$str$ptr + 2783992
+E       23  libsystem_pthread.dylib             0x000000019721c2e4 _pthread_start + 136
+E       24  libsystem_pthread.dylib             0x00000001972170fc thread_start + 8
+
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py:232: WebDriverException
+________________________ test_weather_forecast_display _________________________
+
+selenium_driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="5b056f7ae87ad97456ce17438f3abc7a")>
+
+    def test_weather_forecast_display(selenium_driver):
+        """Test that the weather forecast displays correctly."""
+        # Skip if running in CI environment with no browser
+        if os.environ.get('CI', '0') == '1':
+            pytest.skip("Skipping browser test in CI environment")
+    
+        # Navigate to the homepage or weather page
+>       selenium_driver.get('http://localhost:5000/')
+
+tests/functional/test_weather_display.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py:454: in get
+    self.execute(Command.GET, {"url": url})
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py:429: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1252c5b50>
+response = {'status': 500, 'value': '{"value":{"error":"unknown error","message":"unknown error: net::ERR_CONNECTION_REFUSED\\n  ...00019721c2e4 _pthread_start + 136\\n24  libsystem_pthread.dylib             0x00000001972170fc thread_start + 8\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_CONNECTION_REFUSED
+E         (Session info: chrome=135.0.7049.42)
+E       Stacktrace:
+E       0   chromedriver                        0x0000000100882dec cxxbridge1$str$ptr + 2817040
+E       1   chromedriver                        0x000000010087b088 cxxbridge1$str$ptr + 2784940
+E       2   chromedriver                        0x00000001003c28d8 cxxbridge1$string$len + 93028
+E       3   chromedriver                        0x00000001003bae38 cxxbridge1$string$len + 61636
+E       4   chromedriver                        0x00000001003acfec cxxbridge1$string$len + 4728
+E       5   chromedriver                        0x00000001003ae9cc cxxbridge1$string$len + 11352
+E       6   chromedriver                        0x00000001003ad454 cxxbridge1$string$len + 5856
+E       7   chromedriver                        0x00000001003acdc8 cxxbridge1$string$len + 4180
+E       8   chromedriver                        0x00000001003acb14 cxxbridge1$string$len + 3488
+E       9   chromedriver                        0x00000001003aa8f8 chromedriver + 190712
+E       10  chromedriver                        0x00000001003ab354 chromedriver + 193364
+E       11  chromedriver                        0x00000001003c5888 cxxbridge1$string$len + 105236
+E       12  chromedriver                        0x000000010044b224 cxxbridge1$string$len + 652464
+E       13  chromedriver                        0x000000010044a7b8 cxxbridge1$string$len + 649796
+E       14  chromedriver                        0x00000001003fda80 cxxbridge1$string$len + 335116
+E       15  chromedriver                        0x0000000100847c74 cxxbridge1$str$ptr + 2575000
+E       16  chromedriver                        0x000000010084af40 cxxbridge1$str$ptr + 2588004
+E       17  chromedriver                        0x00000001008279fc cxxbridge1$str$ptr + 2443296
+E       18  chromedriver                        0x000000010084b7bc cxxbridge1$str$ptr + 2590176
+E       19  chromedriver                        0x0000000100818af0 cxxbridge1$str$ptr + 2382100
+E       20  chromedriver                        0x000000010086b9a0 cxxbridge1$str$ptr + 2721732
+E       21  chromedriver                        0x000000010086bb2c cxxbridge1$str$ptr + 2722128
+E       22  chromedriver                        0x000000010087acd4 cxxbridge1$str$ptr + 2783992
+E       23  libsystem_pthread.dylib             0x000000019721c2e4 _pthread_start + 136
+E       24  libsystem_pthread.dylib             0x00000001972170fc thread_start + 8
+
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py:232: WebDriverException
+_____________________________ test_weather_updates _____________________________
+
+selenium_driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="b2c40c348925e15fcb76968cf84c5c40")>
+
+    def test_weather_updates(selenium_driver):
+        """Test that weather data updates properly."""
+        # Skip if running in CI environment with no browser
+        if os.environ.get('CI', '0') == '1':
+            pytest.skip("Skipping browser test in CI environment")
+    
+        # Navigate to the homepage
+>       selenium_driver.get('http://localhost:5000/')
+
+tests/functional/test_weather_display.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py:454: in get
+    self.execute(Command.GET, {"url": url})
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py:429: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1252c6cf0>
+response = {'status': 500, 'value': '{"value":{"error":"unknown error","message":"unknown error: net::ERR_CONNECTION_REFUSED\\n  ...00019721c2e4 _pthread_start + 136\\n24  libsystem_pthread.dylib             0x00000001972170fc thread_start + 8\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_CONNECTION_REFUSED
+E         (Session info: chrome=135.0.7049.42)
+E       Stacktrace:
+E       0   chromedriver                        0x0000000100feadec cxxbridge1$str$ptr + 2817040
+E       1   chromedriver                        0x0000000100fe3088 cxxbridge1$str$ptr + 2784940
+E       2   chromedriver                        0x0000000100b2a8d8 cxxbridge1$string$len + 93028
+E       3   chromedriver                        0x0000000100b22e38 cxxbridge1$string$len + 61636
+E       4   chromedriver                        0x0000000100b14fec cxxbridge1$string$len + 4728
+E       5   chromedriver                        0x0000000100b169cc cxxbridge1$string$len + 11352
+E       6   chromedriver                        0x0000000100b15454 cxxbridge1$string$len + 5856
+E       7   chromedriver                        0x0000000100b14dc8 cxxbridge1$string$len + 4180
+E       8   chromedriver                        0x0000000100b14b14 cxxbridge1$string$len + 3488
+E       9   chromedriver                        0x0000000100b128f8 chromedriver + 190712
+E       10  chromedriver                        0x0000000100b13354 chromedriver + 193364
+E       11  chromedriver                        0x0000000100b2d888 cxxbridge1$string$len + 105236
+E       12  chromedriver                        0x0000000100bb3224 cxxbridge1$string$len + 652464
+E       13  chromedriver                        0x0000000100bb27b8 cxxbridge1$string$len + 649796
+E       14  chromedriver                        0x0000000100b65a80 cxxbridge1$string$len + 335116
+E       15  chromedriver                        0x0000000100fafc74 cxxbridge1$str$ptr + 2575000
+E       16  chromedriver                        0x0000000100fb2f40 cxxbridge1$str$ptr + 2588004
+E       17  chromedriver                        0x0000000100f8f9fc cxxbridge1$str$ptr + 2443296
+E       18  chromedriver                        0x0000000100fb37bc cxxbridge1$str$ptr + 2590176
+E       19  chromedriver                        0x0000000100f80af0 cxxbridge1$str$ptr + 2382100
+E       20  chromedriver                        0x0000000100fd39a0 cxxbridge1$str$ptr + 2721732
+E       21  chromedriver                        0x0000000100fd3b2c cxxbridge1$str$ptr + 2722128
+E       22  chromedriver                        0x0000000100fe2cd4 cxxbridge1$str$ptr + 2783992
+E       23  libsystem_pthread.dylib             0x000000019721c2e4 _pthread_start + 136
+E       24  libsystem_pthread.dylib             0x00000001972170fc thread_start + 8
+
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py:232: WebDriverException
+___________________ test_weather_integration_with_bike_data ____________________
+
+selenium_driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="ad0fd3845262a915b47cc406c939cd0a")>
+
+    def test_weather_integration_with_bike_data(selenium_driver):
+        """Test that weather data is integrated with bike data appropriately."""
+        # Skip if running in CI environment with no browser
+        if os.environ.get('CI', '0') == '1':
+            pytest.skip("Skipping browser test in CI environment")
+    
+        # This test is highly application-specific
+        # You might look for elements that show weather conditions affecting bike availability
+    
+        # Navigate to the map or relevant page
+>       selenium_driver.get('http://localhost:5000/map')
+
+tests/functional/test_weather_display.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py:454: in get
+    self.execute(Command.GET, {"url": url})
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py:429: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x1252c7c20>
+response = {'status': 500, 'value': '{"value":{"error":"unknown error","message":"unknown error: net::ERR_CONNECTION_REFUSED\\n  ...00019721c2e4 _pthread_start + 136\\n24  libsystem_pthread.dylib             0x00000001972170fc thread_start + 8\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -> None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_CONNECTION_REFUSED
+E         (Session info: chrome=135.0.7049.42)
+E       Stacktrace:
+E       0   chromedriver                        0x00000001031aadec cxxbridge1$str$ptr + 2817040
+E       1   chromedriver                        0x00000001031a3088 cxxbridge1$str$ptr + 2784940
+E       2   chromedriver                        0x0000000102cea8d8 cxxbridge1$string$len + 93028
+E       3   chromedriver                        0x0000000102ce2e38 cxxbridge1$string$len + 61636
+E       4   chromedriver                        0x0000000102cd4fec cxxbridge1$string$len + 4728
+E       5   chromedriver                        0x0000000102cd69cc cxxbridge1$string$len + 11352
+E       6   chromedriver                        0x0000000102cd5454 cxxbridge1$string$len + 5856
+E       7   chromedriver                        0x0000000102cd4dc8 cxxbridge1$string$len + 4180
+E       8   chromedriver                        0x0000000102cd4b14 cxxbridge1$string$len + 3488
+E       9   chromedriver                        0x0000000102cd28f8 chromedriver + 190712
+E       10  chromedriver                        0x0000000102cd3354 chromedriver + 193364
+E       11  chromedriver                        0x0000000102ced888 cxxbridge1$string$len + 105236
+E       12  chromedriver                        0x0000000102d73224 cxxbridge1$string$len + 652464
+E       13  chromedriver                        0x0000000102d727b8 cxxbridge1$string$len + 649796
+E       14  chromedriver                        0x0000000102d25a80 cxxbridge1$string$len + 335116
+E       15  chromedriver                        0x000000010316fc74 cxxbridge1$str$ptr + 2575000
+E       16  chromedriver                        0x0000000103172f40 cxxbridge1$str$ptr + 2588004
+E       17  chromedriver                        0x000000010314f9fc cxxbridge1$str$ptr + 2443296
+E       18  chromedriver                        0x00000001031737bc cxxbridge1$str$ptr + 2590176
+E       19  chromedriver                        0x0000000103140af0 cxxbridge1$str$ptr + 2382100
+E       20  chromedriver                        0x00000001031939a0 cxxbridge1$str$ptr + 2721732
+E       21  chromedriver                        0x0000000103193b2c cxxbridge1$str$ptr + 2722128
+E       22  chromedriver                        0x00000001031a2cd4 cxxbridge1$str$ptr + 2783992
+E       23  libsystem_pthread.dylib             0x000000019721c2e4 _pthread_start + 136
+E       24  libsystem_pthread.dylib             0x00000001972170fc thread_start + 8
+
+/opt/anaconda3/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py:232: WebDriverException
+_______________________ test_bike_data_to_frontend_flow ________________________
+
+client = <FlaskClient <Flask 'app'>>
+mock_getBikeData = <MagicMock name='getBikeData' id='4686723264'>
+bike_data_sample = [{'address': 'Smithfield North', 'available_bike_stands': 20, 'available_bikes': 10, 'banking': True, ...}, {'address': 'Parnell Square North', 'available_bike_stands': 15, 'available_bikes': 5, 'banking': True, ...}]
+
+    def test_bike_data_to_frontend_flow(client, mock_getBikeData, bike_data_sample):
+        """Test the flow of bike data from API to frontend."""
+        # Call the API endpoint
+        response = client.post('/api/bikesInfo')
+        assert response.status_code == 200
+    
+        # Check that the API call was made
+>       mock_getBikeData.assert_called_once()
+
+tests/integration/test_data_flow.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='getBikeData' id='4686723264'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'getBikeData' to have been called once. Called 0 times.
+
+/opt/anaconda3/lib/python3.12/unittest/mock.py:923: AssertionError
+______________________ test_weather_data_to_frontend_flow ______________________
+
+client = <FlaskClient <Flask 'app'>>
+mock_getWeatherData = <MagicMock name='getCurrentWeatherData' id='4921031904'>
+weather_data_sample = {'base': 'stations', 'clouds': {'all': 90}, 'cod': 200, 'coord': {'lat': 53.344, 'lon': -6.2672}, ...}
+
+    def test_weather_data_to_frontend_flow(client, mock_getWeatherData, weather_data_sample):
+        """Test the flow of weather data from API to frontend."""
+        # Call the API endpoint
+        response = client.post('/api/weather')
+        assert response.status_code == 200
+    
+        # Check that the API call was made
+>       mock_getWeatherData.assert_called_once()
+
+tests/integration/test_data_flow.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='getCurrentWeatherData' id='4921031904'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'getCurrentWeatherData' to have been called once. Called 0 times.
+
+/opt/anaconda3/lib/python3.12/unittest/mock.py:923: AssertionError
+_____________________________ test_login_data_flow _____________________________
+
+client = <FlaskClient <Flask 'app'>>
+
+    def test_login_data_flow(client):
+        """Test the flow of login data through the application."""
+        # Mock the accessData function
+        with patch('app.accessData') as mock_access:
+            # Create a success response
+            success_response = {'status': 'success', 'message': 'Login successful'}
+            mock_access.return_value = success_response
+    
+            # Create login credentials
+            login_data = {
+                'name': 'test_user',
+                'password': 'test_password'
+            }
+    
+            # Submit login request
+            response = client.post('/api/account', data=login_data)
+    
+            # Check that accessData was called
+            mock_access.assert_called_once()
+    
+            # Response should match our mock
+>           assert response == success_response
+E           AssertionError: assert <WrapperTestResponse streamed [200 OK]> == {'message': 'Login successful', 'status': 'success'}
+
+tests/integration/test_data_flow.py:121: AssertionError
+_____________________________ test_api_bikes_info ______________________________
+
+client = <FlaskClient <Flask 'app'>>
+mock_getBikeData = <MagicMock name='getBikeData' id='4921692464'>
+
+    def test_api_bikes_info(client, mock_getBikeData):
+        """Test the bikes info API endpoint."""
+        response = client.post('/api/bikesInfo')
+        assert response.status_code == 200
+        # Verify it returned JSON data
+        data = json.loads(response.data)
+        assert isinstance(data, list)
+        # Check the mock was called
+>       mock_getBikeData.assert_called_once()
+
+tests/integration/test_routes.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='getBikeData' id='4921692464'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'getBikeData' to have been called once. Called 0 times.
+
+/opt/anaconda3/lib/python3.12/unittest/mock.py:923: AssertionError
+_______________________________ test_api_weather _______________________________
+
+client = <FlaskClient <Flask 'app'>>
+mock_getWeatherData = <MagicMock name='getCurrentWeatherData' id='4921865520'>
+
+    def test_api_weather(client, mock_getWeatherData):
+        """Test the weather API endpoint."""
+        response = client.post('/api/weather')
+        assert response.status_code == 200
+        # Verify it returned JSON data
+        data = json.loads(response.data)
+        assert isinstance(data, dict)
+        # Check the mock was called
+>       mock_getWeatherData.assert_called_once()
+
+tests/integration/test_routes.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='getCurrentWeatherData' id='4921865520'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'getCurrentWeatherData' to have been called once. Called 0 times.
+
+/opt/anaconda3/lib/python3.12/unittest/mock.py:923: AssertionError
+____________________________ test_login_logout_flow ____________________________
+
+client = <FlaskClient <Flask 'app'>>
+
+    def test_login_logout_flow(client):
+        """Test the login and logout flow."""
+        # First check if we're logged out (no session)
+        response = client.get('/')
+>       assert b'Login' in response.data
+E       assert b'Login' in b'<!DOCTYPE html>\n<html lang="en">\n  <head>\n    <meta charset="UTF-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1.0" />\n    <title>Home - Dublin Bike Share</title>\n    <link\n      rel="stylesheet"\n      href="/static/css/global.css"\n    />\n    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">\n    <link rel="preconnect" href="https://fonts.googleapis.com" />\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />\n    <link\n      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"\n      rel="stylesheet"\n    />\n    \n<link rel="stylesheet" href="/static/css/home.css" />\n\n  </head>\n  <body>\n    <header>\n        \n        <div class="flex divided">\n            <a href="/">\n                <div class="logo"><img width="100%" src="/static/images/logo.svg" /></div>\n            </a>\n            \n    \n        \n    \n    <div class="flex desktop">\n        \n            <a href="/"><div>Home</div></a>\n        \n            <a href="/use"><div>How to use</div></a>\n        \n            <a href="/map"><div>Map</div></a>\n        \n            <a href="...connect.ie">\n                hsuan-yu.tan@ucdconnect.ie\n            </a>\n        </p>\n    \n        <p>\n            Kexun:\n            <a href="mailto:kexun.liu@ucdconnect.ie">\n                kexun.liu@ucdconnect.ie\n            </a>\n        </p>\n    \n        <p>\n            Herman:\n            <a href="mailto:herman.dolhyi@ucdconnect.ie">\n                herman.dolhyi@ucdconnect.ie\n            </a>\n        </p>\n    \n\n                </div>\n                <div class="footer-links">\n                    <h3>Quick Links</h3>\n                    <p><a href="/contact">Contact</a></p>\n                    <p><a href="/faq">FAQ</a></p>\n                </div>\n            </div>\n            <div class="footer-credits">\n                <p>\n                    \xc2\xa9 2025 Dublin Bike Share. Developed by UCD students: Tan, Kexun and\n                    Herman\n                </p>\n                <p style="font-size: 14px; margin-top: 5px">\n                    Content adapted from\n                    <a href="https://www.bikeshare.ie" target="_blank">bikeshare.ie</a>\n                </p>\n            </div>\n        </div>\n    </footer>\n  </body>\n</html>'
+E        +  where b'<!DOCTYPE html>\n<html lang="en">\n  <head>\n    <meta charset="UTF-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1.0" />\n    <title>Home - Dublin Bike Share</title>\n    <link\n      rel="stylesheet"\n      href="/static/css/global.css"\n    />\n    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">\n    <link rel="preconnect" href="https://fonts.googleapis.com" />\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />\n    <link\n      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"\n      rel="stylesheet"\n    />\n    \n<link rel="stylesheet" href="/static/css/home.css" />\n\n  </head>\n  <body>\n    <header>\n        \n        <div class="flex divided">\n            <a href="/">\n                <div class="logo"><img width="100%" src="/static/images/logo.svg" /></div>\n            </a>\n            \n    \n        \n    \n    <div class="flex desktop">\n        \n            <a href="/"><div>Home</div></a>\n        \n            <a href="/use"><div>How to use</div></a>\n        \n            <a href="/map"><div>Map</div></a>\n        \n            <a href="...connect.ie">\n                hsuan-yu.tan@ucdconnect.ie\n            </a>\n        </p>\n    \n        <p>\n            Kexun:\n            <a href="mailto:kexun.liu@ucdconnect.ie">\n                kexun.liu@ucdconnect.ie\n            </a>\n        </p>\n    \n        <p>\n            Herman:\n            <a href="mailto:herman.dolhyi@ucdconnect.ie">\n                herman.dolhyi@ucdconnect.ie\n            </a>\n        </p>\n    \n\n                </div>\n                <div class="footer-links">\n                    <h3>Quick Links</h3>\n                    <p><a href="/contact">Contact</a></p>\n                    <p><a href="/faq">FAQ</a></p>\n                </div>\n            </div>\n            <div class="footer-credits">\n                <p>\n                    \xc2\xa9 2025 Dublin Bike Share. Developed by UCD students: Tan, Kexun and\n                    Herman\n                </p>\n                <p style="font-size: 14px; margin-top: 5px">\n                    Content adapted from\n                    <a href="https://www.bikeshare.ie" target="_blank">bikeshare.ie</a>\n                </p>\n            </div>\n        </div>\n    </footer>\n  </body>\n</html>' = <WrapperTestResponse 10528 bytes [200 OK]>.data
+
+tests/integration/test_routes.py:57: AssertionError
+__________________________ test_accessData_exception ___________________________
+
+test_app = <Flask 'test_accountApiFunction'>
+
+    def test_accessData_exception(test_app):
+        """Test accessData handles exceptions properly."""
+        test_url = "https://test-url.com/script"
+        test_form_data = {"name": "test_user", "password": "test_pass"}
+    
+        # Create a mock that raises an exception
+        with patch('accountApiFunction.requests.post', side_effect=Exception("Test exception")) as mock_post:
+            with test_app.test_request_context(method='POST', data=test_form_data):
+                response = accessData(test_url)
+    
+                # Check the response
+>               assert response.status_code == 500
+E               AttributeError: 'tuple' object has no attribute 'status_code'
+
+tests/unit/test_accountApiFunction.py:74: AttributeError
+__________________________ test_accessData_empty_form __________________________
+
+test_app = <Flask 'test_accountApiFunction'>
+
+    def test_accessData_empty_form(test_app):
+        """Test accessData when no form data is provided."""
+        test_url = "https://test-url.com/script"
+    
+        with test_app.test_request_context(method='POST'):
+            response = accessData(test_url)
+    
+            # Check the response
+>           assert response.status_code == 400
+E           AttributeError: 'tuple' object has no attribute 'status_code'
+
+tests/unit/test_accountApiFunction.py:87: AttributeError
+=========================== short test summary info ============================
+FAILED tests/functional/test_map_features.py::test_map_loads_markers - selenium.common.exceptions.WebDriverException: Message: unknown error: net:...
+FAILED tests/functional/test_map_features.py::test_station_details_on_click - selenium.common.exceptions.WebDriverException: Message: unknown error: net:...
+FAILED tests/functional/test_weather_display.py::test_weather_widget_display - selenium.common.exceptions.WebDriverException: Message: unknown error: net:...
+FAILED tests/functional/test_weather_display.py::test_weather_forecast_display - selenium.common.exceptions.WebDriverException: Message: unknown error: net:...
+FAILED tests/functional/test_weather_display.py::test_weather_updates - selenium.common.exceptions.WebDriverException: Message: unknown error: net:...
+FAILED tests/functional/test_weather_display.py::test_weather_integration_with_bike_data - selenium.common.exceptions.WebDriverException: Message: unknown error: net:...
+FAILED tests/integration/test_data_flow.py::test_bike_data_to_frontend_flow - AssertionError: Expected 'getBikeData' to have been called once. Called 0 t...
+FAILED tests/integration/test_data_flow.py::test_weather_data_to_frontend_flow - AssertionError: Expected 'getCurrentWeatherData' to have been called once. ...
+FAILED tests/integration/test_data_flow.py::test_login_data_flow - AssertionError: assert <WrapperTestResponse streamed [200 OK]> == {'message...
+FAILED tests/integration/test_routes.py::test_api_bikes_info - AssertionError: Expected 'getBikeData' to have been called once. Called 0 t...
+FAILED tests/integration/test_routes.py::test_api_weather - AssertionError: Expected 'getCurrentWeatherData' to have been called once. ...
+FAILED tests/integration/test_routes.py::test_login_logout_flow - assert b'Login' in b'<!DOCTYPE html>\n<html lang="en">\n  <head>\n    <meta...
+FAILED tests/unit/test_accountApiFunction.py::test_accessData_exception - AttributeError: 'tuple' object has no attribute 'status_code'
+FAILED tests/unit/test_accountApiFunction.py::test_accessData_empty_form - AttributeError: 'tuple' object has no attribute 'status_code'
+=================== 14 failed, 10 passed, 6 skipped in 4.93s ===================
+(base) Mac:software-project-main Herman$ 
