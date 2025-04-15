@@ -4,8 +4,6 @@ import os
 import numpy as np
 import pandas as pd
 import joblib
-import holidays  # Import holidays package
-import math
 
 from dotenv import load_dotenv
 from getBikeData import getBikeData
@@ -20,13 +18,10 @@ availability_data = pd.read_csv("data/availability.csv")
 weather_data = pd.read_csv("data/weather_data.csv")
 default_lags = pd.read_csv("data/default_lags.csv")
 station_info = pd.read_csv("data/stations.csv")
+restock_schedule = pd.read_csv("data/restock_schedule.csv")
 
 # Load the model and pre-generated data
-model = joblib.load("bike_availability_rf_model_with_new_features.joblib")
-weather_encoder = joblib.load("weather_label_encoder.joblib")
-
-# Initialize Ireland holidays
-ie_holidays = holidays.Ireland()
+model = joblib.load("ml/bike_availability_xgb_model_with_weather.joblib")
 
 load_dotenv(override=True) # Load environment variables from .env file
 
@@ -108,83 +103,83 @@ def predict():
         # Get user input
         date = request.args.get("date")  # Format: YYYY-MM-DD
         time = request.args.get("time")  # Format: HH:MM:SS
-        station_id = request.args.get("station_id")  # User-provided station_id
+        station_id = int(request.args.get("station_id"))  # User-provided station_id
 
         if not date or not time or not station_id:
             return jsonify({"error": "Missing date, time, or station_id parameter"}), 400
 
-        # Convert station_id to integer
-        station_id = int(station_id)
-
-        # Combine date and time into datetime object
+        # Parse date and time
         dt = datetime.strptime(f"{date} {time}", "%Y-%m-%d %H:%M:%S")
         hour = dt.hour
-        is_weekend = dt.weekday() >= 5  # Saturday or Sunday is True
 
-        # Automatically determine if the date is a public holiday in Ireland
-        is_holiday = dt.date() in ie_holidays  # Check if date is in Ireland's holiday list
+        # Get station info
+        station_row = station_info[station_info["station_id"] == station_id]
+        if station_row.empty:
+            return jsonify({"error": f"Station id {station_id} not found in stations.csv"}), 404
+
+        area_cluster = station_row["area_cluster"].iloc[0]
+        capacity = station_row["capacity"].iloc[0]
+        lat = float(station_row["lat"].iloc[0])
+        lon = float(station_row["lon"].iloc[0])
 
         # Compute time features
         hour_sin = np.sin(2 * np.pi * hour / 24)
         hour_cos = np.cos(2 * np.pi * hour / 24)
+        is_weekend = dt.weekday() >= 5
+        day_of_week = dt.weekday()
+        is_peak_hour = hour in [7, 8, 17, 18]
 
-        # Get area_cluster and capacity from station_info.csv
-        station_row = station_info[station_info["station_id"] == station_id]
-        if station_row.empty:
-            return jsonify({"error": f"Station ID {station_id} not found in station_info.csv"}), 404
-
-        area_cluster = station_row["area_cluster"].values[0]
-        capacity = station_row["capacity"].values[0]
-        lat = station_row["lat"].values[0]
-        lon = station_row["lon"].values[0]
-
-        # Get weather data from OpenWeather
-        res = getCurrentWeatherData(lat, lon)
-        weather_data = res.json()
-        temp_max = weather_data["main"]["temp_max"]
-        humidity = weather_data["main"]["humidity"]
-        wind_speed = weather_data["wind"]["speed"]
-        pressure = weather_data["main"]["pressure"]
-        clouds_all = weather_data["clouds"]["all"]
-        weather_main = weather_data["weather"][0]["main"]
-
-        # Encode weather_main
-        weather_main_encoded = weather_encoder.transform([weather_main])[0]
-
-        # Get lag_1h and lag_24h from default_lags.csv
-        default_row = default_lags[(default_lags["station_id"] == station_id) &
-                                   (default_lags["hour"] == hour)]
+         # Get lag_8h from default_lags.csv
+        default_row = default_lags[
+            (default_lags["station_id"] == station_id) &
+            (default_lags["hour"] == hour)
+        ]
         if not default_row.empty:
-            lag_1h = default_row["lag_1h"].values[0]
-            lag_24h = default_row["lag_24h"].values[0]
+            lag_8h = default_row["lag_8h"].iloc[0]
         else:
-            lag_1h = default_lags["lag_1h"].mean()
-            lag_24h = default_lags["lag_24h"].mean()
+            lag_8h = default_lags[
+                default_lags["station_id"] == station_id
+            ]["lag_8h"].mean()
+
+        # Get is_restocked from restock_schedule.csv
+        hour_window = [(hour-1)%24, hour, (hour+1)%24]
+        matches = restock_schedule[
+            (restock_schedule["station_id"] == station_id) &
+            (restock_schedule["hour_window"].isin(hour_window)) &
+            (restock_schedule["frequency"] >= 0.3)
+        ]
+        is_restocked = not matches.empty
+
+           # Fetch weather data
+        weather_data = getCurrentWeatherData(lat, lon).json()
+        temp = float(weather_data["main"]["temp"])
+        humidity = float(weather_data["main"]["humidity"])
+        pressure = float(weather_data["main"]["pressure"])
 
         # Combine input features (same order as in training)
         input_features = [
-            station_id,          # User input
-            area_cluster,        # Retrieved from station_info.csv
-            hour_sin,            # Automatically calculated
-            hour_cos,            # Automatically calculated
-            temp_max,            # Retrieved from OpenWeather
-            humidity,            # Retrieved from OpenWeather
-            capacity,            # Retrieved from station_info.csv
-            int(is_weekend),     # Automatically calculated (0 or 1)
-            lag_1h,              # Retrieved from default_lags.csv
-            lag_24h,             # Retrieved from default_lags.csv
-            wind_speed,          # Retrieved from OpenWeather
-            pressure,            # Retrieved from OpenWeather
-            clouds_all,          # Retrieved from OpenWeather
-            int(is_holiday),     # Automatically determined (0 or 1)
-            weather_main_encoded # Encoded from OpenWeather
+            station_id,      # From station_info.csv
+            area_cluster,    # From station_info.csv
+            hour_sin,        # Calculated
+            hour_cos,        # Calculated
+            capacity,        # From station_info.csv
+            int(is_weekend), # Calculated
+            lag_8h,          # From default_lags.csv
+            int(is_restocked), # From restock_schedule.csv
+            day_of_week,     # Calculated
+            int(is_peak_hour), # Calculated
+            temp,            # float
+            humidity,        # float
+            pressure         # float
         ]
         input_array = np.array(input_features).reshape(1, -1)
-        # Make prediction
-        prediction = model.predict(input_array)
-        prediction_int = max(math.floor(prediction[0]), 0)
 
-        return jsonify({"predicted_available_bikes": prediction_int})
+        # Make prediction
+        relative_pred = model.predict(input_array)[0]
+        absolute_pred = int(np.floor(relative_pred * capacity))
+        absolute_pred = max(absolute_pred, 0)
+
+        return jsonify({"predicted_available_bikes": absolute_pred})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500

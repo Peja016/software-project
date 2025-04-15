@@ -270,6 +270,7 @@ let isDateEmpty = true
 let isTimeEmpty = true
 let isNoStation = true
 let isPast = false
+let isThreeWeek = false
 
 const validation = (key, value) => {
     let date = document.getElementById("date").value;
@@ -277,7 +278,9 @@ const validation = (key, value) => {
     if (date && time) {
       const userDateTimeString = `${date}T${time}:00`;
       const userDateTime = new Date(userDateTimeString);
+      const threeWeeksLater = new Date();
       isPast = userDateTime < new Date();
+      isThreeWeek = userDateTime > threeWeeksLater.setDate(threeWeeksLater.getDate() + 21);
     }
     if (key == 'date') {
         isDateEmpty = !Boolean(value)
@@ -286,7 +289,7 @@ const validation = (key, value) => {
     } else {
         isNoStation = !Boolean(value)
     }
-    if (isDateEmpty || isTimeEmpty || isNoStation || isPast) {
+    if (isDateEmpty || isTimeEmpty || isNoStation || isPast || isThreeWeek) {
         predictBtn.disabled = true;
     } else {
         predictBtn.disabled = false;
@@ -300,7 +303,10 @@ const validation = (key, value) => {
         errorMessage.textContent = 'Time is required.';
     } else if (isPast) {
         errorMessage.style.display = 'block';
-        errorMessage.textContent = 'Cannot select a past date and time.';
+        errorMessage.textContent = 'Please select a date and time in the future.';
+    } else if (isThreeWeek) {
+      errorMessage.style.display = 'block';
+      errorMessage.textContent = 'Please select a date and time within the next three weeks.';
     } else if (isNoStation) {
         errorMessage.style.display = 'block';
         errorMessage.textContent = 'Station is required.';
