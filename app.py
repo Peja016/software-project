@@ -6,10 +6,10 @@ import pandas as pd
 import joblib
 
 from dotenv import load_dotenv
-from getBikeData import getBikeData
-from getWeatherData import getCurrentWeatherData
-from storeContactInfo import sentData
-from accountApiFunction import accessData
+from helpers.getBikeData import getBikeData
+from helpers.getWeatherData import getCurrentWeatherData
+from helpers.accountApiFunction import accessData
+from helpers.storeContactInfo import sentData
 from datetime import datetime, timedelta
 
 # Load csv file data into app
