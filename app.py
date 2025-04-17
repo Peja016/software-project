@@ -48,7 +48,7 @@ def page_not_found(e):
 def index():
     return render_template('index.html')
 
-@app.route("/api/bikesInfo", methods=['POST'])
+@app.route("/api/bikes_info", methods=['POST'])
 def getBikesInfo():
     res = getBikeData()
     if res.status_code == 200:

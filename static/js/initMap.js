@@ -323,7 +323,7 @@ labels.forEach(key => {
 
 const addMarkers = async () => {
   const infoWindow = new google.maps.InfoWindow();
-  const bikeData = await fetchData("/api/bikesInfo");
+  const bikeData = await fetchData("/api/bikes_info");
   const select = document.getElementById("station_id");
 
   bikeData.sort((a, b) => a.name.localeCompare(b.name)).forEach(
