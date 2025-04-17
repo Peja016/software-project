@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Availability Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        label, input, select, button {
+            display: block;
+            margin: 10px 0;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        #error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bike Availability Prediction</h1>
+    <form id="predict-form">
+        <label for="date">Date (YYYY-MM-DD):</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="time">Time (HH:MM):</label>
+        <input type="time" id="time" name="time" required>
+
+        <label for="station_name">Station Name:</label>
+        <select id="station_name" name="station_name" required>
+            <option value="">Select a station</option>
+        </select>
+
+        <button type="submit">Predict</button>
+    </form>
+    <div id="result"></div>
+    <div id="error"></div>
+
+    <script>
+        // Set date and time constraints
+        const now = new Date();
+        const maxDate = new Date();
+        maxDate.setDate(now.getDate() + 21); // 3 weeks from now
+
+        const dateInput = document.getElementById('date');
+        const timeInput = document.getElementById('time');
+        const errorDiv = document.getElementById('error');
+
+        // Set min and max date
+        dateInput.min = now.toISOString().split('T')[0];
+        dateInput.max = maxDate.toISOString().split('T')[0];
+
+        // Load station names
+        fetch('/stations')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const select = document.getElementById('station_name');
+                if (data.error) {
+                    errorDiv.textContent = `Failed to load stations: ${data.error}`;
+                    return;
+                }
+                if (data.length === 0) {
+                    errorDiv.textContent = 'No stations available';
+                    return;
+                }
+                data.forEach(station => {
+                    const option = document.createElement('option');
+                    option.value = station.name;
+                    option.textContent = station.name;
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                errorDiv.textContent = `Failed to load stations: ${error.message}`;
+                console.error('Stations fetch error:', error);
+            });
+
+        // Update time constraints based on date
+        dateInput.addEventListener('change', function() {
+            const selectedDate = new Date(dateInput.value);
+            const isToday = selectedDate.toDateString() === now.toDateString();
+
+            if (isToday) {
+                // Set minimum time to current time (rounded up to next minute)
+                const currentHours = now.getHours();
+                const currentMinutes = now.getMinutes() + 1;
+                timeInput.min = `${currentHours.toString().padStart(2, '0')}:${currentMinutes.toString().padStart(2, '0')}`;
+            } else {
+                timeInput.min = ''; // No time restriction for future dates
+            }
+        });
+
+        // Handle form submission
+        document.getElementById('predict-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const resultDiv = document.getElementById('result');
+            errorDiv.textContent = '';
+            resultDiv.textContent = '';
+
+            const date = dateInput.value;
+            const time = timeInput.value + ':00'; // Add seconds
+            const station_name = document.getElementById('station_name').value;
+
+            // Validate time
+            const selectedDateTime = new Date(`${date}T${time}`);
+            if (selectedDateTime <= now) {
+                errorDiv.textContent = 'Please select a time after the current time';
+                return;
+            }
+            if (selectedDateTime > maxDate) {
+                errorDiv.textContent = 'Please select a time within 3 weeks from now';
+                return;
+            }
+            if (!station_name) {
+                errorDiv.textContent = 'Please select a station';
+                return;
+            }
+
+            fetch(`/predict?date=${date}&time=${time}&station_name=${encodeURIComponent(station_name)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        errorDiv.textContent = `Error: ${data.error}`;
+                    } else {
+                        const bikes = data.predicted_available_bikes;
+                        let message = `Predicted available bikes: ${bikes}`;
+                        if (bikes < 10) {
+                            message += ` - Fewer than 10 bikes available.`;
+                        }
+                        if (bikes < 3) {
+                            message = `Predicted available bikes: ${bikes} - Only ${bikes} bikes left, first come first served!`;
+                        }
+                        resultDiv.textContent = message;
+                    }
+                })
+                .catch(error => {
+                    errorDiv.textContent = `Error: ${error.message}`;
+                    console.error('Predict error:', error);
+                });
+        });
+    </script>
+</body>
+</html>
