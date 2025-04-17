@@ -1,0 +1,20 @@
+What went well:
+1. Improved user stories and organized documents - Herman and team.
+2. Completed the Flask app - All team members.
+3. Decomposed front-end tasks and recorded them in the backlog - Kexun.
+4. Worked on the front end, gathered feedback, and made revisions - Kexun and team.
+5. Successfully obtained the Google Maps API, and each team member practiced accessing it - All team members.
+
+What can be improved:
+1.Avoid overplanning and overpromising, as it adds unnecessary pressure. Proceed step by step. We initially overplanned the website pages and interactivity but eventually focused on the essentials.
+2.Collaboration is strong, but there’s room to improve efficiency. Over-collaboration can slow progress, so we should optimize collaboration time to enhance effectiveness.
+
+Actionable improvements:
+1.Adjust collaboration methods to balance efficiency. While feedback is important, over-collaboration should be avoided to prevent delays. Optimizing collaboration time will improve team performance.
+2.Maintain daily communication and encourage team members to share challenges. Structured check-ins or more focused platforms may enhance collaboration.
+3. Set deadlines with built-in redundancy to account for unexpected events from other subjects, ensuring project progress remains unaffected.
+
+Team dynamics and wellbeing:
+1.The team feels stressed due to other subjects, but the project workload is manageable. We’ll continue monitoring pace to maintain balance.
+2.Improving efficiency and communication is crucial to meeting deadlines without compromising quality.
+3.Despite stress, we continue to support each other, keeping morale high through open communication.

@@ -1,0 +1,32 @@
+Sprint 4 Retrospective
+Sprint 4 marked the conclusion of our project, focusing on machine learning implementation, comprehensive testing, and final refinements. As the culmination of our development process, this sprint allowed us to bring together all project components while preparing final documentation and presentation materials.
+What is working:
+Task allocation based on technical expertise and individual strengths.
+Effective peer review system for quality assurance.
+Clear division of responsibilities with appropriate overlap for knowledge sharing.
+Structured approach to documentation and project finalization.
+What is not working:
+Time pressure with the final deadline approaching created some stress.
+Balancing documentation requirements with technical implementation.
+Efficiency improvements:
+Parallel work on different aspects (ML model, testing, documentation) maximized productivity.
+Regular progress updates prevented bottlenecks.
+Cross-review of deliverables ensured quality while building shared understanding.
+Clear prioritization of remaining tasks helped maintain focus.
+Team strengths:
+Complementary technical skills across team members.
+Commitment to delivering high-quality final product.
+Effective knowledge sharing during review processes.
+Ability to adapt to changing priorities during the final sprint.
+Areas for improvement:
+Earlier start on machine learning components would have allowed more iteration.
+More comprehensive end-to-end testing strategy defined from project start.
+Better time allocation for documentation throughout the project lifecycle.
+Challenges:
+Integrating machine learning predictions with the existing interface.
+Ensuring comprehensive test coverage within time constraints.
+Balancing technical completeness with presentation quality.
+Team well-being:
+Despite deadline pressure, the team maintained positive working relationships.
+Mutual support in completing final deliverables reduced individual stress.
+Satisfaction in seeing the complete product come together after four sprints.

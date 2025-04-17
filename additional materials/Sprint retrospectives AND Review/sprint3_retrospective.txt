@@ -1,0 +1,35 @@
+Sprint 3 Retrospective
+In Sprint 3, we focused on finalizing the website design and functionality, enhancing user experience, and integrating all components into the Flask application. Our team collaborated effectively to implement detailed design changes, create cohesive pages, and ensure consistency across the entire website. We also made significant improvements to code organization and maintainability.
+What is working:
+Task distribution based on specialized skills and strengths.
+Efficient integration of individually developed components.
+Detailed feedback implementation across all pages.
+Code organization through file splitting for better maintainability.
+Get the data input by users in the contact form and check it in our email.
+What is not working:
+Some design decisions required multiple iterations.
+Occasional inconsistencies between page designs required additional alignment work.
+Efficiency improvements:
+Breaking down tasks by page and functionality improved parallel work.
+Regular feedback cycles led to quicker design decisions.
+Structured file organization (global.css, home.css, how.css, contact.css) enhanced maintenance.
+Clear separation of front-end development and Flask integration roles.
+Team strengths:
+Adaptability in responding to feedback and making improvements.
+Cross-functional collaboration with clear role definition.
+Detail-oriented approach to design consistency.
+Efficient integration of individually developed components.
+Areas for improvement:
+Establishing design standards earlier to reduce iterations.
+More comprehensive documentation of code changes.
+Earlier alignment on shared components like header and footer.
+Visualisation for stations and add legend on the map. 
+Challenges:
+Balancing aesthetic design with functional requirements.
+Ensuring consistent user experience across different pages.
+Managing the transition from static pages to Flask integration.
+Team well-being:
+Successful collaboration through well-defined responsibilities.
+Team members effectively leveraged individual strengths.
+Clear communication channels facilitated quick resolution of issues.
+

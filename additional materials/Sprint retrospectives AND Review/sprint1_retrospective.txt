@@ -1,0 +1,36 @@
+This was the first sprint, and because it was beginning it was the most important one. We got to know each other as a team, made a rough plan of the whole project and precise plan of Sprint 1, including plan for week 1 and week 2. 
+	We successfully completed the basic targets, including software installation, defining user stories, mockups, and acceptance criteria, and implementing preliminary data scraping for bikes and weather.
+	Besides that we did such things as: database design, setting up a tunnel to link the database from EC2, scraping bike data and weather data, writing the code to store the collected data in our database and started developing a homepage (still in process)
+
+What is working:
+Well-distributed tasks.
+Effective daily communication and issue resolution.
+Regular meetings foster collaboration.
+Using slides as guidance.
+
+
+What is not working:
+Struggling alone with obstacles instead of seeking help.
+Database connection issues, resolved via SSH.
+
+Efficiency improvements:
+Focused solely on software development.
+Followed structured ceremonies (Sprint planning, daily scrum, reviews, retrospectives) and team routines (meetings Monday, Wednesday, Friday; weekend tasks; Sunday call).
+
+Team strengths:
+Strong teamwork, communication, and professionalism.
+
+Areas for improvement:
+Daily progress tracking.
+Fixed meeting times.
+More collaborative work.
+Smaller, clearer task breakdowns.
+
+Challenges:
+Product and Sprint Backlog took longer due to unclear structure.
+Database linking from the local end required troubleshooting.
+
+Team well-being:
+Collaboration is excellent, and the team enjoys working together.
+
+
