@@ -75,7 +75,7 @@ This project was developed as part of our university group coursework. It aims t
 
 ## 🏗️ System Architecture
 
-> See `/docs/class_diagram.png` for full structure  
+> See `/additional materials/Class and Architecture Diagramsclass_diagram/Architecture_diagram.png` for full structure  
 
 Main components:
 
