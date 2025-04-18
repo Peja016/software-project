@@ -81,7 +81,7 @@ Main components:
 
 - `map.js`, `initMap.js` – handles all map logic
 - `contact.js`, `payment.js`, `account.js` – handles user interaction logic
-- `getWeatherData.py`, `getBikeData.py`, `accountApiFunction.py` – helper scripts for backend
+- `getWeatherData.py`, `getBikeData.py`, `accountApiFunction.py, storeContactInfo.py` – helper scripts for backend
 - `bike_availability_rf_model_with_new_features.joblib` – prediction model
 - CSVs in `/data` – stations, weather, bike availability, etc.
 
