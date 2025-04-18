@@ -168,4 +168,4 @@ This project was developed for academic purposes only. Some features are mock im
 ## 📄 License
 
 MIT License  
-© 2025 Group 6 – University Coursework
+© 2025 Group 6 – University College Dublin Software Engineering Lecture
